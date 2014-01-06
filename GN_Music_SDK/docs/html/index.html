@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html class="left-layout no-feedback" data-mc-runtime-file-type="Default">
+    <head>
+        <meta charset="UTF-8" /><title></title>
+        <link rel="Stylesheet" href="Skins/Default/Stylesheets/Styles.css" />
+        <link rel="Stylesheet" href="Skins/Default/Stylesheets/TextEffects.css" />
+        <script type="text/javascript" src="Resources/Scripts/jquery.min.js">
+        </script>
+        <script type="text/javascript" src="Resources/Scripts/plugins.min.js">
+        </script>
+        <script type="text/javascript" src="Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div id="DEBUG_Log">
+            <div class="MCDebugLogHeader">
+            Log Console</div>
+            <div class="MCDebugLogBody">
+            </div>
+            <div class="MCDebugLogFooter">
+            </div>
+        </div>
+        <div id="header"><a href="index.html"><h1 class="logo"></h1></a>
+            <div class="search-bar needs-pie">
+                <input id="search-field" class="needs-pie" type="text" placeholder="Search" />
+                <div class="search-filter-wrapper">
+                    <div class="search-filter"><span>All Files</span>
+                        <div class="search-filter-content">
+                            <ul>
+                                <li>All Files</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="search-submit-wrapper">
+                    <div class="search-submit" title="Search">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="body">
+            <div id="navigation">
+                <div class="tabs">
+                    <ul class="tabs-nav clearfix">
+                        <li id="TocTab" class="needs-pie tabs-nav-active">Contents</li>
+                    </ul>
+                    <div class="tabs-panels">
+                        <div class="tabs-panel tabs-panel-active">
+                            <div id="toc" class="tabs-panel-content needs-pie">
+                                <!--
+                            <ul class="tree">
+                                <li class="tree-node tree-node-inner tree-node-expanded">
+                                    <div>
+                                        <span>Book A</span>
+                                    </div>
+                                    <ul class="tree inner">
+                                        <li class="tree-node tree-node-inner tree-node-expanded">
+                                            <div>
+                                                <span class="label">Book A-A</span>
+                                            </div>
+                                            <ul class="tree inner">
+                                                <li class="tree-node tree-node-leaf">
+                                                    <div>
+                                                        <span><a href="#TopicA.htm">Topic A-A</a></span>
+                                                    </div>
+                                                </li>
+                                                <li class="tree-node tree-node-leaf">
+                                                    <div>
+                                                        <span class="new-indicator"></span>
+                                                        <span><a href="#TopicB.htm">Topic A-B</a></span>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="tree-node tree-node-inner">
+                                            <div>
+                                                <span class="tree-node-leaf">Topic B</span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="tree-node tree-node-inner tree-node-collapsed">
+                                    <div>
+                                        <span>Book B</span>
+                                    </div>
+                                    <ul class="tree inner">
+                                        <li class="tree-node tree-node-leaf">
+                                            <div>
+                                                <span>Topic B-A</span>
+                                            </div>
+                                        </li>
+                                        <li class="tree-node tree-node-leaf">
+                                            <div>
+                                                <span>Topic B-B</span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="navigationResizeBar">
+                <div id="show-hide-navigation" class="needs-pie">
+                </div>
+            </div>
+            <div id="contentBody" class="needs-pie">
+                <div class="buttons">
+                    <div class="button-group-container-left">
+                        <div class="button-group">
+                            <button class="button needs-pie print-button" title="Print">
+                            </button>
+                            <button class="button needs-pie expand-all-button" data-state1-class="expand-all-button" data-state2-class="collapse-all-button" data-state2-title="Collapse all" title="Expand all" data-state1-title="Expand all">
+                            </button>
+                        </div>
+                        <div class="button-group">
+                            <div class="star-buttons loading">
+                                <div class="button star-button topic-ratings-empty-button" data-state1-class="topic-ratings-empty-button" data-state2-class="topic-ratings-button" title="Click a star to rate this topic" data-state1-title="Click a star to rate this topic" data-state2-title="Click a star to rate this topic">
+                                </div>
+                                <div class="button star-button topic-ratings-empty-button" data-state1-class="topic-ratings-empty-button" data-state2-class="topic-ratings-button" title="Click a star to rate this topic" data-state1-title="Click a star to rate this topic" data-state2-title="Click a star to rate this topic">
+                                </div>
+                                <div class="button star-button topic-ratings-empty-button" data-state1-class="topic-ratings-empty-button" data-state2-class="topic-ratings-button" title="Click a star to rate this topic" data-state1-title="Click a star to rate this topic" data-state2-title="Click a star to rate this topic">
+                                </div>
+                                <div class="button star-button topic-ratings-empty-button" data-state1-class="topic-ratings-empty-button" data-state2-class="topic-ratings-button" title="Click a star to rate this topic" data-state1-title="Click a star to rate this topic" data-state2-title="Click a star to rate this topic">
+                                </div>
+                                <div class="button star-button topic-ratings-empty-button" data-state1-class="topic-ratings-empty-button" data-state2-class="topic-ratings-button" title="Click a star to rate this topic" data-state1-title="Click a star to rate this topic" data-state2-title="Click a star to rate this topic">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="button-group">
+                            <button class="button needs-pie login-button" data-state1-class="login-button" data-state2-class="edit-user-profile-button" data-state2-title="Edit user profile" title="Login" data-state1-title="Login">
+                            </button>
+                        </div>
+                    </div>
+                    <div class="button-group-container-right">
+                        <div class="button-group">
+                            <button class="button needs-pie previous-topic-button" title="Navigate previous">
+                            </button>
+                            <div class="button current-topic-index-button disabled"><span class="sequence-index"></span> of <span class="sequence-total"></span></div>
+                            <button class="button needs-pie next-topic-button" title="Navigate next">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div id="contentBodyInner">
+                    <!-- frameBorder="0" is for IE 8 and below --><iframe id="topic" name="topic" frameBorder="0"></iframe>
+                    <div id="searchPane">
+                        <h1 id="results-heading">Your search for <span class="query"></span> returned <span class="total-results"></span> result(s).</h1>
+                        <!--
+                    <ul id="resultList">
+                        <li>
+                            <h3 class="title"><a href="#TopicA.htm">Topic A</a></h3>
+                            <span class="ratingStarsContainer">
+                                <div class="ratingStar ratingStarFilled">&#160;</div>
+                                <div class="ratingStar ratingStarFilled">&#160;</div>
+                                <div class="ratingStar ratingStarFilled">&#160;</div>
+                                <div class="ratingStar ratingStarFilled">&#160;</div>
+                                <div class="ratingStar ratingStarEmpty">&#160;</div>
+                                17 reviews
+                            </span>
+                            <div class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a dictum dolor. Suspendisse potenti. Donec commodo, mi et pulvinar lobortis, velit magna sodales lectus, sit amet interdum magna urna eget leo. Pellentesque risus eros, vehicula non tempus at, bibendum in neque. In mollis malesuada facilisis.</div>
+                            <div class="url"><cite>TopicA.htm</cite></div>
+                        </li>
+                        <li>
+                            <h3 class="title"><a href="#TopicB.htm">Topic B</a></h3>
+                            <span class="ratingStarsContainer">
+                                <div class="ratingStar ratingStarFilled">&#160;</div>
+                                <div class="ratingStar ratingStarFilled">&#160;</div>
+                                <div class="ratingStar ratingStarFilled">&#160;</div>
+                                <div class="ratingStar ratingStarEmpty">&#160;</div>
+                                <div class="ratingStar ratingStarEmpty">&#160;</div>
+                                5 reviews
+                            </span>
+                            <div class="description">Duis nec massa est, id hendrerit neque. Sed ornare adipiscing turpis eu luctus. Phasellus eu viverra lectus. Nunc purus risus, scelerisque non porttitor vitae, fringilla luctus augue.</div>
+                            <div class="url"><cite>TopicB.htm</cite></div>
+                        </li>
+                        <li>
+                            <h3 class="title"><a href="#TopicA.htm">Topic A</a></h3>
+                            <div class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a dictum dolor. Suspendisse potenti. Donec commodo, mi et pulvinar lobortis, velit magna sodales lectus, sit amet interdum magna urna eget leo. Pellentesque risus eros, vehicula non tempus at, bibendum in neque. In mollis malesuada facilisis.</div>
+                            <div class="url"><cite>TopicA.htm</cite></div>
+                        </li>
+                    </ul>
+                    -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="login-dialog needs-pie">
+            <div class="login-dialog-header needs-pie">
+            Create Profile
+        </div>
+            <div class="login-dialog-content needs-pie">
+                <div class="profile-item-wrapper clearfix">
+                    <div class="label-wrapper">
+                        <label>Username *</label>
+                    </div>
+                    <div class="input-wrapper">
+                        <input class="needs-pie" type="text" name="Username" data-required="true" />
+                    </div>
+                </div>
+                <div class="profile-item-wrapper clearfix">
+                    <div class="label-wrapper">
+                        <label>Email Address *</label>
+                    </div>
+                    <div class="input-wrapper">
+                        <input class="needs-pie" type="text" name="EmailAddress" data-required="true" />
+                    </div>
+                </div>
+                <div class="profile-item-wrapper email-notifications-wrapper">
+                    <div class="label-wrapper">
+                    Email Notifications
+                </div>
+                    <div class="email-notifications-group needs-pie">
+                    I want to receive an email when...
+                    <div><label><input type="checkbox" name="CommentReplyNotification" />a reply is left to one of my comments</label></div><div><label><input type="checkbox" name="CommentSameTopicNotification" />a comment is left on a topic that I commented on</label></div><div><label><input type="checkbox" name="CommentSameHelpSystemNotification" />a comment is left on any topic in the Help system</label></div></div>
+                </div>
+                <div class="login-dialog-buttons">
+                    <button class="submit-button needs-pie" type="submit">Submit</button>
+                    <button class="cancel-button needs-pie">Cancel</button>
+                </div>
+                <div class="status-message-box"><span class="message verification-email-sent-message">An email has been sent to verify your new profile.</span><span class="message required-fields-missing-message">Please fill out all required fields before submitting your information.</span>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

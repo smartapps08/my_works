@@ -1,0 +1,12 @@
+.DS_Store
+.classpath
+.project
+Thumbs.db
+desktop.ini
+local.properties
+
+.pc/
+.settings/
+bin/
+gen/
+target/

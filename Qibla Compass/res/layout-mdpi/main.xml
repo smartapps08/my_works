@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2011 Iranian Supreme Council of ICT, The FarsiTel Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASICS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent" android:id="@+id/mainLayout"
+	android:background="@drawable/background">
+    <com.farsitel.adad.AdView android:id="@+id/ad"
+                              android:layout_width="fill_parent"
+                              android:layout_height="wrap_content"
+                              android:layout_gravity="bottom" />
+	<RelativeLayout
+		xmlns:android="http://schemas.android.com/apk/res/android" android:layout_marginTop="10px"
+		android:orientation="vertical" android:layout_width="fill_parent"
+		android:layout_height="fill_parent">
+		<LinearLayout
+			xmlns:android="http://schemas.android.com/apk/res/android"
+			android:orientation="vertical" android:background="@drawable/leather" android:layout_width="wrap_content"
+			android:layout_centerHorizontal="true"
+			android:gravity="center_horizontal"
+			android:layout_height="wrap_content" android:id="@+id/textLayout">
+			<TextView
+				android:textSize="@dimen/location" android:id="@+id/location_text_line2"
+				android:textColor="@color/gray" android:layout_width="fill_parent" android:layout_height="fill_parent"
+				android:gravity="center_horizontal" android:paddingTop="50px"
+				android:lines="2"/>
+		</LinearLayout>
+		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			android:orientation="vertical" android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:layout_centerInParent="true" android:id="@+id/noLocationLayout"
+			android:background="@drawable/leather">
+			<TextView
+				android:textSize="@dimen/orientation" android:textColor="@color/gray"
+				android:gravity="center" android:id="@+id/noLocationText" android:paddingTop="30px"
+				android:paddingLeft="30px" android:paddingRight="30px"
+				android:layout_height="fill_parent" android:layout_width="fill_parent" 
+				android:lines="5" />
+		</LinearLayout>
+		<FrameLayout
+			android:orientation="vertical" android:id="@+id/qiblaFrameLayout"
+			android:layout_below="@id/textLayout" android:layout_width="wrap_content"
+			android:layout_marginBottom="20px"
+			android:layout_height="wrap_content" android:layout_centerInParent="true">
+			<FrameLayout
+				android:layout_gravity="center"
+				android:orientation="vertical" android:id="@+id/qiblaLayout"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content" >
+				<ImageView
+					android:layout_width="wrap_content" android:layout_height="wrap_content"
+					android:id="@+id/frameImage" android:layout_gravity="center"
+					android:src="@drawable/frame" />
+				<ImageView 
+					android:layout_width="wrap_content" android:layout_height="wrap_content"
+					android:layout_gravity="center" android:id="@+id/compassImage"
+					android:src="@drawable/rosetta" />
+				<ImageView
+					android:layout_width="wrap_content" android:layout_height="wrap_content"
+					android:layout_gravity="center" android:id="@+id/arrowImage"
+					android:src="@drawable/arrow" />
+			</FrameLayout>
+		</FrameLayout>
+	</RelativeLayout>
+</LinearLayout>

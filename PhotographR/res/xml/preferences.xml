@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory
+        android:key="auto_update"
+        android:title="Auto-Update Settings" >
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="perform_updates_startup"
+            android:summary="Enable request for suggestions while the application starts up."
+            android:title="Get suggestions at start-up" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="perform_updates_on_location"
+            android:summary="Enable getting suggestions automatically if your location changes at least by x meters."
+            android:title="Get suggestions on Location changes" />
+
+        <EditTextPreference
+            android:key="distance"
+            android:summary=""
+            android:title="Minimum Displacement (meters)" />
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="perform_updates_periodic"
+            android:summary="Enable getting suggestions periodically every y minutes."
+            android:title="Get preodic suggestions" />
+        <EditTextPreference
+            android:key="period"
+            android:summary=""
+            android:title="Period (minutes)" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

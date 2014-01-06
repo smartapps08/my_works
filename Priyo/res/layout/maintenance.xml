@@ -1,0 +1,108 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".MainActivity$DummySectionFragment" >
+
+    <TableLayout
+        android:id="@+id/nocarinfo"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <TableRow>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:paddingLeft="20dp"
+                android:text="You have NO Car! Add a new car"
+                android:textColor="#919191"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+        </TableRow>
+    </TableLayout>
+
+    <TableLayout
+        android:id="@+id/carinfo"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/ncars"
+                android:paddingLeft="5dp"
+                android:textColor="#919191"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:width="150dp" />
+
+            <TextView />
+
+            <TextView />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:paddingLeft="5dp"
+                android:text="vehicleSystemID:"
+                android:textColor="#919191"
+                android:textSize="12sp"
+                android:width="25dp" />
+
+            <TextView
+                android:id="@+id/vsid"
+                android:textColor="#919191"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:width="50dp" />
+
+            <Button
+                android:id="@+id/bfinfo"
+                android:layout_marginLeft="30dp"
+                android:text="Full Info"
+                android:textSize="10sp"
+                android:width="35dp" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:paddingLeft="5dp"
+                android:text="Maintenance"
+                android:textColor="#919191"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:width="50dp" />
+
+            <TextView />
+
+            <TextView />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/maininfo"
+                android:lines="7"
+                android:paddingLeft="5dp"
+                android:textColor="#919191"
+                android:textSize="12sp"
+                android:width="100dp" />
+
+            <TextView />
+
+            <Button
+                android:id="@+id/bdp"
+                android:text="Parts and Price"
+                android:textSize="10sp"
+                android:width="30dp" />
+        </TableRow>
+    </TableLayout>
+
+</RelativeLayout>

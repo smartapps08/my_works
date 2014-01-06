@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="no-feedback" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Mobile Client Android Implementation Guide (3.1)">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Status Change Updates</title>
+        <link href="../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../Resources/Stylesheets/BookStyles.css" rel="stylesheet" />
+        <script src="../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">You are here: </span><a class="MCBreadcrumbsLink" href="a_Mobile Client Android Implementation.html#_Toc349118723">Mobile Client Android Implementation Guide (3.1)</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Status Change Updates</span>
+        </div>
+        <h2><a name="_Toc349118757"></a>Status Change Updates</h2>
+        <p>When performing an operation, Mobile Client sends status updates to the application via the GNOperationStatusChanged interface.<br />To receive status changed updates, the application must create a class that implements a result-ready interface and the GNOperationStatusChanged interface. An instance of the object must be provided when the operation is invoked.</p>
+        <p>Your app can use status changed updates to keep the user notified of operation progress. The percent completed is also provided but, currently, only for microphone recorded audio.</p>
+        <p class="note">The callbacks for handling status changes and results are called on the main thread. As a best practice, your app should keep the main thread readily available for this purpose and run any other time-consuming tasks in the background.</p><pre xml:space="preserve">class SearchResultsStatusReceiver implements GNSearchResultReady,GNOperationStatusChanged{<br></br>public void GNResultReady( GNSearchResult result ){<br></br>// User code to process search result<br></br>}<br></br><br></br>public void GNStatusChanged( GNStatus status ){<br></br>// User code to process status changed update<br></br><br></br>if( status.getStatus() == GNStatusEnum.LISTENING){<br></br>int percentDone = status.getPercentDone();<br></br>// Display percent completed to the user<br></br>}<br></br>}<br></br>};<br></br><br></br>void recognizeFromMic( GNConfig config ){<br></br>SearchResultsStatusReceiver searchResultStatusReceiverObject = new SearchResultsStatusReceiver();<br></br>GNOperations.recognizeMIDStreamFromMic(searchResultReadyObject,config);<br></br>}</pre>
+        <p class="onlineFooter">© 2000 to present. Gracenote, Inc. All rights reserved.</p>
+        <p><a href="mailto:doc_feedback@gracenote.com?subject=Gracenote Documentation Feedback" target="_blank" title="Send comments about this topic to Gracenote Technical Publications." alt="Send comments about this topic to Gracenote Technical Publications.">How can we improve this documentation?</a>
+        </p>
+    </body>
+</html>

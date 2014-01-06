@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="no-feedback" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Mobile Client Android Implementation Guide (3.1)">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Considerations</title>
+        <link href="../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../Resources/Stylesheets/BookStyles.css" rel="stylesheet" />
+        <script src="../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">You are here: </span><a class="MCBreadcrumbsLink" href="a_Mobile Client Android Implementation.html#_Toc349118723">Mobile Client Android Implementation Guide (3.1)</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Considerations</span>
+        </div>
+        <h2><a name="_Toc349118764"></a>Considerations</h2>
+        <h3><a name="_Toc349118765"></a>Best Practice for Receiving Full and Partial Metadata Responses</h3>
+        <p>Set GNConfig.allowFullResponse to true only when your application requires full(extended) metadata.</p>
+        <p>If your application can live with partial metadata, always set allowFullResponse to false. Only ask for full metadata when required. This will improve your match/response time.</p>
+        <h3><a name="_Toc349118766"></a>Best Practice for Receiving Results and Status Change Updates</h3>
+        <p>The callbacks for handling status changes (GNOperationStatusChanged interface implementation) and results (GNSearchResultReady interface implementation) are called on the main thread. As a best practice, your app should keep the main thread readily available for these callbacks and run any other time-consuming tasks in the background.</p>
+        <h3><a name="_Toc349118767"></a>Recognizing Audio from the Microphone</h3>
+        <p>The following practices are recommended when recognizing audio from the microphone:</p>
+        <ul>
+            <li value="1">Provide clear and concise onscreen instructions on how to record the audio:<ul><li value="1">Most failed recognitions are due to incorrect operation by the user.</li><li value="2">Clear and concise instructions help the user correctly operate the application, resulting in a higher match rate and a better user experience.</li></ul></li>
+            <li value="2">While recording audio from the microphone display a progress indicator:<ul><li value="1">When Mobile Client is recording from the microphone, the application can receive status updates. The status updates indicate what percentage of the recording is completed.</li><li value="2">The status updates are issued at every tenth percentile of completion, meaning 10%, 20%, 30%, and so on.</li><li value="3">Use this information to display a progress bar (indicator) to notify the user.</li><li value="4">When recording has finished use vibration or a tone (or both) to notify the user.</li></ul></li>
+            <li value="3">Visual only notifications can hamper the user experience because:<ul><li value="1">The user may not see the notification if they are holding the handset up to an audio source.</li><li value="2">The user may pull the device away from an audio source to check if recording has completed. This may result in a poor quality recording.</li><li value="3">While Web Services is being contacted, display an animation that indicates the application is performing a function. If the application appears to halt the user may believe the application has crashed.</li><li value="4">If no match is found, reiterate the usage instructions and ask the user to try again.</li></ul></li>
+        </ul>
+        <h3><a name="_Toc349118768"></a>Recognizing Audio from a File using MusicID-File</h3>
+        <p>The following practices are recommended when recognizing audio from a file when using MusicID-File. </p>
+        <ul>
+            <li value="1">Allow the user to select multiple files for recognition. Submit them concurrently for fastest results.</li>
+            <li value="2">Limit the number of stored results and pending recognitions:<ul><li value="1">File recognition operations can run concurrently, which allows many requests to be issued at once.</li><li value="2">Each recognition operation and each returned result requires memory.</li><li value="3">Be careful to limit the number of results stored and pending recognition operations, to avoid exhausting the device's RAM.</li></ul></li>
+            <li value="3">While Web Services is being contacted, display an animation that indicates the application is performing a function. If the application appears to halt, the user may believe the application has crashed.</li>
+        </ul>
+        <h3><a name="_Toc349118769"></a>Image Resizing Best Practice</h3>
+        <h4>Summary</h4>
+        <p>
+            <br />This topic provides guidance on image implementation by discussing Gracenote's use of predefined square dimensions to accommodate variances among image orientations.</p>
+        <h4>Description</h4>
+        <p>
+            <br />Gracenote provides a variety of images as part of our enhanced content offerings. For Mobile Client, these include Cover Art, Artist, and Genre images.<br />To accommodate variation in the images’ dimensions, we resize the images to fit within the standardized image dimensions of a predefined-square, so that the longest dimension equals the dimensions of one side of the square, while the other dimension is somewhat short of the full square. The following images show how an image is resized within the predefined square. (Note that the outline for the square is used here only to demonstrate layout. We do not recommend displaying this outline on your application’s user interface.)</p>
+        <p>Predefined Square<br /><img src="../Resources/Images/Mobile Client Documentation (3.1)1/0200000C.jpg" style="width: 169px;height: 170px;" /></p>
+        <p>Horizontally-oriented Image Examples</p>
+        <p>
+            <img src="../Resources/Images/Mobile Client Documentation (3.1)1/0200000D.jpg" style="width: 169px;height: 170px;" />
+        </p>
+        <br />
+        <img src="../Resources/Images/Mobile Client Documentation (3.1)1/0200000E.jpg" style="width: 169px;height: 170px;" />
+        <p>Vertically-oriented Image Examples</p>
+        <p>
+            <img src="../Resources/Images/Mobile Client Documentation (3.1)1/0200000F.jpg" style="width: 169px;height: 170px;" />
+        </p>
+        <br />
+        <img src="../Resources/Images/Mobile Client Documentation (3.1)1/02000010.jpg" style="width: 169px;height: 170px;" />
+        <p>&#160;</p>
+        <p>The following sections discuss the differences between music images and give the standard image dimensions for each image type.</p>
+        <h4>Music Cover Art</h4>
+        <p>While CD cover art is often represented by a square, it is more accurately a bit wider than it is tall. The dimensions of these cover images vary from album to album. Some CD packages, such as a box set, might even be a radically different shape.</p>
+        <p>Gracenote Standard Image Dimensions: Music Cover Art</p>
+        <table>
+            <tr>
+                <th>
+                    <p>Size</p>
+                </th>
+                <th>
+                    <p>W x H (Pixels)</p>
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <p>Thumbnail</p>
+                </td>
+                <td>
+                    <p>75 x 75</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>Small</p>
+                </td>
+                <td>
+                    <p>170 x 170</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>Medium</p>
+                </td>
+                <td>
+                    <p>450 x 450</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>Large</p>
+                </td>
+                <td>
+                    <p>720 x 720</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>Extra Large</p>
+                </td>
+                <td>
+                    <p>1080 x 1080</p>
+                </td>
+            </tr>
+        </table>
+        <h4>Artist Images</h4>
+        <p>Like music Cover Art, Artist images are seldom square, and are generally more obviously rectangular than music cover art. Because music artists range from solo performers to bands with many members, the images may either be wide or tall.</p>
+        <p>Gracenote Standard Image Dimensions: Artist Images</p>
+        <table>
+            <tr>
+                <th>
+                    <p>Size</p>
+                </th>
+                <th>
+                    <p>W x H (Pixels)</p>
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <p>Thumbnail</p>
+                </td>
+                <td>
+                    <p>75 x 75</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>Small</p>
+                </td>
+                <td>
+                    <p>170 x 170</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>Medium</p>
+                </td>
+                <td>
+                    <p>450 x 450</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>Large</p>
+                </td>
+                <td>
+                    <p>720 x 720</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>Extra Large</p>
+                </td>
+                <td>
+                    <p>1080 x 1080</p>
+                </td>
+            </tr>
+        </table>
+        <h4>Image Implementation Recommendation</h4>
+        <p>For all images: We recommend that the image be centered horizontally and vertically within the predefined square dimensions, and that the square be transparent so that the background shows through. This results in a consistent presentation despite variation in the image dimensions.</p>
+        <h3><a name="_Toc349118770"></a>Searching by Text, Lyric Fragment, and Fingerprint</h3>
+        <p>The following practices are recommended when searching by text, lyric fragment, and fingerprint.</p>
+        <ul>
+            <li value="1">Allow user to input as much information as possible:<ul><li value="1">Text search allows artist name, album title, and track title to be entered. Allow the user to input all of these fields and pass them to Gracenote for the search.</li><li value="2">Lyric fragment search can be augmented with the artist name. Allow the user to provide the artist name and ensure it is passed to Gracenote for the search.</li></ul></li>
+            <li value="2">While Web Services is being contacted, display an animation that indicates the application is performing a function. If the application appears to halt the user may believe the application has crashed.</li>
+        </ul>
+        <h3><a name="_Toc349118771"></a>Retry Facility</h3>
+        <p>Mobile phone handsets are sometimes unsuccessful in creating a network connection. This could be due to the mobile phone handset not being within range of a suitable network, or the network being temporarily unavailable due to device or network limitations.</p>
+        <p>It is recommended that you implement a retry facility that retries the user request several times before reporting to the user that the request could not be fulfilled. A retry facility allows temporary network unavailability to go unnoticed by the user.</p>
+        <h3><a name="_Toc349118772"></a>Resource Management</h3>
+        <p>Mobile Client is a compact library that provides easy access to rich content that can enhance the user's experience. Its compact size and simplicity are not indicative of the vast amount of content it can quickly deliver.</p>
+        <p>It is important that your application is prepared to correctly manage requests for content and is able to handle the content when it is delivered.</p>
+        <h4>Storing Content in RAM</h4>
+        <p>The richness of the content delivered by Mobile Client and the speed of delivery can easily result in megabytes of data being transferred to the device. This can quickly consume the RAM resources available to applications, especially those operating in a resource-limited environment.</p>
+        <p>Applications must consider carefully how data is stored and how long it is stored.</p>
+        <p>If your application performs a single track recognition and then displays the result, the RAM resources are unlikely to be exhausted. But if the application performs thousands of track recognitions and intends to display all the returned data, then RAM usage will become an issue.</p>
+        <p>Applications should limit the amount of data they attempt to store in RAM. For example, an application that recognizes a user’s entire song collection could limit the number of recognition results using paging. The application can recognize a small number of songs, display the results for the user to peruse, and then when prompted by the user, recognize the next set of songs. For more information, see <a href="#Result" class="GNBasic MCXref xref xrefGNBasic">Result Paging</a>.</p>
+        <p>Applications should also consider what needs to be stored in RAM. It might be acceptable for your application to store data returned from Mobile Client directly into persistent memory, only using RAM to display small subsets of the data to the user.</p>
+        <p>The schemes used to manage RAM resources will vary greatly with use case and implementation. It is important that dealing correctly with data delivered from Mobile Client be a major consideration for the development team early in the design phase.</p>
+        <h4><a name="Request"></a>Request Flow Control</h4>
+        <p>Mobile Client is capable of processing multiple requests concurrently. This facility enables an application to obtain results faster than issuing one query at a time.</p>
+        <p>There is no limit to the number of requests that can be issued; Mobile Client queues the requests until they can be processed. Each request, whether it is queued or being processed, consumes RAM. If requests are issued faster than they can be processed, the application may run out of memory.</p>
+        <p>To avoid this situation an application should implement flow control for issuing requests. The number of requests pending (queued or being processed) should be capped at a maximum. It is recommended that you limit the number of pending requests to five (5).</p>
+        <p>Applications should issue requests until the number of pending requests reaches the predefined maximum. No further requests should be issued until the number of pending requests drops below the predefined maximum.</p>
+        <p>In addition, all layers in the application stack should implement request flow control, or be capable of rejecting requests from upper layers.</p>
+        <p>For example, if you are developing a middleware layer that interfaces upper layer applications with Mobile Client, your middleware layer should implement flow control. If the number of pending requests rises to the predefined maximum, the layer should reject any new requests until the number of pending requests drops below the predefined maximum. Sophisticated applications will also provide notifications to upper layers when requests can and can’t be accepted (similar to a modem’s XON and XOFF commands).</p>
+        <h4><a name="Result"></a>Result Paging</h4>
+        <p>In addition to request flow control, an application with user navigable results should optimally use results paging to limit the number of requests issued and results stored. Paging can also be used to ensure the application is responsive.</p>
+        <p>Results paging can be effective in applications that can display a large number of results in sections, such as a scrolling display, or paged results where Next and Previous controls are used for result navigation.</p>
+        <p>It is recommended that such applications store the result for three (3) pages: the current page, the previous page, and the next page. As the user navigates through the pages, the results in the current, previous, and next pages change. As they change, the application can delete stored results and retrieve new results as they are needed to fill the current, previous, and next pages.</p>
+        <p>Using this scheme, the previous and next pages are pre-retrieved, making the application responsive as the user navigates.</p>
+        <p>Limiting the total number of results pre-retrieved also limits the amount of content that is stored in RAM. Gracenote recommends using five results per page. If the user is limited to moving one results page at a time, only one page of results needs to be retrieved with each move. This limits the number of concurrent queries to five, as recommended in <a href="#Request" class="GNBasic MCXref xref xrefGNBasic">Request Flow Control</a>.</p>
+        <h3><a name="_Toc349118773"></a>Error Handling</h3>
+        <p>When an operation cannot be completed, Mobile Client generates the appropriate error information which is returned via a result-ready Object. Your application should handle the error conditions and proceed accordingly.</p>
+        <p>In the event of an error, Mobile Client returns an error code and an error message. The error code can be used by your application to react to specific error conditions. The error message contains error condition information, which provides additional clues to the error's cause. Error messages are not suitable for display to the end-user, as they contain technical information and are English-language specific; they are also subject to change without warning. The error message displayed to the user should be derived from the error code.</p>
+        <p>Sophisticated implementations may provide an error notification mechanism that allows errors to be investigated in deployed applications. For example, your application can send error information to a support server or prompt the user to send error information to an email address. Once notification of an error has been received, technical personnel can investigate the error accordingly.</p>
+        <h4>GNResult.FPXFailure and GNResult.FPXFingerprintingFailure</h4>
+        <p>These errors are generated if Mobile Client could not generate a fingerprint from an audio sample. Your application should indicate that the audio cannot be recognized due to invalid or unsupported format.</p>
+        <h4>GNResult.FPXListeningFailure</h4>
+        <p>This error is generated when Mobile Client cannot obtain the microphone for recording an audio sample. Your application should indicate to the user that the microphone is required to record music for identification and to try again after closing any applications that may be using the microphone.</p>
+        <h4>GNResult.WSRegistrationInvalidClientIdFailure</h4>
+        <p>This error is generated when the Client ID provided to Mobile Client was not successfully authenticated by Web Services. Your application should indicate to the user that the music identification service is unavailable.</p>
+        <h4>GNResult.WSNetworkFailure</h4>
+        <p>This error is generated when the device does not have a valid network connection. This could be because the mobile phone handset is not within range of a suitable network or the network is temporarily unavailable due to device or network limitations.</p>
+        <p>Your application should implement a retry facility, retrying the query a number of times. If the problem persists after all retries, indicate to the user that a network connection could not be created and to try again later.</p>
+        <h4>GNResult.WSFailure</h4>
+        <p>This error is generated when Gracenote Web Services cannot fulfill a request from the Mobile Client or a valid network connection could not be made. The accompanying error message is a description of the error condition as provided by Gracenote Web Services.</p>
+        <p>Your application should indicate that the user's request could not be fulfilled at this time. Do not display the error message to the user as it contains technical language which is generally not user friendly. Also, do not attempt to parse the message as messages returned from Web Services change regularly without warning.</p>
+        <h4>GNResult.WSInvalidDataFormatError</h4>
+        <p>This error is generated when Mobile Client cannot parse the response received from Gracenote Web Services. This could occur due to corruption of the results data. Your application should indicate to the user that their request failed and offer to retry the query.</p>
+        <h4>GNResult.UnhandledError</h4>
+        <p>This error code is reported when an unexpected error occurs that is outside the normal operation of Mobile Client and outside the scope of Mobile Client's error capture capabilities. The possible causes of such an error are very broad and include but are not limited to platform errors, third-party library errors, hardware errors, etc.</p>
+        <p>Your application should indicate that an error occurred and the current request could not be completed.</p>
+        <h3><a name="_Toc349118774"></a>Limiting Query Time</h3>
+        <p>Mobile Client imposes time limits for the amount of time a device takes to create an Internet connection or fulfill an Internet request. The time taken to fulfill a request can depend upon:</p>
+        <ul>
+            <li value="1">The device's internal resources (memory, MIPS, etc.)</li>
+            <li value="2">The capacity of the Internet connection (the amount of data that can be transported by the air interface)</li>
+            <li value="3">The availability of the Internet connection (devices can move in and out of signal range or the network may become congested)</li>
+        </ul>
+        <p>The timeouts chosen by Mobile Client are based on the most limited device with the most limited Internet connection capacity and availability. For high end devices these timeouts may be considered too long.</p>
+        <p>It is recommended that devices impose their own query timeout mechanism that cancels a query when it exceeds an application specified time limit. This allows the application the flexibility to limit query lengths in accordance with the capabilities of the host devices.</p>
+        <p>When initiating a query to the Gracenote database via Mobile Client, start an application timer with an application-specified timeout. If the timer expires before the query completes, cancel the query using the GNOperations.cancel() method.</p>
+        <p>Applications can also reduce query times by limiting the amount of content that is downloaded in each query. It is often acceptable to perform a recognition query and receive only the basic metadata for the result and retrieve the related content in separate queries thereafter.</p>
+        <p class="note">When calling AlbumID operations, do not set a timer. AlbumID directory operations can take a long time, depending on many factors, such as the number of tracks in the directory, processor speed, network speed, type, and other factors.</p>
+        <h3><a name="_Toc349118776"></a>Improving Retrieval Performance by Using Enriched Content URLs</h3>
+        <p>There may be cases when you wish to retrieve metadata, descriptors, or external identifiers as quickly as possible, while lazy-loading enriched content such as cover art in the background. To achieve this, Mobile Client features a set of APIs that allows you to extract the URL pointers to the enriched content, giving you greater control over when you load the additional content. Mobile Client provides the following APIs, each of which retrieves a different type of enriched content (cover art, artist images, album reviews and artist biographies):</p>
+        <ul>
+            <li value="1">GNSearchResponse.getCoverArt().getUrl()</li>
+            <li value="2">GNSearchResponse.getContributorImage().getUrl()</li>
+            <li value="3">GNSearchResponse.getAlbumReviewUrl()</li>
+            <li value="4">GNSearchResponse.getArtistBiographyUrl()</li>
+        </ul>
+        <p>Each API returns a string containing the URL for the enriched content. The returned value will be null if no enriched content is available. In the case of cover art, if there is no cover art available, the URL for genre art may be returned (provided the property for genre art is set).</p>
+        <p class="note">Enriched content URLs are temporary; therefore, the application must be configured to handle expired URLs. Gracenote currently supports content URLs for a lifespan of one hour, but this may be subject to change. </p>
+        <p>The following code examples show how to retrieve the enriched content URLs:</p><pre xml:space="preserve">// Retrieve cover art URL<br></br>GNCoverArt coverArt = bestResponse.getCoverArt();<br></br>if(coverArt =! null) {<br></br>String coverArtUrl = coverArt.getUrl();<br></br>}<br></br><br></br>// Retrieve artist image URL<br></br>GNImage artistImage = bestResponse.getContributorImage();<br></br>if ( artistImage != null ){<br></br>String artistImageUrl = artistImage.getUrl();<br></br>}<br></br><br></br><br></br>// Retrieve artist biography URL&#160;&#160;&#160; <br></br>String artistBiographyUrl = response.getArtistBiographyUrl();<br></br><br></br>// Retrieve album review URL<br></br>String albumReviewUrl = response.getAlbumReviewUrl();</pre>
+        <h4>Error Handling</h4>
+        <p>When the application accesses the URLs, it should handle HTTP errors gracefully. The following table lists the types of HTTP errors that might occur and the corresponding action to take:</p>
+        <table>
+            <tr>
+                <th>
+                    <p>Error</p>
+                </th>
+                <th>
+                    <p>Action</p>
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <p>HTTP 500 error</p>
+                </td>
+                <td>
+                    <p>Retry fetching the URL once.</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>HTTP 412 error (Precondition failed)</p>
+                </td>
+                <td>
+                    <p>The URL has expired. The application should request a new URL from the Mobile Client SDK, using GNSearchResponse.getTrackId() to get the Gracenote Identifier. The application should then use GNOperations.fetchByTrackID() before fetching the URL.</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>HTTP 4xx error (other&#160; 400-level errors)</p>
+                </td>
+                <td>
+                    <p>Handle as if the URL has expired: request a new URL and try fetching the asset again. If that fails, the application should log an error and not attempt further retries</p>
+                </td>
+            </tr>
+        </table>
+        <h4>AlbumID Operations</h4>
+        <p>As a best practice, the application should retrieve the URLs for tracks separately from GNSearchResponse after making an AlbumID request. The application should optimize and retrieve the cover art, artist image, album review, and artist biography URLs (and images and data) for one track in the album and not for each track.</p>
+        <h3><a name="_Toc349118777"></a>Upgradability</h3>
+        <p>When new features are added to your application or bugs are fixed, you may want to issue an upgrade to your users. An application's upgradability is a measure of how easily a new version can be distributed to users.</p>
+        <p>An application with high upgradability has the following features:</p>
+        <ul>
+            <li value="1">Automatically detects that a newer version is available</li>
+            <li value="2">Prompts the user to upgrade to a newer version and gives the option to:<ul><li value="1">Upgrade now</li><li value="2">Remind me later</li><li value="3">Never upgrade to this version</li></ul></li>
+            <li value="3">Provides the ability to force an upgrade (no option provided)</li>
+            <li value="4">Does not overwrite any of the user's data when upgrading, including user history data</li>
+            <li value="5">Has unique version numbers for all every application build released</li>
+            <li value="6">Limits external dependencies (for example, referencing libraries not stored in the APK)</li>
+        </ul>
+        <h4>Application Versions</h4>
+        <p>Upgradable applications take special care to ensure unique version numbers for every application build released. A process to ensure unique version numbers is essential to successfully implementing an upgradable application and infrastructure.</p>
+        <p>Android applications use a simple integer to denote the version where newer versions have a higher integer value. This allows the other applications, such as the upgrade infrastructure, to easily determine if one application version is newer than another.</p>
+        <p>Android also provides a version name that is a String. This is generally used as the formatted version displayed to users and can contain information such as major and minor release numbers.</p>
+        <p>The version code and version name can be defined in the application's manifest file.</p>
+        <h4>Application Architecture</h4>
+        <p>Applications with high upgradability minimize external dependencies. If a new version of your application requires a newer version of a library that is stored outside the APK, it cannot be successfully upgraded unless the external library is also upgraded.</p>
+        <p>Your application cannot initiate the upgrade of a library stored outside the APK.</p>
+        <p>This also applies to the Gracenote libraries. For your application to be upgradable, it must store the Gracenote libraries internally, within its APK. If the Gracenote libraries are stored externally to the APK, such as in the /system/lib directory, then a version of your application based on newer Gracenote libraries cannot be correctly installed.</p>
+        <h4>Upgrade Methodology and Infrastructure</h4>
+        <p>When developing the service that publishes your application, consider the upgrade methodology and infrastructure.</p>
+        <p>A sophisticated implementation provides an endpoint (URL or IP address) that the application can check periodically. The service provides the version number of the newest version available. The application can then determine if the newest version is newer than itself.</p>
+        <p>Similarly an option can be provided to allow the user to check for upgrades. When commanded by the user, the application retrieves the newest version number from the service.</p>
+        <p>When a newer version of the application is detected, a prompt can be provided to the user giving them the option to upgrade the application. The options provided to the user may be:</p>
+        <ul>
+            <li value="1">Upgrade now</li>
+            <li value="2">Remind me later</li>
+            <li value="3">Never upgrade to this version</li>
+        </ul>
+        <p>Some customers will also build in the ability for the application to force an upgrade. Forced upgrades do not require user consent to upgrade to a new version. Forced upgrades are often used to:</p>
+        <ul>
+            <li value="1">Fix security issues in a previous version that threaten your service</li>
+            <li value="2">Retire old technology that will no longer be supported</li>
+        </ul>
+        <p>It is recommended that your application implement both optional and forced upgrade mechanisms.</p>
+        <p class="onlineFooter">© 2000 to present. Gracenote, Inc. All rights reserved.</p>
+        <p><a href="mailto:doc_feedback@gracenote.com?subject=Gracenote Documentation Feedback" target="_blank" title="Send comments about this topic to Gracenote Technical Publications." alt="Send comments about this topic to Gracenote Technical Publications.">How can we improve this documentation?</a>
+        </p>
+    </body>
+</html>

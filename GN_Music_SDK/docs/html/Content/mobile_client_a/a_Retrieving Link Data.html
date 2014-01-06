@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="no-feedback" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Mobile Client Android Implementation Guide (3.1)">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Retrieving Link Data</title>
+        <link href="../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../Resources/Stylesheets/BookStyles.css" rel="stylesheet" />
+        <script src="../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">You are here: </span><a class="MCBreadcrumbsLink" href="a_Mobile Client Android Implementation.html#_Toc349118723">Mobile Client Android Implementation Guide (3.1)</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Retrieving Link Data</span>
+        </div>
+        <h2><a name="_Toc349118756"></a>Retrieving Link Data</h2>
+        <p>When an application is appropriately entitled, Mobile Client returns Link identifiers for all responses provided in a result-ready object instance. The identifiers may be sourced from a third party (such as Amazon.com), or they may be specific to your organization. You can use such Link data to (for example) redirect the user to a site, such as Amazon, where they can purchase the matched track, or as a key into your own data catalog. </p><pre xml:space="preserve">class ApplicationSearchResultReadyObject implements GNSearchResultReady{<br></br>public void GNResultReady(GNSearchResult result) {<br></br>// Application code to process the search result<br></br>GNSearchResponse response[] = result.getResponses();<br></br>if( response.length != 0 ){<br></br>GNLinkData linkData[] = response[0].getAlbumLinkData();<br></br>if( linkData.length != 0 ){<br></br>// User code to use link data<br></br>}<br></br>}<br></br>}<br></br>}<br></br><br></br>void recognizeFromMic( GNConfig config ){<br></br>ApplicationSearchResultReadyObject searchResultReadyObject = new ApplicationSearchResultReadyObject();<br></br>GNOperations.recognizeMIDStreamFromMic(searchResultReadyObject,config);<br></br>}</pre>
+        <p>You can configure audio recognition events to prefer results containing Link identifiers from a specific source. Set the content.link.preferredSource property of the GNConfig object used when invoking the audio recognition method, as shown in this example:</p><pre xml:space="preserve">GNConfig config = GNConfig.init("12345678-ABCDEFGHIJKLMNOPQRSTUVWXYZ012345",applicationContext);<br></br><br></br>config.setProperty("content.link.preferredSource","Amazon");<br></br><br></br>GNOperations.recognizeMIDStreamFromMic(searchResultReadyObject,config);</pre>
+        <p>Gracenote Web Services will then return the best available match containing a Link identifier from that source, if available. Note, however, that the single best match returned is not necessarily guaranteed to contain a Link identifier from the preferred source, if none of the available matches contains one from that source.</p>
+        <p class="note">While commerce identifiers can be requested, AlbumID does not support the preference of a specific identifier over the actual Album a song came from. These preferred results can instead be obtained by using GNOperations.recognizeMIDFileFromFile or GNOperations.recognizeMIDFileFromPcm. See <a href="a_Audio Recognition.html#_Toc349118738" class="GNBasic MCXref xref xrefGNBasic">MusicID-File</a> for more information.</p>
+        <p class="onlineFooter">© 2000 to present. Gracenote, Inc. All rights reserved.</p>
+        <p><a href="mailto:doc_feedback@gracenote.com?subject=Gracenote Documentation Feedback" target="_blank" title="Send comments about this topic to Gracenote Technical Publications." alt="Send comments about this topic to Gracenote Technical Publications.">How can we improve this documentation?</a>
+        </p>
+    </body>
+</html>

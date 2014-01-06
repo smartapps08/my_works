@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Bangladesh Holiday Calendar</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_list_holiday">ListHolidayActivity</string>
+    <string name="title_activity_notice">NoticeActivity</string>
+    <string name="title_activity_asd">ASD</string>
+    <string name="action_help">Help</string>
+    <string name="action_sync">Sync</string>
+    <string name="title_activity_test">TestActivity</string>
+
+</resources>

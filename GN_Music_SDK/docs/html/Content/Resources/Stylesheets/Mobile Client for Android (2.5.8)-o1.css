@@ -1,0 +1,31 @@
+/*<meta />*/
+
+li.li_1
+{
+	list-style-type: disc;
+}
+
+ul.ul_1
+{
+	list-style-type: disc;
+	margin-left: 18pt;
+}
+
+ol.ol_1
+{
+	list-style-type: decimal;
+	margin-left: 18pt;
+}
+
+ul.ul_2
+{
+	list-style-type: disc;
+	margin-left: 36pt;
+}
+
+ul.ul_3
+{
+	list-style-type: disc;
+	margin-left: 54pt;
+}
+

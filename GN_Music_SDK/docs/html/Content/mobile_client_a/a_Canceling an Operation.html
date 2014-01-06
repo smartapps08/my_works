@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="no-feedback" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Mobile Client Android Implementation Guide (3.1)">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Canceling an Operation</title>
+        <link href="../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../Resources/Stylesheets/BookStyles.css" rel="stylesheet" />
+        <script src="../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">You are here: </span><a class="MCBreadcrumbsLink" href="a_Mobile Client Android Implementation.html#_Toc349118723">Mobile Client Android Implementation Guide (3.1)</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Canceling an Operation</span>
+        </div>
+        <h2><a name="_Toc349118758"></a>Canceling an Operation</h2>
+        <p>Mobile Client supports canceling a running operation. To cancel an operation, the application must call the GNOperations.cancel method with the same result-ready object instance that was provided to the operation when it was invoked. Mobile Client uses the result-ready object instance to identify which operation to cancel.</p><pre xml:space="preserve">class RecognizeFromMic{<br></br>private SearchResultsStatusReceiver searchResultStatusReceiverObject;<br></br><br></br>void recognizeFromMic( GNConfig config ){<br></br>searchResultStatusReceiverObject = new SearchResultsStatusReceiver();<br></br>GNOperations.recognizeMIDStreamFromMic(searchResultReadyObject,config);<br></br>}<br></br><br></br>void cancelRecognize(){<br></br>GNOperations.cancel(searchResultStatusReceiverObject);<br></br>}<br></br>}</pre>
+        <p>When GNOperations.cancel is called, the associated operation is stopped. cancel is a non-blocking call and, once invoked, your application can continue with other operations and calls. Your application will not receive any additional information about the cancelled operation.</p>
+        <p>The GNRecognizeStream.stopRecognizeSession method cancels the&#160; IDNow operation and stops the session as well.&#160; To cancel the&#160; IDNow operation without stopping the session, call GNRecognizeStream.cancelIdNow.</p>
+        <p class="onlineFooter">© 2000 to present. Gracenote, Inc. All rights reserved.</p>
+        <p><a href="mailto:doc_feedback@gracenote.com?subject=Gracenote Documentation Feedback" target="_blank" title="Send comments about this topic to Gracenote Technical Publications." alt="Send comments about this topic to Gracenote Technical Publications.">How can we improve this documentation?</a>
+        </p>
+    </body>
+</html>

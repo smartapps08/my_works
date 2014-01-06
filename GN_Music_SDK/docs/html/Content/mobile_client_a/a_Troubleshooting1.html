@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="no-feedback" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Mobile Client Android Implementation Guide (3.1)">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Troubleshooting</title>
+        <link href="../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../Resources/Stylesheets/BookStyles.css" rel="stylesheet" />
+        <script src="../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">You are here: </span><a class="MCBreadcrumbsLink" href="a_Mobile Client Android Implementation.html#_Toc349118723">Mobile Client Android Implementation Guide (3.1)</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Troubleshooting</span>
+        </div>
+        <h2><a name="_Toc349118779"></a>Troubleshooting</h2>
+        <h3><a name="_Toc349118780"></a>Sample Application Project Generates a Google API Error</h3>
+        <h4>Problem</h4>
+        <p>The Mobile Client Sample Application project generates an error similar to the following:</p>
+        <p class="warning">Unable to resolve target 'Google Inc. Google APIs:4'</p>
+        <h4>Solution 1</h4>
+        <p>The Gracenote Mobile Client Sample Application uses Google APIs to determine the user’s location when identifying a song; consequently, the Google APIs must be included to correctly run the Sample Application project.</p>
+        <p>Use the Android SDK and AVD Manager functionality to download the appropriate version of the Google APIs into your Android development environment.</p>
+        <p class="tip">More detailed instructions are available in the Gracenote technical note Getting Started with the Android Sample Application (included in this SDK).</p>
+        <h4>Solution 2</h4>
+        <p>If you already have a version of Google APIs in your Android development environment, this error could be generated if you have a version that is incompatible with the target of the Mobile Client Sample Application Android Project.</p>
+        <p>Enter the project properties (in Eclipse's Package Explorer, right click on the project name, and click on properties in the context menu that appears). In the project properties, select "Android". In the "Project Build Target" pane, select the build target to be the version of Google APIs you have installed. Do a clean build of the application. The application should now build.</p>
+        <p class="note"><span class="note">Note:</span> Google APIs are not required for Mobile Client; they are only required for the Mobile Client Sample Application.</p>
+        <h3><a name="_Toc349118781"></a>Sample Application Project Generates a Class Compatibility Error</h3>
+        <h4>Problem</h4>
+        <p>The Mobile Client Sample Application project generates an error similar to the following:</p>
+        <p class="warning">Android requires .class compatibility set to 5.0. Please file</p>
+        <h4>Solution</h4>
+        <p>The Android project's code generation version is not compatible with the versions supported by the packages downloaded to your Android SDK. Change the class compatibility version to resolve this error.</p>
+        <p>To fix the class compatibility issue in Eclipse:</p>
+        <ol>
+            <li value="1">Right-click on GN_Music_SDK in the Package Explorer tab.</li>
+            <li value="2">Navigate to the Android Tools menu option and select Fix Project Properties in the sub-menu.</li>
+        </ol>
+        <p>Eclipse invokes the Android SDK to determine the correct class compatibility version and changes your Android project accordingly.</p>
+        <h3><a name="_Toc349118782"></a>Sample Application Asks If Client Identifier Is Set</h3>
+        <h4>Problem</h4>
+        <p>When starting the Sample Application, a message similar to the following displays:</p>
+        <p class="warning">Initialization error. Is Client ID set?</p>
+        <h4>Solution</h4>
+        <p>Ensure your Client ID is correctly provided to GNConfig.init in method onCreate in GracenoteMusicID.java.</p>
+        <h3><a name="_Toc349118783"></a>Invalid Client Identifier Exception</h3>
+        <h4>Problem</h4>
+        <p>When calling GNConfig.init, an exception displays with the message:</p>
+        <p class="warning">invalid clientId</p>
+        <h4>Solution</h4>
+        <p>Ensure your Client ID is correctly provided to GNConfig.init in the correct form, which is:</p><pre xml:space="preserve">&lt;Client ID&gt;-&lt;Client ID Tag&gt;</pre>
+        <h3><a name="_Toc349118784"></a>Can't Find Registration Information</h3>
+        <h4>Problem</h4>
+        <p>Mobile Client returns the error message:</p>
+        <p class="warning">Can't find registration information</p>
+        <h4>Solution</h4>
+        <p>Check that you device has a valid network connection.</p>
+        <p>This error can occur if the operating system reports there is a network connection when the device is not connected to a network. This is generally caused by a delay between the device losing a network connection and the operating system reporting the connection was lost.</p>
+        <h3><a name="_Toc349118785"></a>IO Exception While Connecting to Web Services</h3>
+        <h4>Problem</h4>
+        <p>The following error occurs when performing a query:</p>
+        <p class="warning">[Mobile:5000] webservices http status: 500: IO exception while connecting to webservices</p>
+        <h4>Solution 1</h4>
+        <p>In the application's AndroidManifest.xml file, ensure the Internet permission is defined.<br />The following permission tag should be present:</p><pre xml:space="preserve">&lt;uses-permission android:name="android.permission.INTERNET" /&gt;</pre>
+        <p>For the complete set of permissions that must be defined, see the Sample Application's AndroidManifest.xml file.</p>
+        <h4>Solution 2</h4>
+        <p>Ensure your device and application have a working connection with the Internet.</p>
+        <p>This error can be seen due to loss of connectivity with the Internet or Internet traffic congestion.</p>
+        <h3><a name="_Toc349118786"></a>Exception While Listening to Microphone</h3>
+        <h4>Problem</h4>
+        <p>The following error occurs when performing a query:</p>
+        <p class="warning">[Mobile:3000] An exception occurred while recording from the microphone. The audio record state returned uninitialized.</p>
+        <h4>Solution</h4>
+        <p>In the application's AndroidManifest.xml file, ensure the record from microphone permission is defined.<br />The following permission tag should be present:</p><pre xml:space="preserve">&lt;uses-permission android:name="android.permission.RECORD_AUDIO" /&gt;</pre>
+        <p>For the complete set of permissions that must be defined, see the Sample Applications AndroidManifest.xml file.</p>
+        <h3><a name="_Toc349118787"></a>Network Failure: OpenSSLSocketImpl Unknown Error</h3>
+        <h4>Problem</h4>
+        <p>Occasionally Android is unable to successfully create a connection due to a socket error. In the logCat, errors similar to the following will display:</p><pre xml:space="preserve">E/OpenSSLSocketImpl( 2252): Unknown error 1<br />Or<br />E/OpenSSLSocketImpl( 2252): Unknown error 5</pre>
+        <p>The Mobile Client will output a debug message similar to the following:</p><pre xml:space="preserve">D/Gracenote MobileSDK(20284): IO exception while connecting to webservicesjava.io.IOException: <br />SSL handshake failure: I/O error during system call, Unknown error: 0        <![CDATA[ ]]></pre>
+        <p>When this condition arises Mobile Client generates a GNResult.WSFailure error.</p>
+        <h4>Solution</h4>
+        <p>The actual cause of the problem is unknown. As it has been seen on various devices, it is not device-specific. It is thought to be due to temporary unavailability of the network, perhaps due to platform or device limitations (or both), or the network itself.</p>
+        <p>There is no known way to prevent the error from occurring. However, as it is a temporary condition (usually lasting only a few seconds), It is recommended that you employ a retry mechanism to try the transaction again.</p>
+        <h3><a name="_Toc349118788"></a>Unknown Host Exception</h3>
+        <h4>Problem</h4>
+        <p>Android HTTP client generates a webservicesjava.net.UnknownHostException. This appears in the logCat output.</p>
+        <h4>Solution</h4>
+        <p>The exception is thrown by Android's HTTP Client because the Gracenote database servers cannot be reached. The exception is not an indication of a software error, rather it is a notification of why a HTTP request could not be fulfilled.</p>
+        <p>Nothing can be done to prevent the exception from being thrown if the Gracenote database servers cannot be reached, but Mobile Client does catch the exception and report a GNResult.WSNetworkFailure to your application.</p>
+        <p>The general cause of this exception is that the device is not within range of a wireless network, or a wireless network access is not enabled on the device. To prevent this exception, ensure that the application is connected to a network and has access to the Internet.</p>
+        <p class="onlineFooter">© 2000 to present. Gracenote, Inc. All rights reserved.</p>
+        <p><a href="mailto:doc_feedback@gracenote.com?subject=Gracenote Documentation Feedback" target="_blank" title="Send comments about this topic to Gracenote Technical Publications." alt="Send comments about this topic to Gracenote Technical Publications.">How can we improve this documentation?</a>
+        </p>
+    </body>
+</html>

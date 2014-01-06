@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="no-feedback" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Mobile Client Android Implementation Guide (3.1)">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Fingerprints</title>
+        <link href="../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../Resources/Stylesheets/BookStyles.css" rel="stylesheet" />
+        <script src="../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">You are here: </span><a class="MCBreadcrumbsLink" href="a_Mobile Client Android Implementation.html#_Toc349118723">Mobile Client Android Implementation Guide (3.1)</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Fingerprints</span>
+        </div>
+        <h2><a name="_Toc349118741"></a>Fingerprints</h2>
+        <p>Gracenote Web Services uses audio fingerprints to match audio with metadata and cover art. Mobile Client can generate audio fingerprints from any of the following sources:</p>
+        <ul>
+            <li value="1">Audio captured from the microphone or other streaming audio source</li>
+            <li value="2">An audio file</li>
+            <li value="3">Pulse-code modulation (PCM-encoded) audio stored in a buffer</li>
+        </ul>
+        <h3><a name="_Toc349118742"></a>Generating a Fingerprint</h3>
+        <p>Fingerprints are returned via a result-ready object implementing the Mobile Client interface GNFingerprintResultReady. Mobile Client calls the result-ready object's GNResultReady method when a result is generated. Your application can use this method to process the result:</p><pre xml:space="preserve">// Result-ready object implements GNFingerprintResultReady interface<br></br>// ApplicationFingerprintResultReady must implement the GNFingerprintResultReady interface<br></br>class ApplicationFingerprintResultReady implements GNFingerprintResultReady<br></br>{<br></br>// Provide implementation for GNResultReady method<br></br>public void GNResultReady (GNFingerprintResult result)<br></br>{<br></br>// Application code to process fingerprint result<br></br>String fingerprintData = result.getFingerprintData();<br></br>}<br></br>}</pre>
+        <p>The application must create the result-ready object and provide it when invoking the fingerprint generation operation:</p><pre xml:space="preserve">// Create result-ready object to receive fingerprint result<br></br>ApplicationFingerprintResultReady fingerprintResultReady = new ApplicationFingerprintResultReady();<br></br><br></br>// Invoke fingerprint generation operation with a result-ready object and a GNConfig object<br></br>// instance<br></br>GNOperations.fingerprintMIDStreamFromMic (fingerprintResultReady, config);</pre>
+        <h3><a name="_Toc349118743"></a>Searching by Fingerprint</h3>
+        <p>To submit a fingerprint to Gracenote Web Services for matching, use the method GNOperations.searchByFingerprint:</p><pre xml:space="preserve">// Create result-ready object to receive matching result<br></br>ApplicationSearchResultReady searchResultReady = new ApplicationSearchResultReady();<br></br><br></br>// Invoke matching operation<br></br>GNOperations.searchByFingerprint (searchResultReady, config, fingerprintData);</pre>
+        <p>A collection of possible matches is returned as the search result. During fingerprint matching, Mobile Client sends status updates to notify the application as each of the stages shown in the figure is reached:</p>
+        <p>
+            <img src="../Resources/Images/Mobile Client Documentation (3.1)1/03000009_201x61.png" style="width: 201;height: 61;" />
+        </p>
+        <p>Status flow in fingerprint matching</p>
+        <p class="onlineFooter">© 2000 to present. Gracenote, Inc. All rights reserved.</p>
+        <p><a href="mailto:doc_feedback@gracenote.com?subject=Gracenote Documentation Feedback" target="_blank" title="Send comments about this topic to Gracenote Technical Publications." alt="Send comments about this topic to Gracenote Technical Publications.">How can we improve this documentation?</a>
+        </p>
+    </body>
+</html>

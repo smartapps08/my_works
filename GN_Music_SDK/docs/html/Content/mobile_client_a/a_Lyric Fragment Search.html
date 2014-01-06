@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="no-feedback" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Mobile Client Android Implementation Guide (3.1)">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Lyric Fragment Search</title>
+        <link href="../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../Resources/Stylesheets/BookStyles.css" rel="stylesheet" />
+        <script src="../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">You are here: </span><a class="MCBreadcrumbsLink" href="a_Mobile Client Android Implementation.html#_Toc349118723">Mobile Client Android Implementation Guide (3.1)</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Lyric Fragment Search</span>
+        </div>
+        <h2><a name="_Toc349118745"></a>Lyric Fragment Search</h2>
+        <p>Using the method GNOperations.searchByLyricFragment, Mobile Client can search the Gracenote database using a lyric fragment, optionally augmented by an artist name:</p><pre xml:space="preserve">// Create result-ready object to receive search result<br />// ApplicationSearchResultReady must implement the GNSearchResultReady interface<br />ApplicationSearchResultReady searchResultReady = new ApplicationSearchResultReady();<br /><br />// Invoke search operation<br />GNOperations.searchByLyricFragment (searchResultReady, config, lyricFragment, artistName);</pre>
+        <p>A collection of possible matches is returned as the search result. During the search process, Mobile Client sends status updates to notify the application as each of the stages shown in the figure is reached:</p>
+        <p>
+            <img src="../Resources/Images/Mobile Client Documentation (3.1)1/03000009_201x61.png" style="width: 201;height: 61;" />
+        </p>
+        <p>Status flow in lyric fragment search</p>
+        <p class="onlineFooter">© 2000 to present. Gracenote, Inc. All rights reserved.</p>
+        <p><a href="mailto:doc_feedback@gracenote.com?subject=Gracenote Documentation Feedback" target="_blank" title="Send comments about this topic to Gracenote Technical Publications." alt="Send comments about this topic to Gracenote Technical Publications.">How can we improve this documentation?</a>
+        </p>
+    </body>
+</html>

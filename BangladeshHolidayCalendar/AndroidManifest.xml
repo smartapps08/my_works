@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.smartapps.holidaycalendar"
+    android:versionCode="5"
+    android:versionName="1.4" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="17" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:logo="@drawable/logo"
+        android:theme="@style/Theme.Sherlock.Light.DarkActionBar" >
+        <activity
+            android:name="com.smartapps.holidaycalendar.MainActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.smartapps.holidaycalendar.ListHolidayActivity"
+            android:label="@string/title_activity_list_holiday"
+            android:parentActivityName="com.smartapps.holidaycalendar.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.smartapps.holidaycalendar.MainActivity" />
+        </activity>
+        <activity
+            android:name="com.smartapps.holidaycalendar.NoticeActivity"
+            android:label="@string/title_activity_notice"
+            android:parentActivityName="com.smartapps.holidaycalendar.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.smartapps.holidaycalendar.MainActivity" />
+        </activity>
+        <activity
+            android:name="com.smartapps.holidaycalendar.ASD"
+            android:label="@string/title_activity_asd"
+            android:parentActivityName="com.smartapps.holidaycalendar.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.smartapps.holidaycalendar.MainActivity" />
+        </activity>
+       
+    </application>
+
+</manifest>

@@ -1,0 +1,15 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/action_calendar"
+        android:icon="@drawable/ic_action_collections_go_to_today"
+        android:orderInCategory="100"
+        android:showAsAction="always"
+        android:title="Calendar"/>
+    <item
+        android:id="@+id/action_legal"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="Legal Notice"/>
+
+</menu>

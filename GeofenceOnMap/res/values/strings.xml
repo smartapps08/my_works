@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">GeofenceOnMap</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="txt_click_a_point">Long click a point to set the Geofence center</string>
+    <string name="txt_radius">Radius of the Geofence</string>
+    <string name="hint_radius">(in meters)</string>
+    <string name="title_activity_amain">AMainActivity</string>
+
+</resources>

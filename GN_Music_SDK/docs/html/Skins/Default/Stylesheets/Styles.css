@@ -1,0 +1,1246 @@
+/*<meta />*/
+
+/* DEBUG log styles */
+
+#DEBUG_Log
+{
+	background-color: #CCCCCC;
+	border: solid 2px black;
+	width: 275px;
+	top: 50px;
+	right: 25px;
+	position: fixed;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	z-index: 99999;
+	display: none;
+}
+
+html.DEBUG #DEBUG_Log
+{
+	display: block;
+}
+
+.MCDebugLogHeader
+{
+	border-bottom: solid 1px black;
+	font-size: 14px;
+	font-weight: bold;
+	padding: 1ex;
+}
+
+.MCDebugLogBody
+{
+	background-color: #FFFFFF;
+	font-family: Monospace;
+	font-size: 11px;
+	height: 200px;
+	overflow: auto;
+}
+
+.MCDebugLogEntry
+{
+	border-bottom: solid 1px #AAAAAA;
+}
+
+.MCDebugLogEntryTime
+{
+	color: #777777;
+	margin: 0;
+}
+
+/**/
+
+.MCDebugLogFooter
+{
+	padding: 1ex;
+}
+
+html,
+body
+{
+	height: 100%;
+}
+
+/* IE 7: without this, IE 7 displays a scrollbar */
+
+html
+{
+	overflow: hidden;
+}
+
+body
+{
+	font-family: Arial;
+	font-size: 12px;
+	margin: 0;
+	padding: 0;
+	background: #b8b7b7 none;
+}
+
+/* IE7 z-index bug: positioned elements (#header) generate a new stacking context starting with a z-index value of 0. This causes .search-filter-content's z-index not to work. So set #header's z-index (don't really need to set .search-filter-content's z-index but we'll leave it). http://www.quirksmode.org/bugreports/archives/2006/01/Explorer_z_index_bug.html */
+
+#header
+{
+	width: 100%;
+	position: absolute;
+	top: 0;
+	z-index: 1;
+	display: block;
+	height: 60px;
+}
+
+#header .logo
+{
+	position: absolute;
+	top: 50%;
+	margin-left: 20px;
+	background: url('Images/Gracenote_Logo_banner.png') no-repeat center center;
+	display: block;
+	width: 1200px;
+	height: 56px;
+	margin-top: -28px;
+}
+
+#body
+{
+	position: fixed;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	top: 60px;
+}
+
+#navigation
+{
+	width: 300px;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+}
+
+html.left-layout #navigation
+{
+	left: 0;
+}
+
+html.right-layout #navigation
+{
+	right: 0;
+}
+
+#navigation.nav-closed
+{
+	display: none;
+}
+
+#navigationResizeBar
+{
+	width: 4px;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	cursor: col-resize;
+	z-index: 9999;
+}
+
+#navigationResizeBar.nav-closed
+{
+	cursor: default;
+}
+
+html.left-layout #navigationResizeBar
+{
+	left: 300px;
+}
+
+html.right-layout #navigationResizeBar
+{
+	right: 300px;
+}
+
+html.left-layout #navigationResizeBar.nav-closed
+{
+	left: 0;
+}
+
+html.right-layout #navigationResizeBar.nav-closed
+{
+	right: 0;
+}
+
+#show-hide-navigation
+{
+	background-color: #f7f7f7;
+}
+
+html.left-layout #show-hide-navigation
+{
+	-webkit-border-radius: 0 3px 3px 0;
+	-moz-border-radius: 0 3px 3px 0;
+	border-radius: 0 3px 3px 0;
+	-webkit-box-shadow: 2px 0px 3px 0px rgba(0, 0, 0, 0.3);
+	-moz-box-shadow: 2px 0px 3px 0px rgba(0, 0, 0, 0.3);
+	box-shadow: 2px 0px 3px 0px rgba(0, 0, 0, 0.3);
+	width: 10px;
+	height: 46px;
+	position: absolute;
+	top: 50%;
+	margin-top: -23px;
+	cursor: pointer;
+}
+
+html.left-layout #show-hide-navigation:after
+{
+	content: "";
+	border: solid 6px transparent;
+	border-right-width: 6px;
+	border-left: none;
+	position: absolute;
+	top: 50%;
+	right: 0;
+	left: 50%;
+	margin-top: -6px;
+	margin-left: -3px;
+	width: 0;
+	height: 0;
+	border-right-color: #898989;
+}
+
+html.left-layout .nav-closed #show-hide-navigation:after
+{
+	border-left-style: solid;
+	border-left-width: 6px;
+	border-right: none;
+	border-left-color: #898989;
+}
+
+html.right-layout #show-hide-navigation
+{
+	-webkit-border-radius: 3px 0 0 3px;
+	-moz-border-radius: 3px 0 0 3px;
+	border-radius: 3px 0 0 3px;
+	-webkit-box-shadow: -2px 0px 3px 0px rgba(0, 0, 0, 0.3);
+	-moz-box-shadow: -2px 0px 3px 0px rgba(0, 0, 0, 0.3);
+	box-shadow: -2px 0px 3px 0px rgba(0, 0, 0, 0.3);
+	width: 10px;
+	height: 46px;
+	position: absolute;
+	top: 50%;
+	right: 0;
+	margin-top: -23px;
+	cursor: pointer;
+}
+
+html.right-layout #show-hide-navigation:after
+{
+	content: "";
+	border: solid 6px transparent;
+	border-left-width: 6px;
+	border-right: none;
+	position: absolute;
+	top: 50%;
+	right: 0;
+	left: 50%;
+	margin-top: -6px;
+	margin-left: -3px;
+	width: 0;
+	height: 0;
+	border-left-color: #898989;
+}
+
+html.right-layout .nav-closed #show-hide-navigation:after
+{
+	border-right-style: solid;
+	border-right-width: 6px;
+	border-left: none;
+	border-right-color: #898989;
+}
+
+/* IE needs these or else the mouseup event doesn't fire on the mousemove-sheet */
+
+/**/
+
+/* Tabs */
+
+#mousemove-sheet
+{
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	cursor: col-resize;
+	z-index: 10000;
+	background-color: White;
+	opacity: 0;
+	filter: alpha(opacity=0);
+}
+
+.tabs
+{
+	
+}
+
+.tabs-nav
+{
+	margin: 0;
+	padding: 0;
+}
+
+/* Old browsers */
+
+/* FF3.6+ */
+
+/* Chrome,Safari4+ */
+
+/* Chrome10+,Safari5.1+ */
+
+/* Opera11.10+ */
+
+/* IE10+ */
+
+/* W3C */
+
+/*PIE*/
+
+.tabs-nav li
+{
+	-webkit-box-shadow: 1px 0px 3px 0px rgba(0, 0, 0, 0.2);
+	-moz-box-shadow: 1px 0px 3px 0px rgba(0, 0, 0, 0.2);
+	box-shadow: 1px 0px 3px 0px rgba(0, 0, 0, 0.2);
+	-webkit-border-radius: 4px 4px 0 0;
+	-moz-border-radius: 4px 4px 0 0;
+	border-radius: 4px 4px 0 0;
+	cursor: pointer;
+	list-style: none;
+	float: left;
+	text-align: center;
+	margin-top: 3px;
+	width: 70px;
+	height: 28px;
+	line-height: 28px;
+	color: #dadada;
+	border-right: solid 1px #494949;
+	background: #707070;
+	background: -moz-linear-gradient(top, #707070 0%, #555555 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#707070), color-stop(100%,#555555));
+	background: -webkit-linear-gradient(top, #707070 0%, #555555 100%);
+	background: -o-linear-gradient(top, #707070 0%,#555555 100%);
+	background: -ms-linear-gradient(top, #707070 0%,#555555 100%);
+	background: linear-gradient(top, #707070 0%,#555555 100%);
+	-pie-background: linear-gradient(#707070, #555555);
+}
+
+/* Old browsers */
+
+/* FF3.6+ */
+
+/* Chrome,Safari4+ */
+
+/* Chrome10+,Safari5.1+ */
+
+/* Opera11.10+ */
+
+/* IE10+ */
+
+/* W3C */
+
+/*PIE*/
+
+.tabs-nav li.tabs-nav-active
+{
+	text-shadow: 0 1px 0 #FFF;
+	margin-top: 0;
+	color: #000000;
+	border-right: solid 1px #494949;
+	background: #f7f7f7;
+	background: -moz-linear-gradient(top, #ffffff 0%, #f7f7f7 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#f7f7f7));
+	background: -webkit-linear-gradient(top, #ffffff 0%, #f7f7f7 100%);
+	background: -o-linear-gradient(top, #ffffff 0%,#f7f7f7 100%);
+	background: -ms-linear-gradient(top, #ffffff 0%,#f7f7f7 100%);
+	background: linear-gradient(top, #ffffff 0%,#f7f7f7 100%);
+	-pie-background: linear-gradient(#ffffff, #f7f7f7);
+}
+
+.tabs-panels
+{
+	
+}
+
+.tabs-panel
+{
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	display: none;
+	top: 28px;
+	background-color: #f7f7f7;
+}
+
+.tabs-panel-active
+{
+	display: block;
+}
+
+.tabs-panel-content
+{
+	border: solid 1px #E1E1E1;
+	border-bottom: none;
+	position: absolute;
+	top: 8px;
+	right: 7px;
+	bottom: 0;
+	left: 7px;
+	padding: 8px 7px 0 7px;
+	overflow: auto;
+	background-color: #ffffff;
+	padding-left: 7px;
+	padding-right: 7px;
+	padding-top: 8px;
+	border-top: solid 1px #e1e1e1;
+	border-right: solid 1px #e1e1e1;
+	border-left: solid 1px #e1e1e1;
+}
+
+.tabs-panel-content.loading
+{
+	background: url("Images/loading-32px.gif") no-repeat center center;
+}
+
+.login-dialog
+{
+	display: none;
+	z-index: 10001;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-top: -200px;
+	margin-left: -175px;
+	width: 350px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	-webkit-box-shadow: 0 4px 10px #333333;
+	-moz-box-shadow: 0 4px 10px #333333;
+	box-shadow: 0 4px 10px #333333;
+}
+
+/* Old browsers */
+
+/* FF3.6+ */
+
+/* Chrome,Safari4+ */
+
+/* Chrome10+,Safari5.1+ */
+
+/* Opera11.10+ */
+
+/* IE10+ */
+
+/* W3C */
+
+/*PIE*/
+
+.login-dialog-header
+{
+	height: 36px;
+	line-height: 36px;
+	padding-left: 50px;
+	-webkit-border-radius: 3px 3px 0 0;
+	-moz-border-radius: 3px 3px 0 0;
+	border-radius: 3px 3px 0 0;
+	background: #5a5a5a url('Images/login-dialog-icon.png') no-repeat 18px center;
+	background: url('Images/login-dialog-icon.png') no-repeat 18px center, -moz-linear-gradient(top, #5a5a5a 0%, #4a4a4a 100%);
+	background: url('Images/login-dialog-icon.png') no-repeat 18px center, -webkit-gradient(linear, left top, left bottom, color-stop(0%,#5a5a5a), color-stop(100%,#4a4a4a));
+	background: url('Images/login-dialog-icon.png') no-repeat 18px center, -webkit-linear-gradient(top, #5a5a5a 0%, #4a4a4a 100%);
+	background: url('Images/login-dialog-icon.png') no-repeat 18px center, -o-linear-gradient(top, #5a5a5a 0%,#4a4a4a 100%);
+	background: url('Images/login-dialog-icon.png') no-repeat 18px center, -ms-linear-gradient(top, #5a5a5a 0%,#4a4a4a 100%);
+	background: url('Images/login-dialog-icon.png') no-repeat 18px center, linear-gradient(top, #5a5a5a 0%,#4a4a4a 100%);
+	-pie-background: url('Skins/Default/Stylesheets/Images/login-dialog-icon.png') no-repeat 18px center, linear-gradient(#5a5a5a, #4a4a4a);
+	color: #ffffff;
+	font-size: 13px;
+	font-weight: bold;
+	background-color: #5a5a5a;
+	border-bottom: solid 1px #2b2b2b;
+	label: Create Profile;
+}
+
+.login-dialog-content
+{
+	background: #5A5A5A;
+	-webkit-border-radius: 0 0 3px 3px;
+	-moz-border-radius: 0 0 3px 3px;
+	border-radius: 0 0 3px 3px;
+	padding: 17px;
+	background-color: #5a5a5a;
+	border-top: solid 1px #767676;
+}
+
+.login-dialog-content .profile-item-wrapper
+{
+	margin-bottom: 10px;
+	height: 32px;
+	line-height: 32px;
+	color: #cecece;
+}
+
+.login-dialog-content .profile-item-wrapper .label-wrapper
+{
+	margin-bottom: 5px;
+	float: left;
+}
+
+.login-dialog-content .profile-item-wrapper .input-wrapper
+{
+	float: right;
+}
+
+.login-dialog-content .profile-item-wrapper input[type=text]
+{
+	margin: 0;
+	padding: 5px;
+	border: solid 1px #191919;
+	background: #FFF;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	-webkit-box-shadow: 0 1px #888;
+	-moz-box-shadow: 0 1px #888;
+	box-shadow: 0 1px #888;
+	outline: none;
+}
+
+.login-dialog-content .profile-item-wrapper.email-notifications-wrapper
+{
+	margin-top: 15px;
+	height: auto;
+	line-height: normal;
+}
+
+.login-dialog-content .profile-item-wrapper.email-notifications-wrapper .label-wrapper
+{
+	float: none;
+}
+
+.login-dialog-content .profile-item-wrapper.email-notifications-wrapper .email-notifications-group
+{
+	margin-right: 0;
+	padding: 12px;
+	background-color: #4A4A4A;
+	border: solid 1px #2B2B2B;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	-webkit-box-shadow: 0 1px #888;
+	-moz-box-shadow: 0 1px #888;
+	box-shadow: 0 1px #888;
+}
+
+.login-dialog-content .profile-item-wrapper.error input,
+.login-dialog-content .profile-item-wrapper.error select
+{
+	border: solid 1px #F00;
+	background-color: #FEE7E7;
+}
+
+.login-dialog-buttons
+{
+	text-align: right;
+}
+
+/* Old browsers */
+
+/* FF3.6+ */
+
+/* Chrome,Safari4+ */
+
+/* Chrome10+,Safari5.1+ */
+
+/* Opera11.10+ */
+
+/* IE10+ */
+
+/* W3C */
+
+/*PIE*/
+
+.login-dialog button
+{
+	margin-left: 5px;
+	margin-right: 0;
+	padding: 8px 26px;
+	border: solid 1px #2B2B2B;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	cursor: pointer;
+	background: #595959;
+	background: -moz-linear-gradient(top, #595959 0%, #4a4a4a 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#595959), color-stop(100%,#4a4a4a));
+	background: -webkit-linear-gradient(top, #595959 0%, #4a4a4a 100%);
+	background: -o-linear-gradient(top, #595959 0%,#4a4a4a 100%);
+	background: -ms-linear-gradient(top, #595959 0%,#4a4a4a 100%);
+	background: linear-gradient(top, #595959 0%,#4a4a4a 100%);
+	-pie-background: linear-gradient(#595959, #4a4a4a);
+	color: #ffffff;
+	font-weight: bold;
+	background-color: #595959;
+	border-top: solid 1px #2b2b2b;
+	border-right: solid 1px #2b2b2b;
+	border-bottom: solid 1px #2b2b2b;
+	border-left: solid 1px #2b2b2b;
+}
+
+.login-dialog .status-message-box
+{
+	display: none;
+	color: #0F0;
+	text-align: center;
+	margin-top: 16px;
+	padding: 12px;
+	background-color: #DCFEDC;
+	border: solid 1px #0F0;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+
+.login-dialog .status-message-box.error
+{
+	color: #F00;
+	border: solid 1px #F00;
+	background-color: #FEE7E7;
+}
+
+/* TOC */
+
+.login-dialog .status-message-box .message
+{
+	display: none;
+}
+
+#toc
+{
+	
+}
+
+ul.tree.inner
+{
+	padding-left: 19px;
+}
+
+ul.tree
+{
+	margin: 0;
+	padding: 0;
+	list-style-image: none;
+	list-style-type: none;
+	color: #707070;
+}
+
+.tree-node-expanded > ul
+{
+	display: block;
+}
+
+.tree-node-collapsed > ul
+{
+	display: none;
+}
+
+.tree-node div
+{
+	line-height: 1.9em;
+	cursor: pointer;
+	background-repeat: no-repeat;
+	background-position: 0 3px;
+	padding-left: 16px;
+	position: relative;
+}
+
+.tree-node div .label
+{
+	margin-left: 3px;
+}
+
+.tree-node .new-indicator
+{
+	position: absolute;
+	top: 0;
+	left: 0;
+	background: url('Images/new-indicator.png') no-repeat 0 3px;
+	width: 7px;
+	height: 7px;
+}
+
+.tree-node
+{
+	white-space: nowrap;
+}
+
+.tree-node-inner > div
+{
+	
+}
+
+.tree-node-collapsed > div
+{
+	background: url('Images/book.png') no-repeat 0 3px;
+	padding-left: 16px;
+}
+
+.tree-node-expanded > div
+{
+	background: url('Images/book-open.png') no-repeat 0 3px;
+	padding-left: 16px;
+}
+
+.tree-node-leaf > div
+{
+	background: url('Images/topic.png') no-repeat 0 3px;
+	padding-left: 16px;
+}
+
+.tree-node.tree-node-selected > div,
+.tree-node.tree-node-selected > div:hover
+{
+	background-color: #cce0f0;
+}
+
+.tree-node > div:hover
+{
+	background-color: #e5eff7;
+}
+
+/*//color:expression(this.parentNode.currentStyle['color']);*/
+
+.tree-node a
+{
+	color: inherit;
+	text-decoration: none;
+}
+
+/* Index */
+
+.tree-node.tree-node-selected
+{
+	color: #000000;
+}
+
+#index
+{
+	
+}
+
+#index .index-wrapper
+{
+	position: relative;
+}
+
+#index ul
+{
+	
+}
+
+#index .tree-node
+{
+	position: absolute;
+	width: 100%;
+}
+
+#index .tree-node div
+{
+	background-image: none;
+	padding-left: 0;
+}
+
+#index .tree-node a
+{
+	color: #000;
+	text-decoration: none;
+}
+
+/* Glossary */
+
+.see,
+.see-also
+{
+	font-style: italic;
+}
+
+#glossary
+{
+	
+}
+
+#glossary .tree-node
+{
+	color: #000;
+}
+
+#glossary .tree-node div
+{
+	background-image: none;
+	padding-left: 0;
+}
+
+#glossary .GlossaryPageDefinition
+{
+	background-color: inherit;
+	cursor: inherit;
+	white-space: normal;
+	color: #707070;
+}
+
+/* Topic */
+
+#glossary .tree-node a
+{
+	color: #000;
+	text-decoration: none;
+}
+
+#contentBody
+{
+	-webkit-border-radius: 4px 4px 0 0;
+	-moz-border-radius: 4px 4px 0 0;
+	border-radius: 4px 4px 0 0;
+	position: absolute;
+	top: 0;
+	right: 5px;
+	bottom: 0;
+	left: 5px;
+	background-color: #f7f7f7;
+}
+
+html.left-layout #contentBody
+{
+	-webkit-border-radius: 4px 0 0 0;
+	-moz-border-radius: 4px 0 0 0;
+	border-radius: 4px 0 0 0;
+	left: 305px;
+	right: 0;
+}
+
+html.left-layout #contentBody.nav-closed
+{
+	left: 5px;
+}
+
+html.right-layout #contentBody
+{
+	-webkit-border-radius: 0 4px 0 0;
+	-moz-border-radius: 0 4px 0 0;
+	border-radius: 0 4px 0 0;
+	left: 0;
+	right: 305px;
+}
+
+html.right-layout #contentBody.nav-closed
+{
+	right: 5px;
+}
+
+html.left-layout #contentBody.no-buttons,
+html.right-layout #contentBody.no-buttons
+{
+	top: 28px;
+}
+
+#contentBodyInner
+{
+	background-color: #FFF;
+	border-top: solid 1px #E1E1E1;
+	border-right: solid 1px #E1E1E1;
+	border-left: solid 1px #E1E1E1;
+	position: absolute;
+	right: 9px;
+	bottom: 0;
+	left: 9px;
+	overflow: auto;
+	-webkit-overflow-scrolling: touch;
+	top: 38px;
+}
+
+#contentBody.no-buttons #contentBodyInner
+{
+	top: 9px;
+}
+
+/* need this for IE 7 otherwise it'll treat width/height as "auto" */
+
+/* Search */
+
+#topic
+{
+	position: absolute;
+	border: none;
+	width: 100%;
+	height: 100%;
+}
+
+#searchPane
+{
+	margin: 8px;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	display: none;
+}
+
+.search-bar
+{
+	border: solid 1px #363636;
+	-webkit-border-radius: 15px;
+	-moz-border-radius: 15px;
+	border-radius: 15px;
+	-webkit-box-shadow: 0px 1px #7D7D7D;
+	-moz-box-shadow: 0px 1px #7D7D7D;
+	box-shadow: 0px 1px #7D7D7D;
+	position: absolute;
+	top: 50%;
+	right: 14px;
+	display: block;
+	border-top: solid 1px #363636;
+	border-right: solid 1px #363636;
+	border-bottom: solid 1px #363636;
+	border-left: solid 1px #363636;
+	border-top-left-radius: 15px;
+	border-top-right-radius: 15px;
+	border-bottom-left-radius: 15px;
+	border-bottom-right-radius: 15px;
+	margin-top: -15px;
+}
+
+/* Old browsers */
+
+/* FF3.6+ */
+
+/* Chrome,Safari4+ */
+
+/* Chrome10+,Safari5.1+ */
+
+/* Opera11.10+ */
+
+/* IE10+ */
+
+/* W3C */
+
+/*PIE*/
+
+/* need this to workaround CSS3PIE known issue: http://css3pie.com/documentation/known-issues/#z-index */
+
+#search-field
+{
+	border: none;
+	-webkit-border-radius: 15px 0 0 15px;
+	-moz-border-radius: 15px 0 0 15px;
+	border-radius: 15px 0 0 15px;
+	color: #DADADA;
+	position: relative;
+	width: 187px;
+	padding: 0 0 0 14px;
+	float: left;
+	outline: none;
+	border-top-left-radius: 15px;
+	border-bottom-left-radius: 15px;
+	height: 28px;
+	background: #6F6F6F;
+	background: -moz-linear-gradient(top, #6F6F6F 0%, #555555 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#6F6F6F), color-stop(100%,#555555));
+	background: -webkit-linear-gradient(top, #6F6F6F 0%, #555555 100%);
+	background: -o-linear-gradient(top, #6F6F6F 0%,#555555 100%);
+	background: -ms-linear-gradient(top, #6F6F6F 0%,#555555 100%);
+	background: linear-gradient(top, #6F6F6F 0%,#555555 100%);
+	-pie-background: linear-gradient(#6F6F6F, #555555);
+	background-color: #6F6F6F;
+	placeholder: Search;
+}
+
+.search-filter-wrapper
+{
+	display: none;
+	float: left;
+}
+
+/* Old browsers */
+
+/* FF3.6+ */
+
+/* Chrome,Safari4+ */
+
+/* Chrome10+,Safari5.1+ */
+
+/* Opera11.10+ */
+
+/* IE10+ */
+
+/* W3C */
+
+/*PIE*/
+
+.search-filter
+{
+	font-size: 11px;
+	text-align: center;
+	background: #6F6F6F;
+	background: -moz-linear-gradient(top, #6F6F6F 0%, #555555 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#6F6F6F), color-stop(100%,#555555));
+	background: -webkit-linear-gradient(top, #6F6F6F 0%,#555555 100%);
+	background: -o-linear-gradient(top, #6F6F6F 0%,#555555 100%);
+	background: -ms-linear-gradient(top, #6F6F6F 0%,#555555 100%);
+	background: linear-gradient(top, #6F6F6F 0%,#555555 100%);
+	padding-right: 5px;
+	cursor: pointer;
+	height: 28px;
+	line-height: 28px;
+	color: #dadada;
+	border-left: solid 1px #363636;
+	background: -moz-linear-gradient(top, #6F6F6F 0%, #555555 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#6F6F6F), color-stop(100%,#555555));
+	background: -webkit-linear-gradient(top, #6F6F6F 0%, #555555 100%);
+	background: -o-linear-gradient(top, #6F6F6F 0%,#555555 100%);
+	background: -ms-linear-gradient(top, #6F6F6F 0%,#555555 100%);
+	background: linear-gradient(top, #6F6F6F 0%,#555555 100%);
+	-pie-background: linear-gradient(#6F6F6F, #555555);
+}
+
+.search-filter.open
+{
+	background: #3f3f3f;
+}
+
+.search-filter span
+{
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+/* .search-submit width + 8px padding: 34px + 8px */
+
+.search-filter span:after
+{
+	content: "";
+	border: solid 3px transparent;
+	border-top-width: 6px;
+	border-bottom: none;
+	position: absolute;
+	top: 50%;
+	right: 42px;
+	margin-top: -3px;
+	width: 0;
+	height: 0;
+	border-top-color: #dadada;
+}
+
+.search-filter-content
+{
+	display: none;
+	-webkit-border-radius: 0 0 4px 4px;
+	-moz-border-radius: 0 0 4px 4px;
+	border-radius: 0 0 4px 4px;
+	position: absolute;
+	right: 34px;
+	line-height: normal;
+	text-align: left;
+	overflow: auto;
+	z-index: 1;
+	background-color: #3f3f3f;
+}
+
+.search-filter-content ul
+{
+	list-style: none;
+	margin: 0;
+	padding: 6px;
+}
+
+.search-filter-content ul li
+{
+	padding: 5px;
+}
+
+.search-filter-content ul li:hover
+{
+	color: #f7f7f7;
+	background-color: #6f6f6f;
+}
+
+/* Old browsers */
+
+/* FF3.6+ */
+
+/* Chrome,Safari4+ */
+
+/* Chrome10+,Safari5.1+ */
+
+/* Opera11.10+ */
+
+/* IE10+ */
+
+/* W3C */
+
+/*PIE*/
+
+/* need this to workaround CSS3PIE known issue: http://css3pie.com/documentation/known-issues/#z-index */
+
+.search-submit-wrapper
+{
+	-webkit-border-radius: 0 15px 15px 0;
+	-moz-border-radius: 0 15px 15px 0;
+	border-radius: 0 15px 15px 0;
+	position: relative;
+	float: left;
+	cursor: pointer;
+	border-top-right-radius: 15px;
+	border-bottom-right-radius: 15px;
+	background: #626262 url('Images/magnifying_glass.png') no-repeat center center;
+	background: url('Images/magnifying_glass.png') no-repeat center center, -moz-linear-gradient(top, #626262 0%, #373737 100%);
+	background: url('Images/magnifying_glass.png') no-repeat center center, -webkit-gradient(linear, left top, left bottom, color-stop(0%,#626262), color-stop(100%,#373737));
+	background: url('Images/magnifying_glass.png') no-repeat center center, -webkit-linear-gradient(top, #626262 0%, #373737 100%);
+	background: url('Images/magnifying_glass.png') no-repeat center center, -o-linear-gradient(top, #626262 0%,#373737 100%);
+	background: url('Images/magnifying_glass.png') no-repeat center center, -ms-linear-gradient(top, #626262 0%,#373737 100%);
+	background: url('Images/magnifying_glass.png') no-repeat center center, linear-gradient(top, #626262 0%,#373737 100%);
+	-pie-background: url('Skins/Default/Stylesheets/Images/magnifying_glass.png') no-repeat center center, linear-gradient(#626262, #373737);
+	border-left: solid 1px #363636;
+	background-color: #626262;
+	tooltip: Search;
+}
+
+/* placeholder */
+
+/*#search-field::-webkit-input-placeholder { font-style: italic; }*/
+
+/* webkit */
+
+/*#search-field:-moz-placeholder { font-style: italic; }*/
+
+/* mozilla */
+
+.search-submit
+{
+	width: 16px;
+	padding-left: 6px;
+	padding-right: 10px;
+	height: 28px;
+}
+
+#results-heading
+{
+	padding-bottom: 10px;
+	color: #393f45;
+	font-size: 20px;
+	border-bottom: solid 1px #ebebeb;
+	format: Your search for;
+}
+
+#resultList
+{
+	font-family: Arial;
+	margin: 0;
+	padding: 0;
+	list-style-image: none;
+	list-style-type: none;
+}
+
+#resultList li
+{
+	margin-bottom: 16px;
+}
+
+.title
+{
+	font-size: 16px;
+	font-weight: normal;
+	margin: 0 0 2px 0;
+}
+
+.title a
+{
+	color: #2200c1;
+}
+
+.description
+{
+	font-size: 13px;
+}
+
+.url cite
+{
+	font-style: normal;
+	color: #0e774a;
+	font-size: 13px;
+}
+
+.ratingStarsContainer
+{
+	color: #9C9C9C;
+	font-size: 13px;
+}
+
+.ratingStar
+{
+	font-size: 0px;
+	background-image: url("Images/RatingStars.png");
+	padding: 12px 12px 0 0;
+	display: inline;
+}
+
+.ratingStarEmpty
+{
+	
+}
+
+/**/
+
+.ratingStarFilled
+{
+	background-position: -24px 0;
+}
+
+.needs-pie
+{
+	behavior: url('Resources/Scripts/PIE-no-motw.htc');
+}
+
+#contentBody.no-buttons
+{
+	top: 28px;
+}
+
+#toc.tabs-panel-content
+{
+	background-color: #ffffff;
+}
+
+#index.tabs-panel-content
+{
+	background-color: #ffffff;
+}
+
+#glossary.tabs-panel-content
+{
+	background-color: #ffffff;
+}
+
+#browseSequences.tabs-panel-content
+{
+	background-color: #ffffff;
+}
+
+.login-dialog-content input[type=text]
+{
+	
+}
+
+.login-dialog-content .profile-item-wrapper .email-notifications-group
+{
+	background-color: #4a4a4a;
+}
+

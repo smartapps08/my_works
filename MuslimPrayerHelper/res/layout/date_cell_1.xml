@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <com.caldroid.SquareTextView
+        android:id="@+id/calendar_tv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:background="@android:color/transparent"
+        android:gravity="left|top"
+        android:paddingLeft="3dp"
+        android:paddingTop="3dp"
+        android:textColor="@color/Blue"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <com.caldroid.SquareTextView
+        android:id="@+id/calendar_tv_arabic"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:background="@android:color/transparent"
+        android:gravity="right|bottom"
+        android:paddingBottom="3dp"
+        android:paddingRight="3dp"
+        android:textColor="@color/DeepOrange"
+        android:textSize="12sp" />
+
+</RelativeLayout>

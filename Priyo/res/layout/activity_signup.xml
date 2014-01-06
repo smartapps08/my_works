@@ -1,0 +1,83 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomeActivity" >
+
+    <TableLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="150dp" >
+
+        <TableRow>
+
+            <TextView
+                android:paddingLeft="40dp"
+                android:text="User ID:"
+                android:textColor="#919191"
+                android:textSize="12sp"
+                android:width="100dp" />
+
+            <EditText
+                android:id="@+id/uid"
+                android:hint="Enter UserID"
+                android:paddingLeft="10dp"
+                android:textSize="12sp"
+                android:width="200dp" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:paddingLeft="30dp"
+                android:text="Password:"
+                android:textColor="#919191"
+                android:textSize="12sp"
+                android:width="100dp" />
+
+            <EditText
+                android:id="@+id/passw"
+                android:hint="Enter Password"
+                android:paddingLeft="10dp"
+                android:password="true"
+                android:textSize="12sp"
+                android:width="200dp" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:paddingLeft="30dp"
+                android:text="Confirm Password:"
+                android:textColor="#919191"
+                android:textSize="12sp"
+                android:width="100dp" />
+
+            <EditText
+                android:id="@+id/cpassw"
+                android:hint="Enter Password"
+                android:paddingLeft="10dp"
+                android:password="true"
+                android:textSize="12sp"
+                android:width="200dp" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView />
+
+            <Button
+                android:id="@+id/bsignup"
+                android:layout_width="20dp"
+                android:paddingLeft="10dp"
+                android:text="Sign Up"
+                android:textSize="10sp" />
+        </TableRow>
+    </TableLayout>
+
+</LinearLayout>

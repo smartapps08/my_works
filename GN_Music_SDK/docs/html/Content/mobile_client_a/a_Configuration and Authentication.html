@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="no-feedback" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Mobile Client Android Implementation Guide (3.1)">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Configuration and Authentication</title>
+        <link href="../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../Resources/Stylesheets/BookStyles.css" rel="stylesheet" />
+        <script src="../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">You are here: </span><a class="MCBreadcrumbsLink" href="a_Mobile Client Android Implementation.html#_Toc349118723">Mobile Client Android Implementation Guide (3.1)</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Configuration and Authentication</span>
+        </div>
+        <h2><a name="_Toc349118730"></a>Configuration and Authentication</h2>
+        <p>Mobile Client uses a configuration object of type GNConfig to control its behavior. The behavior can be modified by altering the configuration object.</p>
+        <p>To obtain a configuration object, use the GNConfig.init method. This method returns a GNConfig instance that must be stored and used with Gracenote operations (see the section <a href="a_Operations.html" class="GNBasic MCXref xref xrefGNBasic">Operations</a>). The method accepts a client identifier provided by your Gracenote.</p><pre xml:space="preserve">Context applicationContext;<br />GNConfig config;<br /><br />// Obtain context from Android Activity object<br />applicationContext = this.getApplicationContext();<br /><br />// Generate configuration object<br />config = GNConfig.init("12345678-ABCDEFGHIJKLMNOPQRSTUVWXYZ012345", applicationContext);</pre>
+        <p>The application context can be obtained from the Android Activity object when its onCreate method is called. The client identifier is used to generate authentication information, which is stored in the object and used in turn to gain access to Gracenote's cloud-based services.</p>
+        <p>The configuration object can be customized by setting its properties via the GNConfig.setProperties method. For example, you can configure the preferred language for metadata returned from Gracenote:</p><pre xml:space="preserve">// Set preferred language to Japanese<br />config.setProperty ("content.lang","jpn");</pre>
+        <p>See the Android Mobile Client API Reference Guide &gt; Class GNConfig for a complete list of customizable properties.</p>
+        <p class="onlineFooter">© 2000 to present. Gracenote, Inc. All rights reserved.</p>
+        <p><a href="mailto:doc_feedback@gracenote.com?subject=Gracenote Documentation Feedback" target="_blank" title="Send comments about this topic to Gracenote Technical Publications." alt="Send comments about this topic to Gracenote Technical Publications.">How can we improve this documentation?</a>
+        </p>
+    </body>
+</html>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">AutoMotivated</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+    <string name="title_activity_search">Search</string>
+    <string name="title_activity_simulate">Simulation</string>
+    <string name="title_activity_review">Reviews</string>
+    <string name="title_activity_signup">SignupActivity</string>
+    <string name="add_a_car">Add a Car</string>
+    <string name="title_activity_add_car">AddCarActivity</string>
+
+</resources>

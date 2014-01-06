@@ -1,0 +1,99 @@
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" 
+        android:orientation="vertical"
+        android:background="@android:color/holo_blue_bright">
+
+        <ImageView
+            android:id="@+id/imgOut"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/new_message_icon" />
+        
+<LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/btnCreateMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Create Message" 
+           android:background="@android:color/holo_blue_bright"
+             android:layout_weight="5"/>
+        
+      <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="48dip"
+            android:layout_height="48dip"
+            android:layout_weight="2.5"
+            android:background="@android:color/holo_blue_bright"
+            android:src="@drawable/email_app_icon" 
+            />
+        
+</LinearLayout>
+<LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/btnInbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Inbox" 
+             android:layout_weight="5"
+             android:background="@android:color/holo_blue_bright"
+            
+            />
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="48dip"
+            android:layout_height="48dip"
+            android:layout_weight="2.5"
+            android:src="@drawable/inbox" 
+            android:background="@android:color/holo_blue_bright"/>
+</LinearLayout>
+<LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/btnSentItems"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sent Items" 
+             android:layout_weight="5"
+            
+             android:background="@android:color/holo_blue_bright"/>
+         <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="48dip"
+            android:layout_height="48dip"
+            android:layout_weight="2.5"
+            android:src="@drawable/sendmail" 
+            android:background="@android:color/holo_blue_bright"/>
+</LinearLayout>
+<LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/btnDrafts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Drafts" 
+            android:layout_weight="5"
+            
+            android:background="@android:color/holo_blue_bright"/>
+ <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="48dip"
+            android:layout_height="48dip"
+            android:layout_weight="2.5"
+            android:src="@drawable/draft" 
+            android:background="@android:color/holo_blue_bright"/>
+   </LinearLayout>     
+
+    </LinearLayout>
+    

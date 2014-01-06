@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/home_container"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="72dip"
+        android:background="@drawable/headertile"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/gracenoteLogo"
+            android:layout_width="127dip"
+            android:layout_height="72dip"
+            android:gravity="left"
+            android:src="@drawable/gracenote_logo_tile_transparent" />
+
+        <LinearLayout
+            android:id="@+id/LinearLayout01"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
+
+            <View
+                android:id="@+id/checkboxSpacer"
+                android:layout_width="fill_parent"
+                android:layout_height="72dip"
+                android:gravity="fill_horizontal" />
+        </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/checkboxDebug"
+            android:layout_width="wrap_content"
+            android:layout_height="67dip"
+            android:layout_marginRight="10dip"
+            android:gravity="center_vertical"
+            android:text="DEBUG" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingBottom="5dip"
+        android:paddingTop="5dip" >
+
+        <TextView
+            android:id="@+id/statusText"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dip"
+            android:paddingLeft="5dip"
+            android:visibility="gone" />
+
+        <ScrollView
+            android:id="@+id/resultsScroller"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dip" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:id="@+id/debugPanel"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="vertical"
+                    android:visibility="gone" >
+
+                    <View
+                        android:id="@+id/debugTopBorder"
+                        android:layout_width="fill_parent"
+                        android:layout_height="1dip"
+                        android:background="#940808"
+                        android:padding="5dip" />
+
+                    <TextView
+                        android:id="@+id/debugText"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="12dip" />
+
+                    <View
+                        android:id="@+id/debugBottomBorder"
+                        android:layout_width="fill_parent"
+                        android:layout_height="1dip"
+                        android:background="#940808"
+                        android:padding="5dip" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/metadataListing"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="vertical" />
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#940808"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:padding="2dip" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <Button
+                    android:id="@+id/buttonFiles"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Recognize File"
+                    android:textSize="10dip"
+                    android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/buttonAlbumID"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="AlbumID"
+                    android:textSize="10dip" />
+
+                <Button
+                    android:id="@+id/buttonMic"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="ID Now"
+                    android:textSize="10dip" />
+
+                <Button
+                    android:id="@+id/buttoncancel"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Cancel"
+                    android:textSize="10dip" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <Button
+                    android:id="@+id/buttonLyricFragment"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Lyric Fragment Search"
+                    android:textSize="10dip"
+                    android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/buttonText"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Text Search"
+                    android:textSize="10dip" />
+
+                <Button
+                    android:id="@+id/buttonPCMStream"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Recognize PCM"
+                    android:textSize="10dip" />
+
+                <Button
+                    android:id="@+id/buttonHistory"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="History"
+                    android:textSize="10dip" />
+            </LinearLayout>
+        </LinearLayout>
+    </TableRow>
+
+</LinearLayout>

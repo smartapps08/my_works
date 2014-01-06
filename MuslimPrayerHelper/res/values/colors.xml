@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="Blue">#33B5E5</color>
+    <color name="DeepBlue">#0099CC</color>
+    <color name="Violet">#AA66CC</color>
+    <color name="DeepViolet">#9933CC</color>
+    <color name="Green">#99CC00</color>
+    <color name="DeepGreen">#669900</color>
+    <color name="Orange">#FFBB33</color>
+    <color name="DeepOrange">#FF8800</color>
+    <color name="Red">#FF4444</color>
+    <color name="DeepRed">#CC0000</color>
+    <color name="background_color">#F000</color>
+    <color name="marker_color">#FFFF</color>
+    <color name="text_color">#FFFF</color>
+    <color name="shadow_color">#7AAA</color>
+    <color name="outer_border">#FF444444</color>
+    <color name="inner_border_one">#FF323232</color>
+    <color name="inner_border_two">#FF414141</color>
+    <color name="inner_border">#FFFFFFFF</color>
+    <color name="horizon_sky_from">#FFA52A2A</color>
+    <color name="horizon_sky_to">#FFFFC125</color>
+    <color name="horizon_ground_from">#FF5F9EA0</color>
+    <color name="horizon_ground_to">#FF00008B</color>
+     <color name="caldroid_white">#FFFFFF</color>
+    <color name="caldroid_black">#000000</color>
+    <color name="caldroid_transparent">#00000000</color>
+    <!-- For settings framework -->
+    <color name="caldroid_lighter_gray">#ddd</color>
+    <color name="caldroid_gray">#CCC</color>
+    <color name="caldroid_darker_gray">#aaa</color>
+    <!-- A light Holo shade of blue -->
+    <color name="caldroid_holo_blue_light">#ff33b5e5</color>
+    <!-- A dark Holo shade of blue -->
+    <color name="caldroid_holo_blue_dark">#ff0099cc</color>
+    <!-- A really bright Holo shade of blue -->
+    <color name="caldroid_sky_blue">#FFA3E8F7</color>
+
+</resources>

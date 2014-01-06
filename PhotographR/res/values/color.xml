@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="Blue">#33B5E5</color>
+    <color name="DeepBlue">#0099CC</color>
+    <color name="Violet">#AA66CC</color>
+    <color name="DeepViolet">#9933CC</color>
+    <color name="Green">#99CC00</color>
+    <color name="DeepGreen">#669900</color>
+    <color name="Orange">#FFBB33</color>
+    <color name="DeepOrange">#FF8800</color>
+    <color name="Red">#FF4444</color>
+    <color name="DeepRed">#CC0000</color>
+    <color name="LightOrange">#FFE8B9</color>
+    <color name="LightGreen">#D4FF7F</color>
+    <color name="LightBlue">#BFEEFF</color>
+
+</resources>

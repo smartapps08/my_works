@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Near Me</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="txt_choose_a_category">Choose Category</string>
+    <string name="title_activity_places">PlacesActivity</string>
+    <string name="txt_select_a_place">Select a place to view details</string>
+    <string name="title_activity_places_map">PlacesMapActivity</string>
+    <string name="txt_action_refresh">Refresh</string>
+    <string name="txt_action_view_mode">Map Mode</string>
+    <string name="txt_action_settings">Settings</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="action_save">Save</string>
+    <string name="txt_no_result">No result found</string>
+
+</resources>

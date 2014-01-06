@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="no-feedback" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Getting Started with the Android Sample Application (3.1)">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Troubleshooting</title>
+        <link href="../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../Resources/Stylesheets/BookStyles.css" rel="stylesheet" />
+        <script src="../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">You are here: </span><a class="MCBreadcrumbsLink" href="a_Getting Started with the Android.html#_Toc349118710">Getting Started with the Android Sample Application (3.1)</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Troubleshooting</span>
+        </div>
+        <h2><a name="_Toc349118718"></a>Troubleshooting</h2>
+        <p>This section covers common problems with setting up or running the sample application.</p>
+        <h3><a name="_Toc349118719"></a>"com.google cannot be resolved to a type"</h3>
+        <p>You need to reference the correct library at compile time. Right-click your Eclipse project, Properties &gt; Android. In Project Build Target select Google APIs 4.1.</p>
+        <h3><a name="_Toc349118720"></a>Issues Connecting to the Device on Windows</h3>
+        <p>On Windows, you must install the ADB Composite ADB Interface USB driver. You can download this via the Android SDK and AVD Manager. For detailed instructions, see <a href="http://developer.android.com/guide/developing/device.html#setting-up"><span class="Hyperlink">http://developer.android.com/guide/developing/device.html#setting-up</span></a>.</p>
+        <h3><a name="_Toc349118721"></a>Fix an Unresolved Reference to Google APIs</h3>
+        <p>When the appropriate Google APIs are not installed into your Android Development Environment, then Eclipse generates an error message similar to the one shown below.<br /><img src="../Resources/Images/Mobile Client Documentation (3.1)1/03000005_429x49.png" style="width: 429;height: 49;" /></p>
+        <p>
+            <br />The Gracenote Mobile Client Sample Application uses Google APIs to determine the user's location when identifying a song; consequently the Google APIs must be included to correctly run the Sample Application project. Use the Android SDK and AVD Manager to add the appropriate Google APIs to your Android development environment.<br />Note: Google APIs are not required for Mobile Client; they are only required for the Mobile Client Sample Application.</p>
+        <h3><a name="_Toc349118722"></a>Class Compatibility Error</h3>
+        <p>When you build the Sample Application, Eclipse may generate a class compatibility error in the Console tab.<br /><img src="../Resources/Images/Mobile Client Documentation (3.1)1/03000006_417x42.png" style="width: 417;height: 42;" /></p>
+        <p>
+            <br />To fix this error:</p>
+        <ol>
+            <li value="1">Right-click on GN_Music_SDK_Android_&lt;version number&gt; in the Package Explorer tab.</li>
+            <li value="2">Navigate to the Android Tools menu option</li>
+            <li value="3">Select Fix Project Properties in the submenu.</li>
+            <li value="4">Rebuild the project.</li>
+        </ol>
+        <p class="onlineFooter">© 2000 to present. Gracenote, Inc. All rights reserved.</p>
+        <p><a href="mailto:doc_feedback@gracenote.com?subject=Gracenote Documentation Feedback" target="_blank" title="Send comments about this topic to Gracenote Technical Publications." alt="Send comments about this topic to Gracenote Technical Publications.">How can we improve this documentation?</a>
+        </p>
+    </body>
+</html>

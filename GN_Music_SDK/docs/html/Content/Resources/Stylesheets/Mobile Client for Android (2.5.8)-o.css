@@ -1,0 +1,48 @@
+/*<meta />*/
+
+img.img_1
+{
+	visibility: visible;
+	mso-wrap-style: square;
+}
+
+p.p_1
+{
+	list-style-type: disc;
+}
+
+ul.ul_1
+{
+	list-style-type: disc;
+	margin-left: 36pt;
+}
+
+ol.ol_1
+{
+	list-style-type: decimal;
+	margin-left: 36pt;
+}
+
+p.p_2
+{
+	list-style-type: circle;
+}
+
+ul.ul_2
+{
+	list-style-type: circle;
+	margin-left: 72pt;
+}
+
+ol.ol_2
+{
+	list-style-type: lower-roman;
+	margin-left: 108pt;
+}
+
+ol.ol_3
+{
+	list-style-type: lower-alpha;
+	margin-left: 72pt;
+}
+

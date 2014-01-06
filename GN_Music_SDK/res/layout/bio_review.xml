@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:orientation="vertical">
+	<RelativeLayout android:id="@+id/RelativeLayout01"
+		android:layout_height="wrap_content" android:padding="10dip"
+		android:layout_width="fill_parent">
+		<ImageView android:id="@+id/CoverArtImage" android:src="@drawable/no_cover_art"
+			android:layout_alignParentTop="true" android:maxHeight="176px"
+			android:maxWidth="123px" android:layout_height="176dip"
+			android:layout_width="123dip"></ImageView>
+		<LinearLayout android:layout_height="wrap_content"
+			android:layout_toRightOf="@+id/CoverArtImage" android:id="@+id/LinearLayout01"
+			android:layout_marginLeft="10dip" android:layout_width="wrap_content"
+			android:orientation="vertical">
+			<TextView android:layout_width="wrap_content"
+				android:textColor="@color/gracenote_red" android:text="Track"
+				android:id="@+id/TrackTextView" android:layout_height="wrap_content"
+				android:textSize="12dip" android:paddingTop="1dip"
+				android:textStyle="bold"></TextView>
+			<TextView android:layout_width="wrap_content" android:text="Artist"
+				android:id="@+id/ArtistTextView" android:layout_height="wrap_content"
+				android:textSize="11dip" android:paddingTop="1dip"></TextView>
+			<TextView android:layout_width="wrap_content" android:text="Album"
+				android:id="@+id/AlbumTextView" android:layout_height="wrap_content"
+				android:textSize="11dip" android:paddingTop="1dip"></TextView>
+		</LinearLayout>
+	</RelativeLayout>
+	<ScrollView android:paddingLeft="5px" android:id="@+id/resultsScroller"
+		android:layout_height="wrap_content" android:layout_width="fill_parent">
+		<LinearLayout android:layout_height="wrap_content"
+			android:layout_width="fill_parent" android:layout_margin="10dip"
+			android:id="@+id/TextLayout" android:visibility="gone">
+			<TextView android:text="@+id/TextView01"
+				android:layout_height="wrap_content" android:layout_width="fill_parent"
+				android:id="@+id/bioReviewtxt"></TextView>
+		</LinearLayout>
+	</ScrollView>
+</LinearLayout>

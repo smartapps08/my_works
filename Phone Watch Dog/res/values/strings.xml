@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Hello World, PhoneWatchDogActivity!</string>
+    <string name="app_name">Phone Watch Dog</string>
+
+</resources>

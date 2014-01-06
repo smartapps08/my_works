@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="no-feedback" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Mobile Client Android Implementation Guide (3.1)">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Retrieving Related Content</title>
+        <link href="../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../Resources/Stylesheets/BookStyles.css" rel="stylesheet" />
+        <script src="../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">You are here: </span><a class="MCBreadcrumbsLink" href="a_Mobile Client Android Implementation.html#_Toc349118723">Mobile Client Android Implementation Guide (3.1)</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Retrieving Related Content</span>
+        </div>
+        <h2><a name="_Toc349118746"></a>Retrieving Related Content</h2>
+        <p>Mobile Client can retrieve content related to an audio recognition result, including:</p>
+        <ul>
+            <li value="1">Genre</li>
+            <li value="2">Mood</li>
+            <li value="3">Tempo</li>
+            <li value="4">Origin</li>
+            <li value="5">Era</li>
+            <li value="6">Artist Type</li>
+            <li value="7">Cover Art</li>
+            <li value="8">Artist Images</li>
+            <li value="9">Artist Biographies</li>
+            <li value="10">Album Reviews</li>
+        </ul>
+        <p>You can retrieve related content from an audio recognition operation result or via a Gracenote unique album or track identifier.</p>
+        <p class="note">For more information on using images returned by Mobile Client see <a href="a-Considerations.html#_Toc349118769" class="GNBasic MCXref xref xrefGNBasic">Image Resizing Best Practice</a>.</p>
+        <h3><a name="_Toc349118747"></a>Genre</h3>
+        <p>Mobile Client returns album and track level genre descriptors with a recognition or search result. Genre descriptors can be displayed to the end-user or can be used to categorize music in the user's collection for organization, navigation, or playlist generation.</p>
+        <h4>Genre Levels</h4>
+        <p>Gracenote has multiple levels of genre descriptors. Each level describes the related music with a different amount of detail and granularity.</p>
+        <p>Two options for genre are available: DEFAULT and EXTENDED. The DEFAULT option returns a single, default genre descriptor in the result. The EXTENDED option returns multiple levels of genre descriptors in the result.</p>
+        <p>The recommended option to use depends upon the application, its use cases, and the target audience. Some applications might want to use the DEFAULT option, as it is the simplest and contains the most commonly known genres. Other applications might want to provide a richer genre experience via the multiple levels in the EXTENDED option. Applications might also use the EXTENDED option to give their users a choice of which genre level is used.</p>
+        <p>A Mobile Client operation can be configured for one of these options via the GNConfig object provided when the operation is invoked. These parameters are described below.</p>
+        <table>
+            <tr>
+                <th>
+                    <p>Parameter</p>
+                </th>
+                <th>
+                    <p>Description</p>
+                </th>
+                <th>
+                    <p>Default</p>
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <p>content.genre.level</p>
+                </td>
+                <td>
+                    <p>Sets the option for the genre descriptors returned; DEFAULT and EXTENDED</p>
+                </td>
+                <td>
+                    <p>DEFAULT</p>
+                </td>
+            </tr>
+        </table>
+        <h4>Genre Localization</h4>
+        <p>Gracenote provides a global solution and Mobile Client can be configured to deliver genres specific to a supported country and in a supported language. The country and language can be configured by setting the appropriate parameters in the GNConfig object provided when invoking a GNOperation. These parameters are described below.</p>
+        <table>
+            <tr>
+                <th>
+                    <p>Parameter</p>
+                </th>
+                <th>
+                    <p>Description</p>
+                </th>
+                <th>
+                    <p>Default</p>
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <p>content.country</p>
+                </td>
+                <td>
+                    <p>Specifies the country of the delivered genre descriptors (using ISO county code)</p>
+                </td>
+                <td>
+                    <p>null (as of version 2.5.8, USA before)</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>content.lang</p>
+                </td>
+                <td>
+                    <p>Specifies the language of the delivered genre descriptors (using ISO lang code)</p>
+                </td>
+                <td>
+                    <p>""</p>
+                </td>
+            </tr>
+        </table>
+        <p>See <a href="a_Localization and Internationalization.html" class="GNBasic MCXref xref xrefGNBasic">Localization and Internationalization</a> for more information.</p>
+        <h4>Accessing Genres</h4>
+        <p>Genre data is delivered via a result-ready object in a GNDescriptor instance. Multiple genre levels can be delivered for a single album or track, so a collection of GNDescriptor objects is delivered.</p>
+        <p class="note">When track-level genre descriptors are requested, Mobile Client returns them, if they are available. If track-level descriptors are not available, album-level descriptors are returned instead.</p>
+        <p>The delivered genre levels are stored in an array of GNDescriptor objects. The order of the GNDescriptor objects in the collection is representative of their level.</p>
+        <p>Genres are defined by a descriptor and an identifier. The descriptor is a word or phrase describing the genre. The descriptor string should only be used to display to the end user. Because descriptor names and user language settings are subject to change, the identifier is best suited for dealing with genre associations in a programmatic fashion.</p>
+        <p>The GNDescriptor object is fully described in the data dictionary, see <a href="a_Data Dictionary.html#GNDescri" class="GNBasic MCXref xref xrefGNBasic">GNDescriptor</a>.</p>
+        <p>The following code snippet shows how genres can be retrieved from a result-ready object.</p><pre xml:space="preserve">// Define result-ready object to extract related content from a search result<br />class ApplicationSearchResultReady implements GNSearchResultReady<br />{<br />// Provide implementation for GNResultReady method<br />public void GNResultReady (GNSearchResult result)<br />{<br />// Get best response from search result<br />GNSearchResponse bestResponse = result.getBestResponse();<br /><br />if (bestResponse != null)<br />{<br />// Extract track level genres collection<br />GNDescriptor[] trackLevelGenres = bestResponse.getTrackGenre();<br />for(GNDescriptor trackGenre: trackLevelGenres){<br />// Extract the genre information for each genre level returned<br />String genreDescriptor = trackGenre.getData();<br />String genreId = trackGenre.getId();<br />// Process genre information appropriately<br />}<br /><br />// Extract album level genres collection<br />GNDescriptor[] albumLevelGenres = bestResponse.getAlbumGenre();<br />for(GNDescriptor albumGenre: albumLevelGenres){<br />// Extract the genre information for each genre level returned<br />String genreDescriptor = albumGenre.getData();<br />String genreId = albumGenre.getId();<br />// Process genre information appropriately<br />}<br />}<br />}<br />}</pre>
+        <h3><a name="_Toc349118748"></a>Mood</h3>
+        <p>Mobile Client can return track-level mood descriptors with a recognition or search result. Mood descriptors can be displayed to the end-user or can be used to categorize music in the user's collection for organization, navigation, or playlist generation.</p>
+        <p>Your application must be entitled to retrieve mood data. </p>
+        <p>A Mobile Client operation can be configured to include mood descriptors in its response, via the GNConfig object provided when the operation is invoked. These parameters are described below.</p>
+        <table>
+            <tr>
+                <th>
+                    <p>Parameter</p>
+                </th>
+                <th>
+                    <p>Description</p>
+                </th>
+                <th>
+                    <p>Default</p>
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <p>content.mood</p>
+                </td>
+                <td>
+                    <p>Set to true to enable retrieval of mood descriptors</p>
+                </td>
+                <td>
+                    <p>false</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>content.mood.level</p>
+                </td>
+                <td>
+                    <p>Sets the option for the mood descriptors returned; DEFAULT and EXTENDED</p>
+                </td>
+                <td>
+                    <p>DEFAULT</p>
+                </td>
+            </tr>
+        </table>
+        <h4>Mood Levels</h4>
+        <p>Gracenote has multiple levels of mood descriptors. Each level describes the related music with a different amount of detail and granularity.</p>
+        <p>Two options for mood are available: DEFAULT and EXTENDED. The DEFAULT option returns a single, default mood descriptor in the result. The EXTENDED option returns multiple levels of mood descriptors in the result.</p>
+        <p>The recommended option to use depends upon the application, its use cases, and the target audience. Some applications might want to use the DEFAULT option, as it is the simplest and contains the most commonly known moods. Other applications might want to provide a richer experience via the EXTENDED option.&#160; Applications might also use the the EXTENDED option to give their users a choice of which mood level is used.</p>
+        <h4>Mood Localization</h4>
+        <p>Gracenote provides a global solution and Mobile Client can be configured to deliver moods in a supported language. The language can be configured by setting the appropriate parameter in the GNConfig object provided when invoking a GNOperation. These parameters are described below.</p>
+        <table>
+            <tr>
+                <th>
+                    <p>Parameter</p>
+                </th>
+                <th>
+                    <p>Description</p>
+                </th>
+                <th>
+                    <p>Default</p>
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <p>content.lang</p>
+                </td>
+                <td>
+                    <p>Specifies the language of the delivered mood descriptors</p>
+                </td>
+                <td>
+                    <p>""</p>
+                </td>
+            </tr>
+        </table>
+        <p>See <a href="a_Localization and Internationalization.html" class="GNBasic MCXref xref xrefGNBasic">Localization and Internationalization</a> for more information.</p>
+        <h4>Accessing Moods</h4>
+        <p>Mood data is delivered via a result-ready object in a GNDescriptor instance. Multiple mood levels may be delivered for a single track, so a collection of GNDescriptor objects is delivered.</p>
+        <p>The delivered mood levels are stored in an array of GNDescriptor objects. The order of the GNDescriptor objects in the collection is representative of their level.</p>
+        <p>Moods are defined by a descriptor and an identifier. The descripto r is a word or phrase describing the mood. The descriptor string should only be used to display to the end user. Because descriptor names and user language settings are subject to change, the identifier is best suited for dealing with mood associations in a programmatic fashion.</p>
+        <p>The GNDescriptor object is fully described in the data dictionary, see <a href="a_Data Dictionary.html#GNDescri" class="GNBasic MCXref xref xrefGNBasic">GNDescriptor</a>.</p>
+        <p>The following code snippet shows how mood data can be retrieved from a result-ready object.</p><pre xml:space="preserve">// Define result-ready object to extract related content from a search result<br></br>class ApplicationSearchResultReady implements GNSearchResultReady<br></br>{<br></br>// Provide implementation for GNResultReady method<br></br>public void GNResultReady (GNSearchResult result)<br></br>{<br></br>// Get best response from search result<br></br>GNSearchResponse bestResponse = result.getBestResponse();<br></br><br></br>if (bestResponse != null)<br></br>{<br></br>// Extract track level mood collection<br></br>GNDescriptor[] trackLevelMoods = bestResponse.getMood();<br></br>for(GNDescriptor trackMood: trackLevelMoods){<br></br>// Extract the mood information for each mood level returned<br></br>String moodDescriptor = trackMood.getData();<br></br>String moodId = trackMood.getId();<br></br>// Process mood information appropriately<br></br>}<br></br>}<br></br>}<br></br>}</pre>
+        <h3><a name="_Toc349118749"></a>Tempo</h3>
+        <p>Mobile Client can return track-level tempo data with a recognition or search result. Tempo data can be displayed to the end-user or can be used to categorize music in the user's collection for organization, navigation, or playlist generation.</p>
+        <p>Your application must be entitled to retrieve tempo data. </p>
+        <p>A Mobile Client operation can be configured to include tempo data in its response, via the GNConfig object provided when the operation is invoked. These parameters are described below.</p>
+        <table>
+            <tr>
+                <th>
+                    <p>Parameter</p>
+                </th>
+                <th>
+                    <p>Description</p>
+                </th>
+                <th>
+                    <p>Default</p>
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <p>content.tempo</p>
+                </td>
+                <td>
+                    <p>Set to true to enable retrieval of tempo descriptors</p>
+                </td>
+                <td>
+                    <p>false</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>content.tempo.level</p>
+                </td>
+                <td>
+                    <p>Sets the option for the tempo descriptors returned; DEFAULT and EXTENDED</p>
+                </td>
+                <td>
+                    <p>DEFAULT</p>
+                </td>
+            </tr>
+        </table>
+        <h4>Tempo Levels</h4>
+        <p>Gracenote has multiple levels of tempo descriptors. Each level describes the related music with a different amount of detail and granularity.</p>
+        <p>Two options for tempo are available: DEFAULT and EXTENDED. The DEFAULT option returns a single, default tempo descriptor in the result. The EXTENDED option returns multiple levels of tempo descriptors in the result.</p>
+        <p>The recommended option to use depends upon the application, its use cases, and the target audience. Some applications might want to use the DEFAULT option, and other applications might want to provide a richer experience via the EXTENDED option. Applications might also use the EXTENDED option to give their users a choice of which tempo level is used.</p>
+        <h4>Tempo Localization</h4>
+        <p>Gracenote provides a global solution and Mobile Client can be configured to deliver tempo in a supported language. The language can be configured by setting the appropriate parameter in the GNConfig object provided when invoking a GNOperation. These parameters are described below.</p>
+        <table>
+            <tr>
+                <th>
+                    <p>Parameter</p>
+                </th>
+                <th>
+                    <p>Description</p>
+                </th>
+                <th>
+                    <p>Default</p>
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <p>content.lang</p>
+                </td>
+                <td>
+                    <p>Specifies the language of the delivered tempo descriptors</p>
+                </td>
+                <td>
+                    <p>""</p>
+                </td>
+            </tr>
+        </table>
+        <p>See <a href="a_Localization and Internationalization.html" class="GNBasic MCXref xref xrefGNBasic">Localization and Internationalization</a> for more information.</p>
+        <h4>Accessing Tempo Data</h4>
+        <p>Tempo data is delivered via a result-ready object in a GNDescriptor instance. Multiple tempo levels may be delivered for a single track, so a collection of GNDescriptor objects is delivered.</p>
+        <p>The delivered tempo levels are stored in an array of GNDescriptor objects. The order of the GNDescriptor objects in the collection is representative of their level.</p>
+        <p>Tempos are defined by a descriptor and an identifier. The descriptor is a word or phrase describing the tempo. The descriptor string should only be used to display to the end user. Because descriptor names and user language settings are subject to change, the identifier is best suited for dealing with tempo associations in a programmatic fashion.</p>
+        <p>The GNDescriptor object is fully described in the data dictionary, see <a href="a_Data Dictionary.html#GNDescri" class="GNBasic MCXref xref xrefGNBasic">GNDescriptor</a>.</p>
+        <p>The following code snippet shows how tempo data can be retrieved from a result-ready object.</p><pre xml:space="preserve">// Define result-ready object to extract related content from a search result<br></br>class ApplicationSearchResultReady implements GNSearchResultReady<br></br>{<br></br>// Provide implementation for GNResultReady method<br></br>public void GNResultReady (GNSearchResult result)<br></br>{<br></br>// Get best response from search result<br></br>GNSearchResponse bestResponse = result.getBestResponse();<br></br><br></br>if (bestResponse != null)<br></br>{<br></br>// Extract track level tempo collection<br></br>GNDescriptor[] trackLevelTempos = bestResponse.getTempo();<br></br>for(GNDescriptor trackTempo: trackLevelTempos){<br></br>// Extract the tempo information for each tempo level returned<br></br>String tempoDescriptor = trackTempo.getData();<br></br>String tempoId = trackTempo.getId();<br></br>// Process tempo information appropriately<br></br>}<br></br>}<br></br>}<br></br>}</pre>
+        <h3><a name="_Toc349118750"></a>Origin, Era, and Artist Type</h3>
+        <p>Mobile Client can return origin, era, and artist type data with a recognition or search result. Origin data gives the geographic location most strongly associated with the artist. Era data gives the time period most strongly associated with the artist. Artist type data gives the gender and composition (solo, duo, group) of the artist. Origin, era, and artist type data can be displayed to the end-user or can be used to categorize music in the user's collection for organization, navigation, or playlist generation.</p>
+        <p>A Mobile Client operation can be configured to include origin, era, and artist type data in its response, via the GNConfig object provided when the operation is invoked. These parameters are described below.</p>
+        <table>
+            <tr>
+                <th>
+                    <p>Parameter</p>
+                </th>
+                <th>
+                    <p>Description</p>
+                </th>
+                <th>
+                    <p>Default</p>
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <p>content.origin</p>
+                </td>
+                <td>
+                    <p>Set to true to enable retrieval of origin descriptors</p>
+                </td>
+                <td>
+                    <p>false</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>content.era</p>
+                </td>
+                <td>
+                    <p>Set to true to enable retrieval of era descriptors</p>
+                </td>
+                <td>
+                    <p>false</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>content.artistType</p>
+                </td>
+                <td>
+                    <p>Set to true to enable retrieval of artist type descriptors</p>
+                </td>
+                <td>
+                    <p>false</p>
+                </td>
+            </tr>
+        </table>
+        <p class="note">Origin, era, and artist type data is delivered as a bundle. If the value of any of the parameters is set to TRUE, all three types of descriptors are delivered. To turn off delivery of the descriptors, all three parameters must be set to FALSE.</p>
+        <h4>Origin, Era, and Artist Type Levels</h4>
+        <p>Gracenote has multiple levels of origin, era, and artist type descriptors. Each level describes the related music with a different amount of detail and granularity. The following GNConfig parameters set the option for the origin, era, and artist type descriptors returned:</p>
+        <table>
+            <tr>
+                <th>Parameter</th>
+                <th>Description</th>
+                <th>Default</th>
+            </tr>
+            <tr>
+                <td>
+                    <p>content.origin.level</p>
+                </td>
+                <td>
+                    <p>Sets the option for the origin descriptors returned; DEFAULT and EXTENDED</p>
+                </td>
+                <td>
+                    <p>DEFAULT</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>content.era.level</p>
+                </td>
+                <td>
+                    <p>Sets the option for the era descriptors returned; DEFAULT and EXTENDED</p>
+                </td>
+                <td>
+                    <p>DEFAULT</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>content.artistType.level</p>
+                </td>
+                <td>
+                    <p>Sets the option for the artist type descriptors returned; DEFAULT and EXTENDED</p>
+                </td>
+                <td>
+                    <p>DEFAULT</p>
+                </td>
+            </tr>
+        </table>
+        <p>Two options for origin, era, and artist type descriptors are available: DEFAULT and EXTENDED. The DEFAULT option returns a single, default descriptor in the result. The EXTENDED option returns multiple levels of descriptors in the result.</p>
+        <p>The recommended option to use depends upon the application, its use cases, and the target audience. Some applications might want to use the DEFAULT option, and other applications might want to provide a richer experience via the EXTENDED option. Applications might also use the EXTENDED option to give their users a choice of which level is used.</p>
+        <h4>Origin, Era, and Artist Type Localization</h4>
+        <p>Gracenote provides a global solution and Mobile Client can be configured to deliver origin, era, and artist type in a supported language. The language can be configured by setting the appropriate parameter in the GNConfig object provided when invoking a GNOperation. The parameter is described below.</p>
+        <table>
+            <tr>
+                <th>
+                    <p>Parameter</p>
+                </th>
+                <th>
+                    <p>Description</p>
+                </th>
+                <th>
+                    <p>Default</p>
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <p>content.lang</p>
+                </td>
+                <td>
+                    <p>Specifies the language of the delivered tempo descriptors</p>
+                </td>
+                <td>
+                    <p>""</p>
+                </td>
+            </tr>
+        </table>
+        <p>See <a href="a_Localization and Internationalization.html" class="GNBasic MCXref xref xrefGNBasic">Localization and Internationalization</a> for more information.</p>
+        <h4>Accessing Origin, Era, and Artist Type Data</h4>
+        <p>Origin, era, and artist type data is delivered via a result-ready object in a GNDescriptor instance. Multiple levels may be delivered, so a collection of GNDescriptor objects is delivered.</p>
+        <p>The delivered levels are stored in an array of GNDescriptor objects. The order of the GNDescriptor objects in the collection is representative of their level.</p>
+        <p>Origin, era, and artist type are defined by a descriptor and an identifier. The descriptor is a word or phrase describing the origin, era, or artist type. The descriptor string should only be used to display to the end user. Because descriptor names and user language settings are subject to change, the identifier is best suited for dealing with origin, era, and artist type associations in a programmatic fashion.</p>
+        <p>The GNDescriptor object is fully described in the data dictionary, see <a href="a_Data Dictionary.html#GNDescri" class="GNBasic MCXref xref xrefGNBasic">GNDescriptor</a>.</p>
+        <p>The following code snippet shows how origin, era, and artist type data can be retrieved from a result-ready object.</p><pre xml:space="preserve">if (bestResponse != null)<br></br>{<br></br>// Extract artist origin value(s)<br></br>GNDescriptor[] originDescriptorArray = bestResponse.getOrigin();<br></br>for(GNDescriptor originDesciptor: originDescriptorArray){<br></br>// Extract the origin information for each origin level returned<br></br>String origin = originDescriptor.getData();<br></br>String originId = originDescriptor.getId();<br></br>// Process origin information appropriately<br></br>}<br></br><br></br>// Extract artist era value(s)<br></br>GNDescriptor[] eraDescriptorArray = bestResponse.getEra();<br></br>for(GNDescriptor eraDesciptor: eraDescriptorArray){<br></br>// Extract the era information for each era level returned<br></br>String era = eraDescriptor.getData();<br></br>String eraId = eraDescriptor.getId();<br></br>// Process era information appropriately<br></br>}<br></br><br></br>// Extract artist type value(s)<br></br>GNDescriptor[] artistTypeDescriptorArray = bestResponse.getArtistType();<br></br>for(GNDescriptor artistTypeDesciptor: artistTypeDescriptorArray){<br></br>// Extract the artist type information for each artist type level returned<br></br>String artistType = artistTypeDescriptor.getData();<br></br>String artistTypeId = artistTypeDescriptor.getId();<br></br>// Process artist type information appropriately<br></br>}<br></br>}<br></br>}<br></br>}</pre>
+        <h3><a name="_Toc349118751"></a>Cover Art</h3>
+        <p>Mobile Client can return album Cover Art with a recognition or search result. Cover Art can be used effectively to enrich the user experience.</p>
+        <p>Note that only the cover art URL is returned with the result. To get the actual image data, your app needs to invoke the GNCoverArt.data accessor method, which should be done in a background thread. See the Sample App for an example of getting cover art data in a background thread.</p>
+        <p>Your application must be entitled to retrieve Cover Art. </p>
+        <p>A Mobile Client operation can be configured to include Cover Art in its response, via the GNConfig object provided when the operation is invoked. These parameters are described below.</p>
+        <table>
+            <tr>
+                <th>
+                    <p>Parameter</p>
+                </th>
+                <th>
+                    <p>Description</p>
+                </th>
+                <th>
+                    <p>Default</p>
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <p>content.coverArt</p>
+                </td>
+                <td>
+                    <p>Set to true  to enable retrieval of cover art</p>
+                </td>
+                <td>
+                    <p>false (as of version 2.5.8)</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>content.coverArt.sizePreference</p>
+                </td>
+                <td>
+                    <p>Comma-separated list of cover art size preferences. Also specifies size preference for artist images.</p>
+                </td>
+                <td>
+                    <p>"SMALL,MEDIUM,THUMBNAIL,LARGE,XLARGE"</p>
+                </td>
+            </tr>
+        </table>
+        <p>The Cover Art size preference takes a comma-separated list of the preferred Cover Art sizes, in order of preference. Mobile Client will return the first Cover Art image that matches a size in the preference list. If a size is not in the preference list, it will not be returned.</p>
+        <p class="info">If an invalid size preference is included in the list, Mobile Client ignores the list and uses the default list instead.</p>
+        <p>For more information on using images returned by Mobile Client see <a href="a-Considerations.html#_Toc349118769" class="GNBasic MCXref xref xrefGNBasic">Image Resizing Best Practice</a>.</p>
+        <p>You can improve retrieval performance for some operations by retrieving cover art in the background. For more information see <a href="a-Considerations.html#_Toc349118776" class="GNBasic MCXref xref xrefGNBasic">Improving Retrieval Performance by Using Enriched Content URLs</a>.</p>
+        <h4>Genre Cover Art</h4>
+        <p>In cases where Gracenote does not have cover art for a particular album, genre-themed artwork is instead returned in a response. This option can be disabled on a per-query basis by setting the appropriate GNConfig parameter as shown below.</p>
+        <table>
+            <tr>
+                <th>
+                    <p>Parameter</p>
+                </th>
+                <th>
+                    <p>Description</p>
+                </th>
+                <th>
+                    <p>Default</p>
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <p>content.coverArt.genreCoverArt</p>
+                </td>
+                <td>
+                    <p>Set to true to receive genre cover art when album cover art is not available</p>
+                </td>
+                <td>
+                    <p>true</p>
+                </td>
+            </tr>
+        </table>
+        <p class="note">To receive genre art, both content.coverArt.genreCoverArt and content.coverArt must be set to true. Your application also must be entitled for cover art.</p>
+        <p>The size of the Genre Cover Art returned is governed by the Cover Art size preference GNConfig parameter described above.</p>
+        <p>For more information on using images returned by Mobile Client see <a href="a-Considerations.html#_Toc349118769" class="GNBasic MCXref xref xrefGNBasic">Image Resizing Best Practice</a>.</p>
+        <h4>Accessing Cover Art</h4>
+        <p>Cover Art is delivered via a result-ready object as a GNCoverArt object. Cover Art is provided as a raw stream that can be converted to an Android Drawable object. Once a Drawable object is created, the Cover Art can be easily displayed to the user via standard Android mechanisms.</p>
+        <p>The GNCoverArt object is fully described in the data dictionary, see <a href="a_Data Dictionary.html#GNCoverA" class="GNBasic MCXref xref xrefGNBasic">GNCoverArt</a>.</p>
+        <p>The following code snippet shows how Cover Art data can be retrieved from a result-ready object.</p><pre xml:space="preserve">// Define result-ready object to extract related content from a search result<br></br>class ApplicationSearchResultReady implements GNSearchResultReady<br></br>{<br></br>// Provide implementation for GNResultReady method<br></br>public void GNResultReady (GNSearchResult result)<br></br>{<br></br>// Get best response from search result<br></br>GNSearchResponse bestResponse = result.getBestResponse();<br></br><br></br>if (bestResponse != null)<br></br>{<br></br>GNCoverArt coverArt = bestResponse.getCoverArt();<br></br>if( coverArt != null ){<br></br>// Convert the cover art to an Android Drawable<br></br>ByteArrayInputStream is = new ByteArrayInputStream(coverArt().getData());<br></br>Drawable coverArt = Drawable.createFromStream(is, "src");<br></br>// Process cover art Drawable<br></br>}<br></br>}<br></br>}<br></br>}</pre>
+        <h3><a name="_Toc349118752"></a>Artist Images</h3>
+        <p>Mobile Client can return an Artist Image with a recognition or search result. Artist Images can be used effectively to enrich the user experience.</p>
+        <p>Your application must be entitled to retrieve Artist Images. </p>
+        <p>A Mobile Client operation can be configured to include an Artist Image in its response, via the GNConfig object provided when the operation is invoked. These parameters are described below.</p>
+        <table>
+            <tr>
+                <th>
+                    <p>Parameter</p>
+                </th>
+                <th>
+                    <p>Description</p>
+                </th>
+                <th>
+                    <p>Default</p>
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <p>content.contributor.images</p>
+                </td>
+                <td>
+                    <p>Set to true to enable retrieval of artist images</p>
+                </td>
+                <td>
+                    <p>false</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>content.coverArt.sizePreference</p>
+                </td>
+                <td>
+                    <p>Comma-separated list of artist image size preferences. Also specifies size preference for cover art images.</p>
+                </td>
+                <td>
+                    <p>"SMALL,MEDIUM,THUMBNAIL,LARGE,XLARGE"</p>
+                </td>
+            </tr>
+        </table>
+        <p>The Artist Image size preference takes a comma-separated list of the preferred Artist Image sizes, in order of preference. Mobile Client returns the first Artist Image that matches a size in the preference list. If a size is not in the preference list, it will not be returned.</p>
+        <p>For more information on using images returned by Mobile Client see <a href="a-Considerations.html#_Toc349118769" class="GNBasic MCXref xref xrefGNBasic">Image Resizing Best Practice</a>.</p>
+        <p>You can improve retrieval performance for some operations by retrieving artist images in the background. For more information see <a href="a-Considerations.html#_Toc349118776" class="GNBasic MCXref xref xrefGNBasic">Improving Retrieval Performance by Using Enriched Content URLs</a>.</p>
+        <h4>Accessing Artist Images</h4>
+        <p>Artist Images are delivered via a result-ready object as a byte[]. The raw data can be converted to an Android Drawable object. Once a Drawable object is created, the image can be easily displayed to the user via standard Android mechanisms.</p>
+        <p>The following code snippet shows how artist images can be retrieved from a result-ready object.</p><pre xml:space="preserve">// Define result-ready object to extract related content from a search result<br></br>class ApplicationSearchResultReady implements GNSearchResultReady<br></br>{<br></br>// Provide implementation for GNResultReady method<br></br>public void GNResultReady (GNSearchResult result)<br></br>{<br></br>// Get best response from search result<br></br>GNSearchResponse bestResponse = result.getBestResponse();<br></br><br></br>if (bestResponse != null)<br></br>{<br></br>GNImage artistImage = bestResponse.getContributorImage();<br></br>byte[] artistImageData = artistImage.getData();<br></br>if( artistImageData != null ){<br></br>// Convert the image data to an Android Drawable<br></br>ByteArrayInputStream is = new ByteArrayInputStream(artistImageData);<br></br>Drawable artistImage = Drawable.createFromStream(is, "src");<br></br>// Process artist image Drawable<br></br>}<br></br>}<br></br>}<br></br>}</pre>
+        <h3><a name="_Toc349118753"></a>Artist Biographies</h3>
+        <p>Mobile Client can return an Artist Biography with a recognition or search result. Artist Biographies can be used effectively to enrich the user experience.</p>
+        <p>Your application must be entitled to retrieve Artist Biographies. </p>
+        <p>A Mobile Client operation can be configured to include an Artist Biography in its response, via the GNConfig object provided when the operation is invoked. These parameters are described below.</p>
+        <table>
+            <tr>
+                <th>
+                    <p>Parameter</p>
+                </th>
+                <th>
+                    <p>Description</p>
+                </th>
+                <th>
+                    <p>Default</p>
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <p>content.contributor.biography</p>
+                </td>
+                <td>
+                    <p>Set to true to enable retrieval of artist biographies</p>
+                </td>
+                <td>
+                    <p>false</p>
+                </td>
+            </tr>
+        </table>
+        <p>You can improve retrieval performance for some operations by retrieving artist biographies in the background. For more information see <a href="a-Considerations.html#_Toc349118776" class="GNBasic MCXref xref xrefGNBasic">Improving Retrieval Performance by Using Enriched Content URLs</a>.</p>
+        <h4>Accessing Artist Biographies</h4>
+        <p>Artist Biographies are delivered via a result-ready object as a collection of String objects, where each String represents an individual paragraph of the biography.</p>
+        <p>The following code snippet shows how an artist biography can be retrieved from a result-ready object.</p><pre xml:space="preserve">// Define result-ready object to extract related content from a search result<br></br>class ApplicationSearchResultReady implements GNSearchResultReady<br></br>{<br></br>// Provide implementation for GNResultReady method<br></br>public void GNResultReady (GNSearchResult result)<br></br>{<br></br>// Get best response from search result<br></br>GNSearchResponse bestResponse = result.getBestResponse();<br></br><br></br>if (bestResponse != null)<br></br>{<br></br>// Extract the artist biography<br></br>String[] bio = bestResponse.getArtistBiography();<br></br>// Process artist biography information appropriately<br></br>}<br></br>}<br></br>}</pre>
+        <h3><a name="_Toc349118754"></a>Album Reviews</h3>
+        <p>Mobile Client can return an Album Review with a recognition or search result. Album Reviews can be used effectively to enrich the user experience.</p>
+        <p>A Mobile Client operation can be configured to include Album Reviews in its response, via the GNConfig object provided when the operation is invoked. These parameters are described below.</p>
+        <table>
+            <tr>
+                <th>
+                    <p>Parameter</p>
+                </th>
+                <th>
+                    <p>Description</p>
+                </th>
+                <th>
+                    <p>Default</p>
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <p>content.review</p>
+                </td>
+                <td>
+                    <p>Set to true to enable retrieval of album reviews</p>
+                </td>
+                <td>
+                    <p>false</p>
+                </td>
+            </tr>
+        </table>
+        <p>You can improve retrieval performance for some operations by retrieving album reviews in the background. For more information see <a href="a-Considerations.html#_Toc349118776" class="GNBasic MCXref xref xrefGNBasic">Improving Retrieval Performance by Using Enriched Content URLs</a>.</p>
+        <h4>Accessing Album Reviews</h4>
+        <p>Album Reviews are delivered via a result-ready object as a collection of String objects, where each String represents an individual paragraph of the review.</p>
+        <p>The following code snippet shows how an album review can be retrieved from a result-ready object.</p><pre xml:space="preserve">// Define result-ready object to extract related content from recognition result<br />class ApplicationSearchResultReady implements GNSearchResultReady<br />{<br />// Provide implementation for GNResultReady method<br />public void GNResultReady (GNSearchResult result)<br />{<br />// Get best response from search result<br />GNSearchResponse bestResponse = result.getBestResponse();<br /><br />if (bestResponse != null)<br />{<br />// Extract the artist biography<br />String[] review = bestResponse.getAlbumReview();<br />// Process album review information appropriately<br />}<br />}<br />}</pre>
+        <h3><a name="_Toc349118755"></a>Retrieval Methods</h3>
+        <p>Related content can be retrieved from the single best match returned by an audio recognition operation or via a Gracenote unique album or track identifier.</p>
+        <h4>Retrieving Related Content for a Single Best Match</h4>
+        <p>A single best match result returned by an audio recognition operation can contain related content, if the GNConfig object provided when the operation is invoked is appropriately configured. This mechanism can be used to deliver all of the desired related content in a single GNOperations call.</p>
+        <p>The following code example illustrates how to configure the configuration object, initiate a recognition event, and retrieve the related content from the returned result:</p><pre xml:space="preserve">// Set configuration properties<br />config.setProperty ("content.genre", "true");<br />config.setProperty ("content.mood", "true");<br />config.setProperty ("content.tempo", "true");<br />config.setProperty ("content.origin", "true");<br />config.setProperty ("content.era", "true");<br />config.setProperty ("content.artistType", "true");<br />config.setProperty ("content.coverArt", "true");<br />config.setProperty ("content.contributor.images", "true");<br />config.setProperty ("content.contributor.biography", "true");<br />config.setProperty ("content.review", "true");<br /><br /><br />// Define result-ready object to extract related content from recognition result<br />class ApplicationSearchResultReady implements GNSearchResultReady<br />{<br />// Provide implementation for GNResultReady method<br />public void GNResultReady (GNSearchResult result)<br />{<br />// Get best response from search result<br />GNSearchResponse bestResponse = result.getBestResponse();<br /><br />if (bestResponse != null)<br />{<br />// Extract related content from response<br />GNDescriptor[] trackGenres = bestResponse.getTrackGenre();<br />GNDescriptor[] albumGenres = bestResponse.getAlbumGenre();<br />GNDescriptor[] trackMoods = bestResponse.getMood();<br />GNDescriptor[] trackTempos = bestResponse.getTempo();<br />GNDescriptor[] artistOrigins = bestResponse.getOrigin();<br />GNDescriptor[] artistEras = bestResponse.getEra();<br />GNDescriptor[] artistTypes = bestResponse.getArtistType();<br />GNCoverArt coverArt = bestResponse.getCoverArt();<br />GNImage artistImage = bestResponse.getContributorImage();<br />String[] artistBiography = bestResponse.getArtistBiography();<br />String[] albumReview = bestResponse.getAlbumReview();<br /><br />// Display related content as desired<br />}<br />}<br />}<br /><br /><br />// Use configuration object when invoking a recognition operation<br />void recognizeFromMic (GNConfig config)<br />{<br />// Create result-ready object to receive retrieval result and extract related content<br />ApplicationSearchResultReady searchResultReady = new ApplicationSearchResultReady();<br /><br />// Invoke recognition operation<br />GNOperations.recognizeMIDStreamFromMic (searchResultReady, config);<br />}</pre>
+        <p class="note">For subsequent operations after an initial identification, retrieving related content from a Gracenote album or track identifier is more efficient than repeating the full recognition process. To minimize response time, extract and store the Gracenote Identifier after the initial recognition operation and use it for subsequent retrieval operations, as shown in the next section.</p>
+        <h4><a name="Retrievi"></a>Retrieving Related Content by Gracenote Identifier</h4>
+        <p>Gracenote unique album and track identifiers can be obtained from any Gracenote product, enabling Mobile Client to be easily integrated into a larger music identification system. The following code example shows how to obtain a Gracenote Identifier for a specific album and use it to retrieve related content; the same technique can be used to retrieve related content for a track identifier instead of an album identifier, by using the methods GNSearchResponse.getTrackId and GNOperations.fetchByTrackId instead of GNSearchResponse.getAlbumId and GNOperations.fetchByAlbumId:</p><pre xml:space="preserve">// Define result-ready object to extract related content from recognition result by album identifier<br></br>class ApplicationGetGnIdResultReady implements GNSearchResultReady<br></br>{<br></br>// Provide implementation for GNResultReady method<br></br>public void GNResultReady (GNSearchResult result)<br></br>{<br></br>// Get best response from search result<br></br>GNSearchResponse bestResponse = result.getBestResponse();<br></br><br></br>// Extract album identifier and store for later use<br></br>gnAlbumID = bestResponse.getAlbumID();<br></br><br></br>// Retrieve related content using album identifier<br></br>fetchRelatedContent (config, gnAlbumID);<br></br>}<br></br>}<br></br><br></br><br></br>// Define result-ready object to extract related content from recognition result<br></br>class ApplicationFetchRelatedContent implements GNSearchResultReady<br></br>{<br></br>public void GNResultReady (GNSearchResult result)<br></br>{<br></br>// Get best response from search result<br></br>GNSearchResponse bestResponse = result.getBestResponse();<br></br><br></br>// Extract related content from response<br></br>if (bestResponse != null)<br></br>{<br></br>GNDescriptor[] trackGenres = bestResponse.getTrackGenre();<br></br>GNDescriptor[] albumGenres = bestResponse.getAlbumGenre();<br></br>GNDescriptor[] trackMoods = bestResponse.getMood();<br></br>GNDescriptor[] trackTempos = bestResponse.getTempo();<br></br>GNDescriptor[] artistOrigins = bestResponse.getOrigin();<br></br>GNDescriptor[] artistEras = bestResponse.getEra();<br></br>GNDescriptor[] artistTypes = bestResponse.getArtistType();<br></br>GNCoverArt coverArt = bestResponse.getCoverArt();<br></br>GNImage artistImage = bestResponse.getContributorImage();<br></br>String[] artistBiography = bestResponse.getArtistBiography();<br></br>String[] albumReview = bestResponse.getAlbumReview();<br></br><br></br>// Display the related content as desired<br></br>}<br></br>}<br></br>}<br></br><br></br><br></br>// Initial recognition request; result will contain a Gracenote album identifier<br></br>void recognizeFromMic (GNConfig config)<br></br>{<br></br>// Create result-ready object to receive search result and extract and store track identifier and related content<br></br>ApplicationGetGnIdResultReady getGnIdResultReady = new ApplicationGetGnIdResultReady();<br></br><br></br>// Invoke recognition operation<br></br>GNOperations.recognizeMIDStreamFromMic (getGnIdResultReady, config);<br></br>}<br></br><br></br><br></br>// Later retrieval request using previously stored album identifier<br></br>void fetchRelatedContent (GNConfig config, String albumId)<br></br>{<br></br>// Set configuration properties<br></br>config.setProperty ("content.genre", "true");<br></br>config.setProperty ("content.mood", "true");<br></br>config.setProperty ("content.tempo", "true");<br></br>config.setProperty ("content.origin", "true");<br></br>config.setProperty ("content.era", "true");<br></br>config.setProperty ("content.artistType", "true");<br></br>config.setProperty ("content.coverArt", "true");<br></br>config.setProperty ("content.contributor.images", "true");<br></br>config.setProperty ("content.contributor.biography", "true");<br></br>config.setProperty ("content.review", "true");<br></br><br></br>// Create result-ready object to receive retrieval result<br></br>ApplicationFetchRelatedContent fetchRelatedContent = new ApplicationFetchRelatedContent();<br></br><br></br>// Invoke retrieval operation using album identifier<br></br>GNOperations.fetchByAlbumId (fetchRelatedContent, config, albumId);<br></br>}</pre>
+        <p>During the retrieval process, Mobile Client sends status updates to notify the application as each stage shown in the figure is reached:</p>
+        <p>
+            <img src="../Resources/Images/Mobile Client Documentation (3.1)1/03000009_201x61.png" style="width: 201;height: 61;" />
+        </p>
+        <p>Status flow in related content retrieval by Gracenote Identifier</p>
+        <p>Track and Album Identifiers can be retrieved from any of Gracenote's products, enabling Mobile Client to be easily integrated into a larger music identification system.</p>
+        <p class="onlineFooter">© 2000 to present. Gracenote, Inc. All rights reserved.</p>
+        <p><a href="mailto:doc_feedback@gracenote.com?subject=Gracenote Documentation Feedback" target="_blank" title="Send comments about this topic to Gracenote Technical Publications." alt="Send comments about this topic to Gracenote Technical Publications.">How can we improve this documentation?</a>
+        </p>
+    </body>
+</html>

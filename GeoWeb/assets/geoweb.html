@@ -1,0 +1,28 @@
+<html>
+	<head>
+		<title>Geoweb Example</title>
+		<script language="javascript">
+			function whereami(lat, lng)
+			{
+				<!-- retrieve value from java code-->
+				
+				document.getElementById("lat").innerHTML=lat;
+				document.getElementById("lng").innerHTML=lng;
+			}
+			
+			function pull()
+			{
+				var location=JSON.parse(locator.getLocation());
+				whereami(location.lat, location.lng);
+			}
+		</script>
+	</head>
+	<body>
+		<p>Where am I</p>
+		<a onClick="pull()">Update My Location</a>
+		<span id="lat">Lat: Unknown</span>
+		<span id="lng">Lng: Unknown</span>
+		
+	</body>
+
+</html>

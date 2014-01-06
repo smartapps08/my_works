@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="no-feedback" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Mobile Client Android Implementation Guide (3.1)">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Debug Logging</title>
+        <link href="../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../Resources/Stylesheets/BookStyles.css" rel="stylesheet" />
+        <script src="../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">You are here: </span><a class="MCBreadcrumbsLink" href="a_Mobile Client Android Implementation.html#_Toc349118723">Mobile Client Android Implementation Guide (3.1)</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Debug Logging</span>
+        </div>
+        <h2><a name="_Toc349118760"></a>Debug Logging</h2>
+        <p>Mobile Client can be configured to generate a debug log and PCM for debugging. To turn on debugging, set the debugEnabled property to "1", "true" or "True" in a GNConfig object instance, and provide that instance when invoking an operation.</p>
+        <p>Only operations that are passed a GNConfig object instance with debugging enabled will generate logging output.<br />The recognizeMIDStreamFromMic and fingerprintMIDStreamFromMic operations with debugging enabled will generate recorded.pcm.</p>
+        <p>The default location of the generated log file is /sdcard/gracenote/debug.log and PCM file is /sdcard/gracenote/recorded.pcm. The location of the generated files can be changed by setting the debugLog property of a GNConfig object instance.</p>
+        <p>When choosing a location for the debug files ensure:</p>
+        <ul>
+            <li value="1">The location is specified</li>
+            <li value="2">The location exists</li>
+            <li value="3">The application has write access to the location</li>
+            <li value="4">The media that will store the debug files has enough available memory</li>
+        </ul><pre xml:space="preserve">config.setProperty("debugEnabled", "1");<br />config.setProperty("debugLog", "/sdcard/debugDir");</pre>
+        <p>The debug files feature is provided for development only. Production applications cannot have debugging enabled or provide an option to enable it.</p>
+        <p>During validation Gracenote ensures debug files generation are not and can not be enabled by the application.</p>
+        <p class="onlineFooter">© 2000 to present. Gracenote, Inc. All rights reserved.</p>
+        <p><a href="mailto:doc_feedback@gracenote.com?subject=Gracenote Documentation Feedback" target="_blank" title="Send comments about this topic to Gracenote Technical Publications." alt="Send comments about this topic to Gracenote Technical Publications.">How can we improve this documentation?</a>
+        </p>
+    </body>
+</html>

@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/action_refresh"
+        android:icon="@drawable/ic_action_refresh"
+        android:orderInCategory="100"
+        android:showAsAction="always|withText"
+        android:title="@string/txt_action_refresh"/>
+    <item
+        android:id="@+id/action_settings"
+        android:icon="@drawable/ic_action_action_settings"
+        android:orderInCategory="100"
+        android:showAsAction="always"
+        android:title="@string/txt_action_settings"/>
+
+</menu>

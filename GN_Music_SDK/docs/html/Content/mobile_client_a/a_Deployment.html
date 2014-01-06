@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="no-feedback" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Mobile Client Android Implementation Guide (3.1)">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Deployment</title>
+        <link href="../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../Resources/Stylesheets/BookStyles.css" rel="stylesheet" />
+        <script src="../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">You are here: </span><a class="MCBreadcrumbsLink" href="a_Mobile Client Android Implementation.html#_Toc349118723">Mobile Client Android Implementation Guide (3.1)</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Deployment</span>
+        </div>
+        <h2><a name="_Toc349118725"></a>Deployment</h2>
+        <p>Mobile Client is delivered as an Eclipse project that can be integrated into an Android development environment that uses the Eclipse integrated development environment (IDE).</p>
+        <p class="note">Before continuing, you should already have run the Sample App as detailed in the Getting Started with the Android Sample Application. This document contains details about setting up your Android development environment.</p>
+        <h3><a name="_Toc349118726"></a>Integrating Mobile Client into an Existing Android Project</h3>
+        <p>Mobile Client can be integrated into an existing Android project.<br />The Mobile Client is distributed as the following libraries:</p>
+        <ul>
+            <li value="1">GN_Music_SDK.jar (Java library)</li>
+            <li value="2">libgnmc_decoder.&lt;version number&gt;.so (native library)</li>
+            <li value="3">libgnmc_fpx.&lt;version number&gt;.so (native library)</li>
+            <li value="4">libgnmc_id3tag.&lt;version number&gt;.so (native library)</li>
+            <li value="5">libgnmc_aactag.&lt;version number&gt;.so (native library)</li>
+            <li value="6">libgnencryption.&lt;version number&gt;.so</li>
+            <li value="7">libgnlocal_lookup.&lt;version number&gt;.so</li>
+            <li value="8">libgntransition_detector.&lt;version number&gt;.so</li>
+        </ul>
+        <p>Ensure that these files can be accessed by your existing Android project and are located by your application build system. Gracenote libraries are not intended to be copied into the Android system folders (root). All of the Gracenote libraries should be kept with the application code (apk). This is essential for application upgradability and multi-application support.</p>
+        <h3><a name="_Toc349118727"></a>Mobile Client Android Permissions</h3>
+        <p>To use Mobile Client properly in your Android application, it must be configured with specific permissions, including:</p>
+        <ul>
+            <li value="1">Record audio</li>
+            <li value="2">Access fine (e.g., GPS) location</li>
+            <li value="3">Write to external storage</li>
+            <li value="4">Access Internet</li>
+            <li value="5">Access network</li>
+        </ul>
+        <p>These permissions must be added to the Android application's AndroidManifest.xml file. For a complete list of required permissions and an example of how they are defined, see the Sample Application's AndroidManifest.xml file.</p>
+        <h3><a name="_Toc349118728"></a>Migrating to this Release</h3>
+        <h4>Supported Sampling Rates for MusicID-Stream and MusicID-File</h4>
+        <p>As of Release 3.1, the supported sampling rates for MusicID-Stream and MusicID-File are:</p>
+        <ul>
+            <li value="1">8000 Hz</li>
+            <li value="2">44100 Hz</li>
+        </ul>
+        <h4>Library Update</h4>
+        <p>The following libraries must be copied from the Mobile Client distribution package into your application:</p>
+        <ul>
+            <li value="1">GN_Music_SDK.jar (Java library)</li>
+            <li value="2"> libgnmc_decoder.&lt;version number&gt;.so (native library)</li>
+            <li value="3">libgnmc_fpx.&lt;version number&gt;.so (native library)</li>
+            <li value="4">libgnmc_id3tag.&lt;version number&gt;.so (native library)</li>
+            <li value="5"> libgnmc_aactag.&lt;version number&gt;.so (native library)</li>
+            <li value="6">libgnencryption.&lt;version number&gt;.so</li>
+            <li value="7">libgnlocal_lookup.&lt;version number&gt;.so</li>
+            <li value="8">libgntransition_detector.&lt;version number&gt;.so</li>
+        </ul><pre xml:space="preserve">
+Versioning (&lt;version-number&gt;) is broken down as follows:
+
+&lt;library&gt;.&lt;M.N.I.B&gt;.so 
+
+where
+
+M - Major release number
+
+N - Minor release number 
+
+I - Improvement release number 
+
+B - Build number
+
+For example: libgnmc_decoder.2.5.9.1.so
+
+Note that backward compatibility between different library versions is NOT supported.</pre>
+        <p>The libraries were renamed in Mobile Client 2.5.6. The table below summarizes the changes made:</p>
+        <table>
+            <tr>
+                <th>
+                    <p>Old Name</p>
+                </th>
+                <th>
+                    <p>New Name</p>
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <p>libdec.so</p>
+                </td>
+                <td>
+                    <p>libgnmc_decoder.&lt;version number&gt;.so</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>libstream_core.so</p>
+                </td>
+                <td>
+                    <p>libgnmc_fpx.&lt;version number&gt;.so</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>libid3tag.so</p>
+                </td>
+                <td>
+                    <p>libgnmc_id3tag.&lt;version number&gt;.so</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>libaactag.so</p>
+                </td>
+                <td>
+                    <p>libgnmc_aactag.&lt;version number&gt;.so</p>
+                </td>
+            </tr>
+        </table>
+        <h4>GNConfig Parameter Changes</h4>
+        <p>Several GNConfig parameters were renamed in Mobile Client 2.5.2 to improve consistency and extensibility.&#160; As of 3.1, you must migrate your code to match the new naming conventions.</p>
+        <p>The tables below summarize the changes made, including the parameters that are no longer supported.</p>
+        <h5>No Longer Supported</h5>
+        <table>
+            <tr>
+                <th>
+                    <p>No Longer Supported Name</p>
+                </th>
+                <th>
+                    <p>New Name</p>
+                </th>
+                <th>
+                    <p>Comments</p>
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <p>country</p>
+                </td>
+                <td>
+                    <p>content.country</p>
+                </td>
+                <td>
+                    <p>As of Version 2.5.8., the default for this is null, before, it was USA</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>genre and genreId properties in GNSearchResponse</p>
+                </td>
+                <td>
+                    <p>trackGenre and albumGenre</p>
+                </td>
+                <td>
+                    <p>As of Version 2.5: Replace GNSearchResponse properties genre with trackGenre and genreId with albumGenre.<br />Multiple genre levels can now be returned, so genres are delivered as a collection of GNDescriptor objects that contain a genre descriptor and a genre identifier. The properties genre and genreId will NO LONGER return the descriptor and identifier from the lowest level genre returned to Mobile Client.</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>isGenreCoverArtEnabled</p>
+                </td>
+                <td>
+                    <p>content.coverArt.genreCoverArt</p>
+                </td>
+                <td>
+                    <p>&#160;</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>lang</p>
+                </td>
+                <td>
+                    <p>content.lang</p>
+                </td>
+                <td>
+                    <p>&#160;</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>preferredLinkSource</p>
+                </td>
+                <td>
+                    <p>content.link.preferredSource</p>
+                </td>
+                <td>
+                    <p>&#160;</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>webservices.coverArtSizePreference</p>
+                </td>
+                <td>
+                    <p>content.coverArt.sizePreference</p>
+                </td>
+                <td>
+                    <p>&#160;</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>webservices.gzipEnabled</p>
+                </td>
+                <td>
+                    <p>N/A</p>
+                </td>
+                <td>
+                    <p>&#160;</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>webservices.isInlineCoverArtEnabled</p>
+                </td>
+                <td>
+                    <p>content.coverArt</p>
+                </td>
+                <td>
+                    <p>As of Version 2.5. The default for this is false (as of version 2.5.8)</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>webservices.isSingleBestMatchPreferred</p>
+                </td>
+                <td>
+                    <p>content.musicId.queryPreference.singleBestMatch</p>
+                </td>
+                <td>
+                    <p>&#160;</p>
+                </td>
+            </tr>
+        </table>
+        <h5>Case Change Only</h5>
+        <p>Cases are changed for consistency. Older case is supported. No deprecation.</p>
+        <table>
+            <tr>
+                <th>
+                    <p>Old Name</p>
+                </th>
+                <th>
+                    <p>New Name</p>
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <p>Content.contributor.images</p>
+                </td>
+                <td>
+                    <p>content.contributor.images</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>Content.review</p>
+                </td>
+                <td>
+                    <p>content.review</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>Content.contributor.biography</p>
+                </td>
+                <td>
+                    <p>content.contributor.biography</p>
+                </td>
+            </tr>
+        </table>
+        <h5>Changed Default Values</h5>
+        <table>
+            <tr>
+                <th>
+                    <p>Name<br /></p>
+                </th>
+                <th>
+                    <p>New Default Value<br /></p>
+                </th>
+                <th>
+                    <p>As of</p>
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <p>content.coverArt</p>
+                </td>
+                <td>
+                    <p>false</p>
+                </td>
+                <td>
+                    <p>Version 2.5.8</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>content.country</p>
+                </td>
+                <td>
+                    <p>null</p>
+                </td>
+                <td>
+                    <p>Version 2.5.8<br />Prior to this, the default value was USA</p>
+                </td>
+            </tr>
+        </table>
+        <h5>New GNConfig Property</h5>
+        <table>
+            <tr>
+                <th>
+                    <p>Property</p>
+                </th>
+                <th>
+                    <p>Type</p>
+                </th>
+                <th>
+                    <p>Default</p>
+                </th>
+                <th>
+                    <p>As of</p>
+                </th>
+                <th>
+                    <p>Description</p>
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <p>content.allowfullresponse</p>
+                </td>
+                <td>
+                    <p>Boolean string</p>
+                </td>
+                <td>
+                    <p>False</p>
+                </td>
+                <td>
+                    <p>3.1</p>
+                </td>
+                <td>
+                    <p>Indicates if Gracenote response from local cache identification should contain full or partial metadata.<br />The following operations use local cache lookup:</p>
+                    <ol start="1" class="ol_1">
+                        <p>GNRecognizeStream.idNow</p>
+                        <p>GNOperations.recognizeMIDStreamFromMic</p>
+                        <p>GNOperations.recognizeMIDStreamFromPcm</p>
+                    </ol>
+                    <p>&#160;</p>
+                </td>
+            </tr>
+        </table>
+        <h4>GNStatus Change</h4>
+        <p>The GNStatus RECORDING value has been removed and replaced with LISTENING.</p>
+        <h4>Deprecated GNS</h4>
+        <h5>Deprecated GNSearchResponse Methods</h5>
+        <table>
+            <tr>
+                <th>
+                    <p>Old Name</p>
+                </th>
+                <th>
+                    <p>New Name</p>
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <p>getArtistImage()</p>
+                </td>
+                <td>
+                    <p>getContributorImage()</p>
+                </td>
+            </tr>
+        </table>
+        <h5>New GNSearchResponse Property</h5>
+        <table>
+            <tr>
+                <th>
+                    <p>Property</p>
+                </th>
+                <th>
+                    <p>Type</p>
+                </th>
+                <th>
+                    <p>As of</p>
+                </th>
+                <th>
+                    <p>Description</p>
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <p>isPartial</p>
+                </td>
+                <td>
+                    <p>Boolean</p>
+                </td>
+                <td>
+                    <p>3.1</p>
+                </td>
+                <td>
+                    <p>Indicates if response contains full or partial metadata.</p>
+                </td>
+            </tr>
+        </table>
+        <p class="onlineFooter">© 2000 to present. Gracenote, Inc. All rights reserved.</p>
+        <p><a href="mailto:doc_feedback@gracenote.com?subject=Gracenote Documentation Feedback" target="_blank" title="Send comments about this topic to Gracenote Technical Publications." alt="Send comments about this topic to Gracenote Technical Publications.">How can we improve this documentation?</a>
+        </p>
+    </body>
+</html>

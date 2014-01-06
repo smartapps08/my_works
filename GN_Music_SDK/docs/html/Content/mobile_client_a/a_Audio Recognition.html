@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="no-feedback" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Mobile Client Android Implementation Guide (3.1)">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Audio Recognition</title>
+        <link href="../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../Resources/Stylesheets/BookStyles.css" rel="stylesheet" />
+        <script src="../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">You are here: </span><a class="MCBreadcrumbsLink" href="a_Mobile Client Android Implementation.html#_Toc349118723">Mobile Client Android Implementation Guide (3.1)</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Audio Recognition</span>
+        </div>
+        <p><a href="#AlbumID" class="GNBasic MCXref xref xrefGNBasic">AlbumID Configuration</a>
+        </p>
+        <h2><a name="_Toc349118734"></a>Audio Recognition</h2>
+        <p>Mobile Client provides three Gracenote technologies for audio recognition:</p>
+        <ul>
+            <li value="1">MusicID-Stream, for audio delivered from a microphone or other streaming audio source (such as a radio signal or streaming Internet source).</li>
+            <li value="2"> MusicID-File, for audio extracted from an audio file (such as a .wav or .mp3 file).</li>
+            <li value="3"> AlbumID, for identifying groups of audio files using fingerprints, text inputs, tag data, and Gracenote Identifiers. AlbumID can also use this data to group files into albums.</li>
+        </ul>
+        <p>The results of recognition operations are returned to the application via a result-ready object implementing the GNSearchResultReady interface.</p>
+        <p class="note"><span class="note">Note:</span> If requested (and if the application is so entitled), Mobile Client can also provide cover art and Link identifiers with the recognition results; see <a href="a_Retrieving Related Content.html#_Toc349118751" class="GNBasic MCXref xref xrefGNBasic">Cover Art</a> and <a href="a_Retrieving Related Content.html" class="GNBasic MCXref xref xrefGNBasic">Retrieving Related Content</a>, for further information.</p>
+        <p class="tip">Stream-based recognition can take longer than file-based. When recognizing an audio file, use file-based recognition to obtain the best response time.</p>
+        <h3><a name="_Toc349118735"></a>Setting Up a Cache of Music Metadata for MusicID Stream</h3>
+        <p> Gracenote provides a local database of fingerprints and metadata of some example songs. The SDK uses this data to attempt a local ID prior to attempting an online lookup. If a song is not found locally, the SDK then performs an online lookup. </p>
+        <p>Beginning with Mobile Client 3.1, Gracenote makes available a bundle of&#160; fingerprints and metadata for currently trending tracks that your application can download. </p>
+        <p>Once downloaded, your application can ingest the bundle and create a cache with methods provided through the GnConfig class - loadCache() and clearCache(). </p>
+        <p>Matching from cache can significantly improve SDK performance compared to online lookups. <br /></p>
+        <p>Loading cache example:</p><pre xml:space="preserve">//
+// Example - from sample application GracenoteMusicID.java
+//
+    private void setUpCache() {
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    InputStream in = getResources().openRawResource(R.raw.bundle161);
+                    final String bundleFilePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/bundle161.b";
+                    FileOutputStream out = new FileOutputStream(bundleFilePath);
+                    byte[] buff = new byte[1024];
+                    int read = 0;
+                    try {
+                        while ((read = in.read(buff)) &gt; 0) {
+                            out.write(buff, 0, read);
+                        }
+                    } finally {
+                        in.close();
+                        out.close();
+                    }
+                    GNCacheStatusEnum cacheStatus = config.loadCache(bundleFilePath);
+                    if(cacheStatus != GNCacheStatusEnum.SUCCESS){
+                        Log.e(LOG_TAG, "load cache failed with status: " + cacheStatus.toString());
+                    }
+                    // Delete Bundle after loading cache
+                    File bundlefile = new File(bundleFilePath);
+                    if (bundlefile.exists()) {
+                        bundlefile.delete();
+                    }
+                } catch (Exception e) {
+                    Log.e(LOG_TAG, e.toString());
+                }
+            }
+        }).start();
+    }</pre>
+        <p>To implement recognition from local audio fingerprint storage:</p>
+        <ol>
+            <li value="1">Download the bundle from Gracenote.</li>
+            <li value="2">In your application, download the bundle to device storage.</li>
+            <li value="3">In your application, call the GNConfig.loadCache() method to set up a cache from the bundle. As a best practice, call this method in a background thread.</li>
+            <li value="4">Delete the bundle from device storage when done loading cache.</li>
+        </ol>
+        <h3><a name="_Toc349118736"></a>Full and Partial Metadata Responses From Cache</h3>
+        <p>In a local lookup (cache-based identification) request, you can indicate if your app is returned a full or partial metadata response with the GNConfig.allowfullresponse field (new in 3.1). In a partial metadata response, the following fields are returned:</p>
+        <ul>
+            <li value="1">Album title</li>
+            <li value="2">Artist (track level)</li>
+            <li value="3">Track title</li>
+            <li value="4">Track duration (in milliseconds)</li>
+            <li value="5">Track match position</li>
+            <li value="6">Track GNID (Gracenote ID)</li>
+            <li value="7">Album GNID</li>
+        </ul>
+        <p>The GNSearchResponse.isPartial flag (also new in 3.1) indicates if your response contains full or partial metadata results. Note that this flag will only be true if a single, best match response is returned.</p>
+        <p>To get full metadata after a partial response, your app would need to call GNOperations.fetchByTrackId or fetchByAlbumId.</p>
+        <p class="note">Since the local cache only contains partial metadata, a locally-identified match requires an additional online lookup for full metadata. Doing this will require Internet access and an additional 800ms -1 second to resolve the request. If GNConfig.allowfullresponse is true, and you do NOT have an Internet connection, your app will receive an "Internet Connection" error.<br /><br />Note that it is possible for partial and allowFullResponse to both be true. This can occur if the network is not available and metadata is returned from cache. Your application should check the value of partial even if allowFullResponse is true and not assume full metadata.
+			</p>
+        <p>The following operations use local cache lookup:</p>
+        <ul>
+            <li value="1">GNRecognizeStream.idNow</li>
+            <li value="2">GNOperations.recognizeMIDStreamFromMic</li>
+            <li value="3">GNOperations.recognizeMIDStreamFromPcm</li>
+        </ul>
+        <h3><a name="_Toc349118737"></a>MusicID-Stream</h3>
+        <p>MusicID-Stream can be used to recognize a snippet of a song, such as a recording received from the device microphone or from an Internet stream.</p>
+        <p>Mobile Client provides two methods for invoking a MusicID-Steam recognition, one designed for simplicity, the other for flexibility.</p>
+        <p>Supported Sampling Rates for MusicID-Stream:</p>
+        <ul>
+            <li value="1">8000 Hz</li>
+            <li value="2">44100 Hz</li>
+        </ul>
+        <h4>GNAudioSourceMic</h4>
+        <p>This class provides simple microphone management, optimized for GNRecognizeStream and has two methods:</p>
+        <ul>
+            <li value="1">startRecording() - start or resume recording</li>
+            <li value="2">stopRecording( ) - stop recording and release microphone</li>
+        </ul>
+        <p>The GNAudioSourceMic constructor takes a GNAudioConfig instance and an object that implements the GNAudioSourceDelegate interface:</p><pre xml:space="preserve">
+// From the Sample Application
+public class GracenoteMusicID extends Activity implements GNSearchResultReady,GNAudioSourceDelegate {
+
+// ...
+
+GNAudioConfig myDeviceAudioConfig;
+GNAudioSourceMic mAudioSource;
+
+// ...
+
+// Initialize with recommended audio settings
+int sampleRate = 44100;
+int bytesPerSample = 2;
+int numChannels = 1;
+
+this.myDeviceAudioConfig = new GNAudioConfig(sampleRate, bytesPerSample,numChannels);
+mAudioSource = new GNAudioSourceMic(this.myDeviceAudioConfig, this);
+
+try {
+	mAudioSource.startRecording();
+}
+catch (Exception e) { 
+
+	// audio-recording initialization failed
+}
+	
+// ...</pre>
+        <p class="note"><span class="note">Note:</span> It is recommended that your application use this class when streaming audio from the device microphone.</p>
+        <h4>GNRecognizeStream</h4>
+        <p>The GNRecognizeStream class provides APIs to quickly recognize audio streamed from a device microphone or other input source. Using this class, a Mobile Client application continuously processes PCM data from the input stream and prepares it for a recognition operation.</p>
+        <p>The sample application calls the idNow() method to initiate the audio recognition process. All results are delivered as a result-ready object implementing the GNSearchResultReady interface.&#160; During the audio recognition process, Mobile Client sends operation progress status updates to the application.</p>
+        <p>The following steps illustrate how to use the GNRecognizeStream class when streaming from the device microphone:</p>
+        <ol>
+            <li value="1">Initialize GNConfig. If supporting local lookups, set up the local fingerprint database by calling loadCache. For more information, see <a href="#_Toc349118735" class="GNBasic MCXref xref xrefGNBasic">Setting Up a Cache of Music Metadata for MusicID Stream</a>.</li>
+            <li value="2">Initialize a GNAudioConfig object with these recommended settings:</li>
+            <ul>
+                <li value="1">Number of channels: mono (1) or stereo (2)</li>
+                <li value="2">Sample rate: 44.1K (44100.0)</li>
+                <li value="3">Bytes per sample: 16-bit mono(2) or 16-bit stereo (4)</li>
+            </ul>
+            <li value="3">Initialize GNAudioSourceMic and implement GNAudioSourceDelegate</li>
+            <li value="4">Implement GNSearchResult to receive recognition results. The Mobile Client SDK invokes this in the main thread when a search result is ready.</li>
+            <li value="5">Call GNRecognizeStream.startSession(), passing in your GNSearchResultReady object and GNAudioConfig object.</li>
+            <li value="6">Call GNAudioSourceMic.startRecording()</li>
+            <li value="7">As audio input is buffered continuously, feed in the samples for recognition using the GNRecognizeStream.writeBytes method.</li>
+            <li value="8">Implement a recognition operation (idNow) when user taps an ID Now button.</li>
+            <li value="9">Once a match is found, your app receives a GNSearchResult object in its GNSearchResultReady callback.</li>
+            <li value="10">Call GNAudioSourceMic.stopRecording and GNRecognizeStream.stopSession to stop the recording and streaming session when your application goes into the background. When the application resumes, call GNRecognizeStream.startSession and GNAudioSourceMic.startRecording again.</li>
+        </ol>
+        <p class="note"><span class="note">Note:</span> After idNow is called, the application remains in "request mode" (listening, fingerprinting, or recognizing) until the operation is complete. During this time, repeated requests (such as repeated tapping of an ID Now button) are ignored. Your application must first call the&#160; cancelIdNow method to abandon the operation in progress before a new idNow operation can be initiated.</p>
+        <h5>Best Practices for&#160; GNRecognizeStream</h5>
+        <p>Follow these guidelines when implementing MusicID-Stream recognition with GNRecognizeStream.</p>
+        <ul>
+            <li value="1">When streaming from the device microphone, use GNAudioSourceMic instead of the Android platform's AudioRecord class.</li>
+            <li value="2">Gracenote recommends using an audio buffer size of 2048 bytes for best matches.</li>
+            <li value="3">Once started, the recognition session will continuously buffer audio received from the microphone until you stop the session.&#160; To handle session interruptions (e.g. when the application activity is paused as the user receives a phone call, or when the application is pushed into the background), the activity's onPause, onStop, and onResume methods should include operations indicated in step 10 above.</li>
+        </ul>
+        <h4>GNOperations.recognizeMIDStreamFromMic</h4>
+        <p>GNOperations.recognizeMIDStreamFromMic recognizes audio recorded from the microphone and is the simplest way to recognize music playing in the user's environment.</p>
+        <p>When invoked, Mobile Client obtains the device microphone and records 6.5 seconds of audio. This audio is processed and a MusicID-Stream fingerprint is generated. The fingerprint is then submitted to Gracenote Web Services for recognition. The result is delivered via an object that implements the GNSearchResultReady interface.</p>
+        <p>
+            <img src="../Resources/Images/Mobile Client Documentation (3.1)1/03000007_343x63.png" style="width: 343;height: 63;" />
+        </p>
+        <p>Status flow in stream-based audio recognition</p>
+        <p>The following example shows how to invoke GNOperations.recognizeMIDStreamFromMic.</p><pre xml:space="preserve">// Create result-ready object to receive recognition result.<br />// ApplicationSearchResultReady must implement the GNSearchResultReady interface<br />ApplicationSearchResultReady searchResultReady = new ApplicationSearchResultReady();<br /><br />// Invoke recognition operation with the result-ready object and a GNConfig object<br />// instance<br />GNOperations.recognizeMIDStreamFromMic (searchResultReady, config);</pre>
+        <p>During audio recognition, Mobile Client sends status updates to notify the application of progress.</p>
+        <p class="note"><span class="note">Note:</span>
+        No more than one application can access the microphone at a time; consequently, recording is a blocking function. The Android platform blocks attempts to access a microphone that is already in use (except in the case of incoming phone calls).
+        If recognition from microphone recording is a frequent operation, consider using GNRecognizeStream instead of GNOperations.recognizeMIDStreamFromMic.</p>
+        <h4>GNOperations.recognizeMIDStreamFromPcm</h4>
+        <p>GNOperations.recognizeMIDStreamFromPcm recognizes audio provided as a buffer of PCM (pulse-code modulation) data. This provides the application with additional flexibility: for instance, the application can recognize audio from external streaming audio sources such as a radio broadcast or an Internet stream.</p>
+        <p>When invoked, Mobile Client reads the PCM audio data. The audio is processed and a MusicID-Stream fingerprint is generated. The fingerprint is then submitted to Gracenote Web Services for recognition. The result is delivered via an object that implements the GNSearchResultReady interface.</p>
+        <p>
+            <img src="../Resources/Images/Mobile Client Documentation (3.1)1/03000008_272x63.png" style="width: 272;height: 63;" />
+        </p>
+        <p>Status flow in PCM-based audio recognition</p>
+        <p>The following example shows how to invoke GNOperations.recognizeMIDStreamFromPcm.</p><pre xml:space="preserve">// Create PCM sample buffer<br></br>GNSampleBuffer sampleBuffer = new GNSampleBuffer(samples, bytesPerSample, numChannels, sampleRate);<br></br><br></br>// Create result-ready object to receive recognition result<br></br>// ApplicationSearchResultReady must implement the GNSearchResultReady interface<br></br>ApplicationSearchResultReady searchResultReady = new ApplicationSearchResultReady();<br></br><br></br>// Invoke recognition operation with the result-ready object, a GNConfig object<br></br>// instance and the PCM buffer<br></br>GNOperations.recognizeMIDFileFromPcm (searchResultReady, config, sampleBuffer);</pre>
+        <p>During audio recognition, Mobile Client sends status updates to notify the application of progress.</p>
+        <p class="note"><span class="note">Note:</span> The PCM audio sample must be at least 6.5 seconds long for Mobile Client to sucessfully generate a MusicID-Stream fingerprint.</p>
+        <h3><a name="_Toc349118738"></a>MusicID-File</h3>
+        <p>MusicID-File can be used to recognize an audio file.</p>
+        <p>Mobile Client provides two methods for invoking a MusicID-File recognition, one designed for simplicity, the other for flexibility.</p>
+        <h4>GNOperations.recognizeMIDFileFromFile</h4>
+        <p>GNOperations.recognizeMIDFileFromFile recognizes and audio file stored on the device and is the simplest way to perform a MusicID-File recognition.</p>
+        <p>When invoked Mobile Client decodes the audio file. The audio is processed and a MusicID-File fingerprint is generated. The fingerprint is then submitted to Gracenote Web Services for recognition. The result is delivered via an object that implements the GNSearchResultReady interface.</p>
+        <p>
+            <img src="../Resources/Images/Mobile Client Documentation (3.1)1/03000008_272x63.png" style="width: 272;height: 63;" />
+        </p>
+        <p>Status flow in file-based audio recognition</p>
+        <p>Mobile Client can recognize audio files in the following formats:</p>
+        <ul>
+            <li value="1">.wav</li>
+            <li value="2">.mp3</li>
+            <li value="3">.aac</li>
+        </ul>
+        <p class="note">MPEG-2 AAC is NOT supported, since Android does not support MPEG-2 AAC. See <a href="http://developer.android.com/guide/appendix/media-formats.html"><span class="Hyperlink">http://developer.android.com/guide/appendix/media-formats.html</span></a> for more information.</p>
+        <p>The following sampling rates are supported, in both monaural and stereo:</p>
+        <ul>
+            <li value="1">8000 Hz</li>
+            <li value="2">44100 Hz</li>
+        </ul>
+        <p class="note">Files containing video components are not supported.</p>
+        <p>The following example shows how to invoke GNOperations.recognizeMIDFileFromFile.</p><pre xml:space="preserve">// Create result-ready object to receive recognition result<br></br>// ApplicationSearchResultReady must implement the GNSearchResultReady interface<br></br>ApplicationSearchResultReady searchResultReady = new ApplicationSearchResultReady();<br></br><br></br>// Invoke recognition operation with the result-ready object, a GNConfig object<br></br>// instance and an audio filename<br></br>GNOperations.recognizeMIDFileFromFile (searchResultReady, config, fileName);</pre>
+        <p>During audio recognition, Mobile Client sends status updates to notify the application of progress.</p>
+        <p class="note">Processing an audio file requires approximately 20 seconds of audio and that audio must come from the start of the track.</p>
+        <h4>GNOperations.recognizeMIDFileFromPcm</h4>
+        <p>GNOperations.recognizeMIDFileFromPcm recognizes audio provided as a buffer of PCM (pulse-code modulation) data. This provides the application with additional flexibility: for instance, file formats not directly supported by Mobile Client can be decoded by the application to PCM and recognized via this method.</p>
+        <p>When invoked, Mobile Client reads the PCM audio data. The audio is processed and a MusicID-File fingerprint is generated. The fingerprint is then submitted to Gracenote Web Services for recognition. The result is delivered via an object that implements the GNSearchResultReady interface.</p>
+        <p>
+            <img src="../Resources/Images/Mobile Client Documentation (3.1)1/03000008_272x63.png" style="width: 272;height: 63;" />
+        </p>
+        <p>Status flow in PCM-based audio recognition</p>
+        <p>The following example shows how to invoke GNOperations.recognizeMIDFileFromPcm.</p><pre xml:space="preserve">// Create PCM sample buffer<br></br>GNSampleBuffer sampleBuffer = new GNSampleBuffer(samples, bytesPerSample, numChannels, sampleRate);<br></br><br></br>// Create result-ready object to receive recognition result.<br></br>// ApplicationSearchResultReady must implement the GNSearchResultReady interface<br></br>ApplicationSearchResultReady searchResultReady = new ApplicationSearchResultReady();<br></br><br></br>// Invoke recognition operation with the result-ready object, a GNConfig object<br></br>// instance and the PCM buffer<br></br>GNOperations.recognizeMIDFileFromPcm (searchResultReady, config, sampleBuffer);</pre>
+        <p>During audio recognition, Mobile Client sends status updates to notify the application of progress.</p>
+        <p class="note">Processing an audio file requires approximately 20 seconds of audio and that audio must come from the start of the track.</p>
+        <h3><a name="_Toc349118739"></a>AlbumID</h3>
+        <p>AlbumID is a powerful and flexible recognition processing tool that can be used to provide advanced recognition of digital audio files within the user's collection.&#160; By leveraging contextual information about the audio files, AlbumID can effectively identify, group and organize a collection, providing clean and consistent metadata. It is best used for:</p>
+        <ul>
+            <li value="1">Analyzing groups of media files, where the grouping of results is as important as the accuracy of the individual results</li>
+            <li value="2">Receiving responses that match the contextual data of an audio file, such as metadata from ID3 tags</li>
+        </ul>
+        <p>AlbumID can use a variety of combinations of the following recognition methods and inputs:</p>
+        <ul>
+            <li value="1">MusicID-File fingerprinting:&#160; Audio files in supported formats are decoded and a MusicID-File fingerprint is then generated.</li>
+            <li value="2">Text search and text comparison:&#160; Metadata from ID3 tags extracted from supported file formats or additional text information provided by the application are used to search for appropriate tracks and albums.</li>
+            <li value="3">Gracenote Identifiers:&#160; Audio files sometimes have an associated Gracenote Identifier, which Mobile Client can use for consideration during the identification process.</li>
+            <li value="4">Audio file name and file-system (folder) location:&#160; As music collections are often grouped by directory (Artist/Album/Track), file name and location can also used during identification.</li>
+            <li value="5">Audio file groupings:&#160; Files can be analyzed in groups, which allows common albums to be determined based on the tracks in the group.</li>
+        </ul>
+        <p class="note">While commerce identifiers can be requested, AlbumID does not support the preference of a specific identifier over the actual Album a song came from. These preferred results can instead be obtained by using GNOperations.recognizeMIDFileFromFile or GNOperations.recognizeMIDFileFromPcm. See <a href="#_Toc349118738" class="GNBasic MCXref xref xrefGNBasic">MusicID-File</a> for more information.</p>
+        <p>Mobile Client provides various ways to invoke AlbumID, allowing the developer to choose between a simplified or more flexible implementation.</p>
+        <p>You can improve retrieval performance for AlbumID by retrieving enriched content in the background. For more information see <a href="a-Considerations.html#_Toc349118776" class="GNBasic MCXref xref xrefGNBasic">Improving Retrieval Performance by Using Enriched Content URLs</a>.</p>
+        <h4>Calling AlbumID Operations Serially</h4>
+        <p>An application should call AlbumID operations serially (one at a time). An application should only call another operation after the previous operation has completed. If multiple AlbumID operations are called concurrently with many tracks (for example, 1000 tracks per AlbumID directory operation), it might impact performance on the device and might cause the application to run out of memory.</p>
+        <h4>GNOperations.albumIdDirectory</h4>
+        <p>GNOperations.albumIdDirectory takes a single directory path and identifies all of the audio files in the directory tree, including sub-directories.<br />This is the simplest way to invoke AlbumID.</p>
+        <p>The following code example shows how to invoke GNOperations.albumIdDirectory.</p><pre xml:space="preserve">// Create result-ready object to receive recognition result.<br></br>// ApplicationSearchResultReady must implement the GNSearchResultReady interface<br></br>ApplicationSearchResultReady searchResultReady = new ApplicationSearchResultReady();<br></br><br></br>// Invoke AlbumID operation with the result-ready object, a GNConfig object<br></br>// instance and the root of the directory tree to be processed<br></br>GNOperations.albumIdDirectory(searchResultReady, config, directoryPath);</pre>
+        <p>When invoked, this method performs the following operations:</p>
+        <ol>
+            <li value="1">Searches the directory tree and locates audio files that are supported by Gracenote MusicID-File audio decoder or AlbumID tag decoder</li>
+            <li value="2">Generates MusicID-File fingerprints for files in supported formats</li>
+            <li value="3">Extracts information tags from supported formats which can include artist, album and track information and Gracenote Identifiers</li>
+            <li value="4">The recognition inputs collected by the above steps are combined with the file name and path and delivered to the Gracenote Service for identification; this may result in multiple queries to the Gracenote Service</li>
+            <li value="5">The results of identification are delivered to the application</li>
+        </ol>
+        <p>The behavior of GNOperations.albumIdDirectory can be controlled via the AlbumID configuration parameters. See <a href="#AlbumID" class="GNBasic MCXref xref xrefGNBasic">AlbumID Configuration</a>.</p>
+        <h4>GNOperations.albumIdFile</h4>
+        <p>GNOperations.albumIdFile takes the filenames and paths of a collection of audio files and applies AlbumID identification for grouping and organizing.<br />This method allows targeted identification of groups of audio files, or a single audio file, utilizing all of the recognition technologies available to AlbumID.</p>
+        <p>The following code example shows how to invoke GNOperations.albumIdFile.</p><pre xml:space="preserve">// Create result-ready object to receive recognition result.<br></br>// ApplicationSearchResultReady must implement the GNSearchResultReady interface<br></br>ApplicationSearchResultReady searchResultReady = new ApplicationSearchResultReady();<br></br><br></br>// Assemble a collection of audio files filename and path<br></br>ArrayList&lt;String&gt; filesToIdentify = new ArrayList&lt;String&gt;();<br></br>filesToIdentify.add("/sdcard/fileA.mp3");<br></br>filesToIdentify.add("/sdcard/fileB.mp3");<br></br><br></br>// Invoke AlbumID operation with the result-ready object, a GNConfig object<br></br>// instance and a collection of files to identify<br></br>GNOperations.albumIdFile(searchResultReady, config, filesToIdentify);</pre>
+        <p>When invoked, this method performs the following operations:</p>
+        <ol>
+            <li value="1">Generates MusicID-File fingerprints for files in supported formats</li>
+            <li value="2">Extracts information tags from supported formats which can include artist, album and track information and Gracenote Identifiers</li>
+            <li value="3">The recognition inputs collected by the above steps are combined with the file name and path and delivered to the Gracenote Service for identification; this may result in multiple queries to the Gracenote Service</li>
+        </ol>
+        <p>The behavior of GNOperations.albumIdFile can be controlled via the AlbumID configuration parameters. See <a href="#AlbumID" class="GNBasic MCXref xref xrefGNBasic">AlbumID Configuration</a>.</p>
+        <h4>GNOperations.albumIdList</h4>
+        <p>GNOperations.albumIdList takes a collection of objects where each object contains the recognition inputs for an audio file. Recognition inputs are:</p>
+        <ul>
+            <li value="1">MusicID-File Fingerprint</li>
+            <li value="2">Textual metadata:<ul><li value="1">Artist Name</li><li value="2">Album Title</li><li value="3">Track Title</li><li value="4">Track Number</li></ul></li>
+            <li value="3">File name and path</li>
+            <li value="4">Gracenote Identifiers</li>
+        </ul>
+        <p>AlbumID does not require all of the above inputs to be effective; it can use only those provided to assist identification. Note this also means that text can be used if no fingerprint can be created, allowing AlbumID to be used for audio files that cannot be accessed or decoded by Mobile Client. Mobile Client does not provide a method to export Gracenote Identifiers from a file directly to the application; however, the query result contains these identifiers, which can be used for subsequent AlbumID List queries.</p>
+        <p>The following code example shows how to invoke GNOperations.albumIdList.</p><pre xml:space="preserve">// Create result-ready object to receive recognition result.<br></br>// ApplicationSearchResultReady must implement the GNSearchResultReady interface<br></br>ApplicationSearchResultReady searchResultReady = new ApplicationSearchResultReady();<br></br><br></br>// Assemble a collection of GNAlbumIdAttributes objects.<br></br>// Each GNAlbumIdAttributes has the recognition inputs for a specific file.<br></br>ArrayList&lt;GNAlbumIdAttributes&gt; filesToIdentify = new ArrayList&lt;GNAlbumIdAttributes&gt;();<br></br><br></br>// Assemble the recognition inputs for individual audio files into GNAlbumIdAttributes<br></br>// instances<br></br>GNAlbumIdAttributes fileAttrib = new GNAlbumIdAttributes();<br></br>fileAttrib.setArtist("Bon Jovi");<br></br>fileAttrib.setAlbum("Keep the Faith");<br></br>fileAttrib.setFingerprintData(fingerprintString);<br></br><br></br>filesToIdentify.add(fileAttrib);<br></br><br></br>// Invoke AlbumID operation with the result-ready object, a GNConfig object<br></br>// instance and a collection of files to identify<br></br>GNOperations.albumIdList(searchResultReady, config, filesToIdentify);</pre>
+        <p>When this method is invoked, the recognition inputs for each file are delivered to Gracenote Web Services for identification, which may result in multiple queries to Gracenote Web Services.</p>
+        <p>The behavior of GNOperations.albumIdList can be controlled via the AlbumID configuration parameters. See <a href="#AlbumID" class="GNBasic MCXref xref xrefGNBasic">AlbumID Configuration</a> for more information.</p>
+        <h4><a name="AlbumID"></a>AlbumID Configuration</h4>
+        <p>The behavior of AlbumID can be controlled by appropriately configuring the GNCOnfig object provided when an AlbumID operation is invoked.<br />The configuration parameters are described below.</p>
+        <table>
+            <tr>
+                <th>
+                    <p>Parameter</p>
+                </th>
+                <th>
+                    <p>Description</p>
+                </th>
+                <th>
+                    <p>Default</p>
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <p>content.albumId.queryPreference.useTagData</p>
+                </td>
+                <td>
+                    <p>When true, AlbumID will use textual metadata when identifying an audio file.</p>
+                </td>
+                <td>
+                    <p>true</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>content.albumId.queryPreference.useFingerprint</p>
+                </td>
+                <td>
+                    <p>When true, AlbumID will use MusicID-Fingerprints when identifying an audio file.</p>
+                </td>
+                <td>
+                    <p>true</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>content.albumId.queryPreference.useGN_ID</p>
+                </td>
+                <td>
+                    <p>When true, AlbumID will use Gracenote Identifier when identifying an audio file.</p>
+                </td>
+                <td>
+                    <p>true</p>
+                </td>
+            </tr>
+        </table>
+        <h4>AlbumID Query Load</h4>
+        <p>AlbumID is capable of recognizing large music collections and in most cases will use multiple queries for recognition of tracks and retrieval of related content.</p>
+        <p>To assist with recognition Mobile Client will group audio files. The number of queries used for recognition is impacted by the number of groupings. Audio file groupings are based on:</p>
+        <ul>
+            <li value="1">The metadata of the audio files (tag data is used to group similar tracks)</li>
+            <li value="2">The organization of the audio files (files can be grouped based on the directories they reside in)</li>
+            <li value="3">The limit of the recognition interface</li>
+        </ul>
+        <p>Because file groupings are impacted by track metadata and organization, it is difficult to predict how many recognition queries will be needed.</p>
+        <p>Once the audio files have been recognized, your application can access related content via the result objects. Although queries are batched in multiple groups, the responses for all the grouped queries are provided to the application at one time, at the end of the operation.</p>
+        <p>The example below provides an indication of the number of queries that are required for AlbumID. This example can be extrapolated to larger collections requiring similar content to be delivered.</p>
+        <h5>AlbumID Query Load Example</h5>
+        <p>Consider an audio collection organized as shown below.</p>
+        <p>Assume:</p>
+        <ul>
+            <li value="1">All tracks have accurate Artist Name, Album Title, and Track Title tag data.</li>
+        </ul>
+        <p class="p_1">No Gracenote Identifiers are known for any of the files.</p>
+        <p>/sdcard/Red Hot Chili Peppers/By The Way/By The Way.mp3<br />/sdcard/Red Hot Chili Peppers/By The Way/Universally Speaking.mp3<br />/sdcard/Red Hot Chili Peppers/By The Way/This Is The Place.mp3<br />/sdcard/Red Hot Chili Peppers/By The Way/Dosed.mp3<br />/sdcard/Red Hot Chili Peppers/By The Way/Don't Forget Me.mp3<br />/sdcard/Red Hot Chili Peppers/By The Way/...<br />/sdcard/Midnight Oil/10, 9, 8, 7, 6, 5, 4, 3, 2, 1/Outside World.mp3<br />/sdcard/Midnight Oil/10, 9, 8, 7, 6, 5, 4, 3, 2, 1/Only The Strong.mp3<br />/sdcard/Midnight Oil/10, 9, 8, 7, 6, 5, 4, 3, 2, 1/Short Memory.mp3<br />/sdcard/Midnight Oil/10, 9, 8, 7, 6, 5, 4, 3, 2, 1/Read About It.mp3<br />/sdcard/Midnight Oil/10, 9, 8, 7, 6, 5, 4, 3, 2, 1/Scream In Blue.mp3<br />/sdcard/Midnight Oil/10, 9, 8, 7, 6, 5, 4, 3, 2, 1/...</p>
+        <p>Using albumIdDirectory, the base directory /sdcard would be provided. The AlbumID algorithm will create two groups, one for Red Hot Chili Peppers and one for Midnight Oil. An identification query is generated for each group.</p>
+        <p>After identification is completed, the results are provided via a result-ready object. The application can then process the individual track results by processing the respective GNSearchResponse object.</p>
+        <p>Related content, such as Cover Art, is not included in the initial result set. When the application calls GNSearchResponse.getCoverArt(), a query is generated to fetch the cover art.</p>
+        <p>The application should only call GNSearchResponse.getCoverArt() for one track on each album. This is to avoid the same Cover Art from being fetched more than once. The application should include some intelligence to ensure this.</p>
+        <p>In this example the minimum number of queries required to identify the audio tracks and retrieve the track and album metadata and cover art for each album is four:</p>
+        <ul>
+            <li value="1">Two queries for identification</li>
+            <li value="2">One query to retrieve Cover Art for Red Hot Chili Peppers' album By The Way</li>
+            <li value="3">One query to retrieve Cover Art for Midnight Oil's album 10, 9, 8, 7, 6, 5, 4, 3, 2, 1</li>
+        </ul>
+        <p>Applications can minimize the number of queries made through correct configuration, and analysis and storage of results. </p>
+        <h3><a name="_Toc349118740"></a>Single Best Match and Multiple Matches</h3>
+        <p>The audio recognition operations MusicID-Stream and MusicID-File can return a single best match or multiple matches. The default configuration returns a single best match, but this can be changed by configuring the GNConfig instance provided when the recognition operation is invoked. The multiple match configuration parameter is described below.</p>
+        <table>
+            <tr>
+                <th>
+                    <p>Parameter</p>
+                </th>
+                <th>
+                    <p>Description</p>
+                </th>
+                <th>
+                    <p>Default</p>
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <p>content.musicId.queryPreference.singleBestMatch</p>
+                </td>
+                <td>
+                    <p>When true, single best match is returned for MusicID-Stream and MusicID-File recognition operations. When false, multiple matches are returned.</p>
+                </td>
+                <td>
+                    <p>true</p>
+                </td>
+            </tr>
+        </table>
+        <p>When configured for a single best match, the best match is identified by comparing the characteristics of all possible matches against criteria specific to your application. By setting properties in the configuration object, you can change the criteria used in determining the best match.</p>
+        <p>When multiple matches are configured, all matches are delivered, up to a maximum of ten. The application can apply its own criteria to determine the best match and deliver it to the user. The application can also allow the user to choose the best match.</p>
+        <p>Text and Lyric Fragment Search operations always return multiple matches and AlbumID always returns a single match.</p>
+        <p>Single best match queries can be configured to return cover art in the recognition response. Cover art is not delivered with the responses containing multiple matches; however, it can be retrieved with an additional query by Gracenote Identifier (see <a href="a_Retrieving Related Content.html#Retrievi" class="GNBasic MCXref xref xrefGNBasic">Retrieving Related Content by Gracenote Identifier</a>).</p>
+        <p class="onlineFooter">© 2000 to present. Gracenote, Inc. All rights reserved.</p>
+        <p><a href="mailto:doc_feedback@gracenote.com?subject=Gracenote Documentation Feedback" target="_blank" title="Send comments about this topic to Gracenote Technical Publications." alt="Send comments about this topic to Gracenote Technical Publications.">How can we improve this documentation?</a>
+        </p>
+    </body>
+</html>

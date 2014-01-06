@@ -1,0 +1,53 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/start_update_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onStartUpdates"
+        android:text="@string/start_updates" />
+
+    <Button
+        android:id="@+id/stop_update_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onStopUpdates"
+        android:text="@string/stop_updates" />
+
+    <Button
+        android:id="@+id/current_loc_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="getLocation"
+        android:text="@string/lb_current_location" />
+
+    <Button
+        android:id="@+id/current_weather"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="getWeather"
+        android:text="@string/lb_current_weather" />
+
+    <Button
+        android:id="@+id/listSongs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="getSongs"
+        android:text="@string/lb_all_songs" />
+
+    <Button
+        android:id="@+id/getPlaylist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="getPlaylist"
+        android:text="@string/lb_get_playlist" />
+
+    <ListView
+        android:id="@+id/log_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>
